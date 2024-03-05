@@ -18,6 +18,16 @@ export default function Home() {
     setInputValue(val);
   };
 
+  const handleSubmit = () => {
+    fetch('/api/hello', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({inputValue}),
+    })
+  }
+
   return (
     <main className={styles.main}>
       <h1>Please select a name for your room</h1>
@@ -25,7 +35,7 @@ export default function Home() {
         className={styles.form}
         onSubmit={(evt) => {
           evt.preventDefault();
-          console.log("submit:", inputValue);
+          handleSubmit()
         }}
       >
         <TextInput
