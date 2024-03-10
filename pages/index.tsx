@@ -1,55 +1,14 @@
 import styles from "@/styles/Home.module.css";
-import TextInput from "@/components/TextInput";
-import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
-  const [disableSubmit, setDisableSubmit] = useState(true);
-
-  const onValidate = (val: string) => {
-    if (val) {
-      console.log("validate:", val); // sends via websocket to verify name availability
-      setDisableSubmit(false);
-    }
-  };
-
-  const onChange = (val: string) => {
-    setDisableSubmit(true);
-    setInputValue(val);
-  };
-
-  const handleSubmit = () => {
-    fetch('/api/hello', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({inputValue}),
-    })
-  }
-
   return (
     <main className={styles.main}>
-      <h1>Please select a name for your room</h1>
-      <form
-        className={styles.form}
-        onSubmit={(evt) => {
-          evt.preventDefault();
-          handleSubmit()
-        }}
-      >
-        <TextInput
-          value={inputValue}
-          onChange={onChange}
-          onValidate={onValidate}
-        />
-        <input
-          className={styles.submitButton}
-          type="submit"
-          value="Submit"
-          disabled={disableSubmit}
-        />
-      </form>
+      <h1>What will you be participating as?</h1>
+      <div className={styles.container}>
+        <Link className={styles.button} href={{ pathname: "room", query: { host: "true" } }}>Host</Link>
+        <Link className={styles.button} href={{ pathname: "room" }}>Participant</Link>
+      </div>
     </main>
   );
 }
