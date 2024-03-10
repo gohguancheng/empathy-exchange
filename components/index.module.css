@@ -3,3 +3,8 @@
   padding: 4px 8px;
   max-width: 100%;
 }
+
+.error {
+  font-size: 0.8rem;
+  color: red;
+}

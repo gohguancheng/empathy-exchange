@@ -6,10 +6,19 @@ interface TextInputProps {
   onChange: (v: string) => void;
   delay?: number;
   onValidate?: (v: string) => void;
+  errorMessage?: string;
+  disabled?: boolean;
 }
 
 export default function TextInput(props: TextInputProps) {
-  const { onChange, value = "", delay = 2000, onValidate } = props;
+  const {
+    onChange,
+    value = "",
+    delay = 2000,
+    onValidate,
+    errorMessage,
+    disabled = false,
+  } = props;
   const [localValue, setLocalValue] = useState<string>("");
   const [timeoutTracker, setTimeoutTracker] = useState<
     NodeJS.Timeout | undefined
@@ -44,11 +53,15 @@ export default function TextInput(props: TextInputProps) {
   };
 
   return (
-    <input
-      className={styles.textInput}
-      type="text"
-      value={localValue}
-      onChange={handleOnChange}
-    />
+    <>
+      <input
+        className={styles.textInput}
+        type="text"
+        value={localValue}
+        onChange={handleOnChange}
+        disabled={disabled}
+      />
+      {!!errorMessage && <p className={styles.error}>{errorMessage}</p>}
+    </>
   );
 }
