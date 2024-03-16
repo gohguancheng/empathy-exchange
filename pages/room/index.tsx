@@ -1,34 +1,79 @@
 import styles from "@/styles/Room.module.css";
 import TextInput from "@/components/TextInput";
 import { useEffect, useState } from "react";
-import useSocket from "@/hooks/useSocket";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { IUser } from "@/utils/types";
 
 export default function Room() {
   const [inputRoomCode, setInputRoomCode] = useState<string>("");
   const [inputUsername, setInputUsername] = useState<string>("");
+  const [validation, setValidation] = useState<Validation>({});
+  const [savedUser, setSavedUser] = useState<UserData>({ username: "" });
 
-  const {
-    joinRoom,
-    onValidate,
-    errors,
-    isValidName,
-    isAvailableRoom,
-    setUserData,
-    userData,
-    setIsConnected,
-  } = useSocket(inputRoomCode, inputUsername);
   const router = useRouter();
-  useEffect(() => {
-    setUserData((prev) => ({ ...prev, host: router.query.host === "true" }));
-  }, [router.query.host]);
+  const searchParams = useSearchParams();
+  const isHost = searchParams.get("host") === "true";
 
-  useEffect(() => {
-    setIsConnected(true);
-  });
+  const validateRoomCode = async (value: string) => {
+    try {
+      const res = await fetch(
+        `/api/room/validate?roomCode=${value}&host=${isHost}`
+      ).then((res) => res.json());
 
-  const roomInputLabel = userData.host
+      if (res) {
+        setValidation((prev) => ({
+          ...prev,
+          validRoom: res.isAvail,
+          roomError: res.message,
+        }));
+      }
+    } catch (e) {
+      setValidation({ roomError: "Unexpected Error" });
+    }
+  };
+
+  const validateUsername = async (value: string) => {
+    try {
+      const res = await fetch(
+        `/api/room/validate-user?username=${value}&roomCode=${inputRoomCode}&host=${isHost}`
+      ).then((res) => res.json());
+
+      if (res?.isAvail) {
+        setValidation((prev) => ({
+          ...prev,
+          validUsername: res.isAvail,
+          usernameValidated: res.isAvail,
+          usernameError: res.message,
+        }));
+      }
+    } catch (e) {
+      setValidation((prev) => ({ ...prev, usernameError: "Unexpected Error" }));
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch(`/api/room`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          host: isHost,
+          roomCode: inputRoomCode,
+          username: inputUsername,
+        }),
+      }).then((res) => res.json());
+      if (res) {
+        const { roomCode, username } = res;
+        router.push({ pathname: "/room/" + roomCode, query: { username } });
+      }
+    } catch (e) {}
+  };
+
+  const roomInputLabel = isHost
     ? "Please create a new code to generate a room"
     : "Please enter the code of an existing room to join";
 
@@ -39,34 +84,53 @@ export default function Room() {
         className={styles.form}
         onSubmit={(evt) => {
           evt.preventDefault();
-          joinRoom();
+          handleSubmit();
         }}
       >
-        <label className={styles.label}>Room Code</label>
-        <TextInput
-          value={inputRoomCode}
-          onChange={setInputRoomCode}
-          onValidate={(value) => onValidate(value, "room", userData.host)}
-          delay={500}
-          errorMessage={errors.roomError}
-        />
+        {!validation.roomValidated && (
+          <>
+            <label className={styles.label}>Room Code</label>
+            <TextInput
+              value={inputRoomCode}
+              onChange={setInputRoomCode}
+              onValidate={validateRoomCode}
+              delay={500}
+              errorMessage={validation.roomError}
+            />
+            <button
+              className={styles.submitButton}
+              disabled={!validation.validRoom}
+              onClick={() =>
+                setValidation((prev) => ({ ...prev, roomValidated: true }))
+              }
+            >
+              Next
+            </button>
+          </>
+        )}
+        {validation.roomValidated && (
+          <>
+            <label
+              className={styles.label}
+            >{`In room ${inputRoomCode}, participants can call me`}</label>
+            <TextInput
+              value={inputUsername}
+              onChange={setInputUsername}
+              onValidate={validateUsername}
+              delay={500}
+              errorMessage={validation.usernameError}
+            />
+          </>
+        )}
 
-        <label className={styles.label}>Choose your display name</label>
-        <TextInput
-          value={inputUsername}
-          onChange={setInputUsername}
-          onValidate={(value) => onValidate(value, "user")}
-          delay={500}
-          errorMessage={!!inputUsername ? errors.usernameError : ""}
-          disabled={!inputRoomCode}
-        />
-
-        <input
-          className={styles.submitButton}
-          type="submit"
-          value="Submit"
-          disabled={!(isValidName && isAvailableRoom)}
-        />
+        {validation.roomValidated && (
+          <input
+            className={styles.submitButton}
+            type="submit"
+            value="Submit"
+            disabled={!validation.validUsername}
+          />
+        )}
       </form>
 
       <Link className={styles.backButton} href="/">
@@ -74,4 +138,17 @@ export default function Room() {
       </Link>
     </main>
   );
+}
+interface UserData extends IUser {
+  roomCode?: string;
+}
+
+interface Validation {
+  validRoom?: boolean;
+  roomError?: string;
+  roomValidated?: boolean;
+
+  validUsername?: boolean;
+  usernameError?: string;
+  usernameValidated?: boolean;
 }
