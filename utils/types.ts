@@ -22,15 +22,17 @@ export enum EStage {
   END = 5,
 }
 
+export interface IRoom {
+  users: IUser[];
+  current:
+    | { stage: Omit<EStage, EStage.SHARING> }
+    | { stage: EStage.SHARING; speaker: string };
+}
+
 export interface IRooms {
-  [roomCode: string]: {
-    users: IUser[];
-    current:
-      | { stage: Omit<EStage, EStage.SHARING> }
-      | { stage: EStage.SHARING; speaker: string };
-  };
+  [roomCode: string]: IRoom;
 }
 
 export interface ISocketUserMap {
-  [key: string]: { username: string; roomCode: string; isHost?: boolean };
+  [key: string]: { username: string; roomCode: string };
 }
