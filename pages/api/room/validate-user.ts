@@ -1,6 +1,6 @@
+import serverStore from "@/lib/roomStore";
 import { NextApiResponseWithSocket } from "@/utils/types";
 import { NextApiRequest } from "next";
-import { rooms } from ".";
 
 export default function validateUserHandler(
   req: NextApiRequest,
@@ -22,19 +22,16 @@ export default function validateUserHandler(
    */
 
   let isAvail = false;
-  const room = rooms[roomCode as string];
+  const users = serverStore.getRoomUsers(roomCode as string);
 
   if (isHost) {
-    isAvail =
-      !room || (room.users[0].username === username && !room.users[0].online);
+    isAvail = !users || (users[0].username === username && !users[0].online);
   } else {
     isAvail =
-      !!room &&
-      !room.users.find(
-        (member) => !!member.online && member.username === username
-      );
+      !!users &&
+      !users.find((member) => !!member.online && member.username === username);
   }
 
-  const message = isAvail? undefined : 'Seems like that name is taken'
-  return res.status(200).json({ isAvail, roomCode, username,message });
+  const message = isAvail ? undefined : "Seems like that name is taken";
+  return res.status(200).json({ isAvail, roomCode, username, message });
 }
