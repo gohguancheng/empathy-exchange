@@ -10,11 +10,36 @@ export default function Room() {
   const [inputRoomCode, setInputRoomCode] = useState<string>("");
   const [inputUsername, setInputUsername] = useState<string>("");
   const [validation, setValidation] = useState<Validation>({});
-  const [savedUser, setSavedUser] = useState<UserData>({ username: "" });
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const isHost = searchParams.get("host") === "true";
+
+  const roomInputLabel = isHost
+    ? "Please create a new code to generate a room"
+    : "Please enter the code of an existing room to join";
+
+  const showRoomInput = !validation.roomValidated;
+  const showUserInput = validation.roomValidated;
+  const allowSubmit = validation.validUsername && !!inputUsername;
+
+  useEffect(() => {
+    setValidation((prev) => ({
+      ...prev,
+      validRoom: false,
+      roomError: "",
+      roomValidated: false,
+    }));
+  }, [inputRoomCode]);
+
+  useEffect(() => {
+    setValidation((prev) => ({
+      ...prev,
+      validUsername: false,
+      usernameError: "",
+      usernameValidated: false,
+    }));
+  }, [inputUsername]);
 
   const validateRoomCode = async (value: string) => {
     try {
@@ -73,10 +98,6 @@ export default function Room() {
     } catch (e) {}
   };
 
-  const roomInputLabel = isHost
-    ? "Please create a new code to generate a room"
-    : "Please enter the code of an existing room to join";
-
   return (
     <main className={styles.main}>
       <h1>{roomInputLabel}</h1>
@@ -87,7 +108,7 @@ export default function Room() {
           handleSubmit();
         }}
       >
-        {!validation.roomValidated && (
+        {showRoomInput && (
           <>
             <label className={styles.label}>Room Code</label>
             <TextInput
@@ -108,7 +129,7 @@ export default function Room() {
             </button>
           </>
         )}
-        {validation.roomValidated && (
+        {showUserInput && (
           <>
             <label
               className={styles.label}
@@ -122,18 +143,17 @@ export default function Room() {
             />
           </>
         )}
-
-        {validation.roomValidated && (
+        {showUserInput && (
           <input
             className={styles.submitButton}
             type="submit"
             value="Submit"
-            disabled={!validation.validUsername}
+            disabled={!allowSubmit}
           />
         )}
       </form>
 
-      <Link className={styles.backButton} href="/">
+      <Link tabIndex={-1} className={styles.backButton} href="/">
         Back to Home
       </Link>
     </main>
