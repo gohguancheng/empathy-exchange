@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { IUser } from "@/utils/types";
+import { hasXSSChars } from "@/utils/string";
 
 export default function Room() {
   const [inputRoomCode, setInputRoomCode] = useState<string>("");
@@ -42,6 +43,15 @@ export default function Room() {
   }, [inputUsername]);
 
   const validateRoomCode = async (value: string) => {
+    if (hasXSSChars(value)) {
+      setValidation((prev) => ({
+        ...prev,
+        validRoom: false,
+        roomError: "Special characters not allowed",
+        roomValidated: false,
+      }));
+      return;
+    }
     try {
       const res = await fetch(
         `/api/room/validate?roomCode=${value}&host=${isHost}`
@@ -60,6 +70,15 @@ export default function Room() {
   };
 
   const validateUsername = async (value: string) => {
+    if (hasXSSChars(value)) {
+      setValidation((prev) => ({
+        ...prev,
+        validUsername: false,
+        usernameError: "Special characters not allowed",
+        usernameValidated: false,
+      }));
+      return;
+    }
     try {
       const res = await fetch(
         `/api/room/validate-user?username=${value}&roomCode=${inputRoomCode}&host=${isHost}`
@@ -115,7 +134,7 @@ export default function Room() {
               value={inputRoomCode}
               onChange={setInputRoomCode}
               onValidate={validateRoomCode}
-              delay={500}
+              delay={300}
               errorMessage={validation.roomError}
             />
             <button
@@ -138,7 +157,7 @@ export default function Room() {
               value={inputUsername}
               onChange={setInputUsername}
               onValidate={validateUsername}
-              delay={500}
+              delay={300}
               errorMessage={validation.usernameError}
             />
           </>
