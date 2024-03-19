@@ -28,14 +28,14 @@ export default function roomHandler(
   } else {
     if (!room) return res.status(400).json({ error: `Room does not exist!` });
 
-    const user = users.find((p) => p.username === username && p.online);
+    const user = users.find((p) => p.username === username);
 
-    if (user) {
+    if (user?.online) {
       return res
         .status(400)
         .json({ error: `Username ${user.username} is online` });
     } else {
-      users.push({ username });
+      if (!user) users.push({ username });
       return res.status(200).json({ message: "OK", roomCode, username });
     }
   }

@@ -84,7 +84,7 @@ export default function Room() {
         `/api/room/validate-user?username=${value}&roomCode=${inputRoomCode}&host=${isHost}`
       ).then((res) => res.json());
 
-      if (res?.isAvail) {
+      if (res) {
         setValidation((prev) => ({
           ...prev,
           validUsername: res.isAvail,

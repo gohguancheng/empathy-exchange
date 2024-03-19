@@ -16,45 +16,55 @@ export default function Room() {
   const [content, setContent] = useState<IRoom>();
 
   useEffect(() => {
-    if (!(roomCode && username)) router.replace("/");
-  }, [roomCode, username, socket]);
+    if (!router.isReady) return;
+    if (roomCode && username) return;
+
+    router.push("/");
+  }, [router.isReady, roomCode, username]);
 
   useEffect(() => {
-    if (socket?.id && isAuthenticated) {
-      socket.emit(
-        "get_room",
-        ({ update, user }: { update: IRoom; user: IUser }) => {
-          setUserData(user);
-          setContent(update);
-        }
-      );
-      socket.on("room_update", (update: IRoom) => {
+    if (!socket?.id || !isAuthenticated) return;
+    socket.emit(
+      "get_room",
+      ({ update, user }: { update: IRoom; user: IUser }) => {
+        setUserData(user);
         setContent(update);
-        setUserData((prev) => ({
-          ...prev,
-          ...update.users.find((e) => e.username === prev.username),
-        }));
-      });
-    } else {
-      socket?.on("auth_error", (payload) =>
-        router.replace({ pathname: "/", query: payload })
-      );
-    }
-  }, [isAuthenticated]);
+      }
+    );
 
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
+    const roomUpdateHandler = (update: IRoom) => {
+      setContent(update);
+      setUserData((prev) => ({
+        ...prev,
+        ...update.users.find((e) => e.username === prev.username),
+      }));
+    };
+    socket.on("room_update", roomUpdateHandler);
+
+    return () => {
+      socket.off("room_update", roomUpdateHandler);
+    };
+  }, [socket, isAuthenticated]);
+
+  useEffect(() => {
+    if (username && userData?.username && username !== userData?.username) {
+      router.replace("/");
+    }
+  }, [userData]);
 
   // useEffect(() => {
   //   console.log(content);
   // }, [content]);
-
+  const { current, users } = content ?? {};
   return (
     <div>
       <div>
-        Room ID: {roomCode} {username}
+        Room ID: {roomCode} {username} {`${isAuthenticated}`} {`${socket?.id}`}{" "}
+        {`${router.isReady}`}
       </div>
+      <div>User data: {JSON.stringify(userData)}</div>
+      <div>current: {JSON.stringify(current)}</div>
+      <div>users: {JSON.stringify(users)}</div>
       {<div></div>}
     </div>
   );

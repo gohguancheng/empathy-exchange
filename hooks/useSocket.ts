@@ -13,9 +13,12 @@ export default function useSocket(roomCode = "", username = "") {
   });
 
   useEffect(() => {
-    if (!socket) {
+    if (!socket && roomCode && username) {
       fetch("/api/socket").finally(() => {
-        const sock = io("/", { auth: { roomCode, username } });
+        const sock = io("/", {
+          auth: { roomCode, username },
+          transports: ["websocket", "polling"],
+        });
 
         sock.on("connect", () => {
           setSocket(sock);
@@ -25,6 +28,12 @@ export default function useSocket(roomCode = "", username = "") {
           setUserData(data);
           setIsAuthenticated(true);
         });
+
+        const authErrorHandler = (payload: any) => {
+          sock.close();
+          console.log(payload);
+        };
+        sock.on("auth_error", authErrorHandler);
       });
     }
 
@@ -34,7 +43,7 @@ export default function useSocket(roomCode = "", username = "") {
         socket.close();
       }
     };
-  }, []);
+  }, [roomCode, username]);
 
   return {
     socket,

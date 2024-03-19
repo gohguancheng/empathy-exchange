@@ -5,6 +5,7 @@ import { NextApiResponseWithSocket } from "@/utils/types";
 import serverStore from "@/lib/roomStore";
 
 const attachCredentials = (socket: Socket) => {
+  if (socket.data.roomCode && socket.data.username) return;
   const data = socket.handshake.auth as { roomCode: string; username: string };
   const { roomCode = "", username = "" } = data;
   const user = serverStore.getUser(roomCode, username);
@@ -47,10 +48,14 @@ export default function handler(
         callback({ update, user });
       });
 
-      socket.on("disconnecting", () => {
+      socket.on("disconnecting", async () => {
         const { roomCode, username } = socket.data;
-        serverStore.setUserOnlineState(roomCode, username, "");
+        await serverStore.setUserOnlineState(roomCode, username, "");
         socket.to(roomCode).emit("room_update", serverStore.getRoom(roomCode));
+      });
+
+      socket.on("disconnect", () => {
+        const { roomCode } = socket.data;
         serverStore.closeRoomIfEmpty(roomCode);
       });
     });
