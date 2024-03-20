@@ -1,5 +1,5 @@
 import styles from "@/styles/Room.module.css";
-import TextInput from "@/components/TextInput";
+import TextInput from "@/components/TextInput/TextInput";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function Room() {
   const isHost = searchParams.get("host") === "true";
 
   const roomInputLabel = isHost
-    ? "Please create a new code to generate a room"
+    ? "Please enter a code to create a new room or rejoin a room you disconnected from"
     : "Please enter the code of an existing room to join";
 
   const showRoomInput = !validation.roomValidated;

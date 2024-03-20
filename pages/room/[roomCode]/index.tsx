@@ -1,3 +1,4 @@
+import { WaitingRoom } from "@/components/WaitingRoom/WaitingRoom";
 import useSocket from "@/hooks/useSocket";
 import { IRoom, IUser } from "@/utils/types";
 import { useRouter } from "next/router";
@@ -65,7 +66,7 @@ export default function Room() {
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
       <div>users: {JSON.stringify(users)}</div>
-      {<div></div>}
+      <WaitingRoom />
     </div>
   );
 }
