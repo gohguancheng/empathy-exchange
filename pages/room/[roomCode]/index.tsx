@@ -1,6 +1,9 @@
+import { SelectRole } from "@/components/SelectRole/SelectRole";
+import { SharingDashboard } from "@/components/SharingDashboard/SharingDashboard";
+import { TopicInput } from "@/components/TopicInput/TopicInput";
 import { WaitingRoom } from "@/components/WaitingRoom/WaitingRoom";
 import useSocket from "@/hooks/useSocket";
-import { IRoom, IUser } from "@/utils/types";
+import { EStage, IRoom, IUser } from "@/utils/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -30,6 +33,7 @@ export default function Room() {
       ({ update, user }: { update: IRoom; user: IUser }) => {
         setUserData(user);
         setContent(update);
+        console.log(user);
       }
     );
 
@@ -53,10 +57,50 @@ export default function Room() {
     }
   }, [userData]);
 
-  // useEffect(() => {
-  //   console.log(content);
-  // }, [content]);
   const { current, users } = content ?? {};
+
+  const renderStages = () => {
+    const currentStage = content?.current.stage;
+
+    if (!userData.username) {
+      return <div>Spinner</div>;
+    }
+
+    if (currentStage === EStage.WAITING) {
+      return <WaitingRoom />;
+    }
+
+    if (!userData.topic || currentStage === EStage.TOPIC_INPUT) {
+      return <TopicInput />;
+    }
+
+    if (!userData.role || currentStage === EStage.ROLE_SELECT) {
+      return <SelectRole />;
+    }
+
+    if (currentStage === EStage.SHARING) {
+      return <SharingDashboard />;
+    }
+
+    if (currentStage === EStage.END) {
+      return <div>End</div>;
+    }
+  };
+
+  // const updateStage = (key: any) => {
+  //   setContent((prev: any) => ({
+  //     ...prev,
+  //     current: { ...prev?.current, stage: EStage[key] },
+  //   }));
+  // };
+  // const buttons = (Object.keys(EStage) as Array<keyof typeof EStage>).map(
+  //   (key, i) => (
+  //     <button key={i} onClick={() => updateStage(key)}>
+  //       {key}
+  //     </button>
+  //   )
+  // );
+
   return (
     <div>
       <div>
@@ -66,7 +110,8 @@ export default function Room() {
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
       <div>users: {JSON.stringify(users)}</div>
-      <WaitingRoom />
+      {/* <div>{buttons}</div> */}
+      {renderStages()}
     </div>
   );
 }

@@ -35,13 +35,13 @@ export default function useSocket(roomCode = "", username = "") {
         };
         sock.on("auth_error", authErrorHandler);
       });
+    } else {
+      setIsAuthenticated(true);
     }
 
     return () => {
-      if (socket) {
-        console.log("dismounting");
-        socket.close();
-      }
+      console.log("dismounting");
+      socket?.close();
     };
   }, [roomCode, username]);
 
