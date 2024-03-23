@@ -3,52 +3,89 @@ import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
 type IUserData = IUser & { host?: boolean };
+type SocketStatus = {
+  isValidParams?: boolean;
+  isAuthenticated?: boolean;
+};
 
-export default function useSocket(roomCode = "", username = "") {
+export default function useSocket(
+  roomCode: string,
+  username: string,
+  handleAuthError: (query: { error: string }) => void
+) {
   const [socket, setSocket] = useState<Socket | undefined>();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
+  const [socketStatus, setSocketStatus] = useState<SocketStatus>({});
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     host: false,
   });
 
   useEffect(() => {
-    if (!socket && roomCode && username) {
-      fetch("/api/socket").finally(() => {
-        const sock = io("/", {
-          auth: { roomCode, username },
-          transports: ["websocket", "polling"],
-        });
-
-        sock.on("connect", () => {
-          setSocket(sock);
-        });
-
-        sock.on("auth_success", (data: IUserData) => {
-          setUserData(data);
-          setIsAuthenticated(true);
-        });
-
-        const authErrorHandler = (payload: any) => {
-          sock.close();
-          console.log(payload);
-        };
-        sock.on("auth_error", authErrorHandler);
-      });
-    } else {
-      setIsAuthenticated(true);
-    }
-
-    return () => {
-      console.log("dismounting");
-      socket?.close();
-    };
+    setSocketStatus(() => ({ isValidParams: !!(roomCode && username) }));
   }, [roomCode, username]);
+
+  useEffect(() => {
+    if (
+      socketStatus.isValidParams &&
+      !socketStatus.isAuthenticated &&
+      !socket
+    ) {
+      let sock: Socket;
+      const connectSocket = async () => {
+        await fetch("/api/socket").finally(() => {
+          sock = new (io as any)({
+            auth: { roomCode, username },
+            transports: ["websocket", "polling"],
+            addTrailingSlash: false,
+          }) as Socket;
+          const handleConnection = () => {
+            setSocket(() => sock);
+          };
+          sock.on("connect", handleConnection);
+        });
+      };
+
+      connectSocket();
+
+      return () => {
+        sock.removeAllListeners("connect");
+      };
+    }
+  }, [socketStatus]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit("authenticate");
+      socket.on("auth_success", (data: IUserData) => {
+        setUserData(() => data);
+        setSocketStatus((prev) => ({
+          ...prev,
+          isAuthenticated: !!data.username,
+        }));
+      });
+
+      const authErrorHandler = (payload: { error: string }) => {
+        handleAuthError(payload);
+      };
+      socket.on("auth_error", authErrorHandler);
+
+      return () => {
+        if (socket.connected) {
+          socket.close();
+        } else if (socket) {
+          socket.once("connect", () => {
+            socket.close();
+          });
+        }
+        socket.removeAllListeners("auth_success");
+      };
+    }
+  }, [socket]);
 
   return {
     socket,
     userData,
     setUserData,
-    isAuthenticated,
+    socketStatus,
   };
 }

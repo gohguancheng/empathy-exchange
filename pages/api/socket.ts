@@ -5,8 +5,10 @@ import { NextApiResponseWithSocket } from "@/utils/types";
 import serverStore from "@/lib/roomStore";
 
 const attachCredentials = (socket: Socket) => {
-  if (socket.data.roomCode && socket.data.username) return;
-  const data = socket.handshake.auth as { roomCode: string; username: string };
+  const data = socket.handshake.auth as {
+    roomCode: string;
+    username: string;
+  };
   const { roomCode = "", username = "" } = data;
   const user = serverStore.getUser(roomCode, username);
 
@@ -38,7 +40,9 @@ export default function handler(
     res.socket.server.io = io;
 
     io.on("connection", (socket) => {
-      attachCredentials(socket);
+      socket.on("authenticate", () => {
+        attachCredentials(socket);
+      });
 
       socket.on("get_room", async (callback) => {
         const { roomCode, username } = socket.data;

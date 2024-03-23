@@ -13,32 +13,43 @@ export default function Room() {
     roomCode: string;
     username: string;
   };
-  const { socket, setUserData, userData, isAuthenticated } = useSocket(
+  const handleAuthError = (query: { error: string }) => {
+    router.replace({ pathname: "/", query });
+  };
+  const { socket, setUserData, userData, socketStatus } = useSocket(
     roomCode,
-    username
+    username,
+    handleAuthError
   );
   const [content, setContent] = useState<IRoom>();
 
   useEffect(() => {
-    if (!router.isReady) return;
-    if (roomCode && username) return;
-
-    router.push("/");
+    if (router.isReady && !(roomCode && username)) {
+      router.replace({
+        pathname: "/",
+        query: { error: "incomplete params", roomCode, username },
+      });
+    }
   }, [router.isReady, roomCode, username]);
 
   useEffect(() => {
-    if (!socket?.id || !isAuthenticated) return;
+    if (username && userData?.username && username !== userData?.username) {
+      router.replace("/");
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (!socketStatus.isAuthenticated || !socket) return;
     socket.emit(
       "get_room",
       ({ update, user }: { update: IRoom; user: IUser }) => {
-        setUserData(user);
-        setContent(update);
-        console.log(user);
+        setUserData(() => user);
+        setContent(() => update);
       }
     );
 
     const roomUpdateHandler = (update: IRoom) => {
-      setContent(update);
+      setContent(() => update);
       setUserData((prev) => ({
         ...prev,
         ...update.users.find((e) => e.username === prev.username),
@@ -49,20 +60,14 @@ export default function Room() {
     return () => {
       socket.off("room_update", roomUpdateHandler);
     };
-  }, [socket, isAuthenticated]);
-
-  useEffect(() => {
-    if (username && userData?.username && username !== userData?.username) {
-      router.replace("/");
-    }
-  }, [userData]);
+  }, [socketStatus.isAuthenticated]);
 
   const { current, users } = content ?? {};
 
   const renderStages = () => {
     const currentStage = content?.current.stage;
 
-    if (!userData.username) {
+    if (!userData?.username) {
       return <div>Spinner</div>;
     }
 
@@ -104,8 +109,8 @@ export default function Room() {
   return (
     <div>
       <div>
-        Room ID: {roomCode} {username} {`${isAuthenticated}`} {`${socket?.id}`}{" "}
-        {`${router.isReady}`}
+        Room ID: {roomCode} {username} {`${socketStatus.isAuthenticated}`}{" "}
+        {`${socket?.id}`} {`${router.isReady}`}
       </div>
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
