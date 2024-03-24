@@ -11,7 +11,7 @@ type SocketStatus = {
 export default function useSocket(
   roomCode: string,
   username: string,
-  handleAuthError: (query: { error: string }) => void
+  handleAuthError: (query: { message: string }) => void
 ) {
   const [socket, setSocket] = useState<Socket | undefined>();
   const [socketStatus, setSocketStatus] = useState<SocketStatus>({});
@@ -38,10 +38,18 @@ export default function useSocket(
             transports: ["websocket", "polling"],
             addTrailingSlash: false,
           }) as Socket;
+
           const handleConnection = () => {
             setSocket(() => sock);
           };
           sock.on("connect", handleConnection);
+
+          const authErrorHandler = (payload: { message: string }) => {
+            handleAuthError(payload);
+          };
+          sock.on("connect_error", (err) => {
+            authErrorHandler({ message: err.message });
+          });
         });
       };
 
@@ -49,13 +57,13 @@ export default function useSocket(
 
       return () => {
         sock.removeAllListeners("connect");
+        sock.removeAllListeners("connect_error");
       };
     }
   }, [socketStatus]);
 
   useEffect(() => {
     if (socket) {
-      socket.emit("authenticate");
       socket.on("auth_success", (data: IUserData) => {
         setUserData(() => data);
         setSocketStatus((prev) => ({
@@ -63,11 +71,6 @@ export default function useSocket(
           isAuthenticated: !!data.username,
         }));
       });
-
-      const authErrorHandler = (payload: { error: string }) => {
-        handleAuthError(payload);
-      };
-      socket.on("auth_error", authErrorHandler);
 
       return () => {
         if (socket.connected) {

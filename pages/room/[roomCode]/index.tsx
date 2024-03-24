@@ -13,7 +13,7 @@ export default function Room() {
     roomCode: string;
     username: string;
   };
-  const handleAuthError = (query: { error: string }) => {
+  const handleAuthError = (query: { message: string }) => {
     router.replace({ pathname: "/", query });
   };
   const { socket, setUserData, userData, socketStatus } = useSocket(

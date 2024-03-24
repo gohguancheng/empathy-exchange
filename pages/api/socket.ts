@@ -11,20 +11,20 @@ const attachCredentials = (socket: Socket) => {
   };
   const { roomCode = "", username = "" } = data;
   const user = serverStore.getUser(roomCode, username);
-
+  let error;
   if (!user) {
-    return socket.emit("auth_error", { error: "User is not registered" });
+    error = "User is not registered";
+    // socket.emit("auth_error", { error });
+    throw error;
   }
   if (!!user?.online) {
-    return socket.emit("auth_error", { error: "User is already online" });
+    error = "User is already online";
+
+    throw error;
   }
+
   serverStore.setUserOnlineState(roomCode, username, socket.id);
   socket.data = data;
-  socket.join(roomCode);
-  socket.emit("auth_success", {
-    ...serverStore.getUser(roomCode, username),
-    host: serverStore.isUserHost(roomCode, username),
-  });
 };
 
 export default function handler(
@@ -39,10 +39,26 @@ export default function handler(
     const io = new Server(httpServer, { addTrailingSlash: false });
     res.socket.server.io = io;
 
-    io.on("connection", (socket) => {
-      socket.on("authenticate", () => {
+    io.use((socket, next) => {
+      if (socket.data.roomCode && socket.data.username) next();
+      try {
         attachCredentials(socket);
-      });
+        next();
+      } catch (error: any) {
+        const err = new Error(error);
+        next(err);
+      }
+    });
+
+    io.on("connection", (socket) => {
+      if (socket.data) {
+        const { roomCode, username } = socket.data || {};
+        socket.join(roomCode);
+        socket.emit("auth_success", {
+          ...serverStore.getUser(roomCode, username),
+          host: serverStore.isUserHost(roomCode, username),
+        });
+      }
 
       socket.on("get_room", async (callback) => {
         const { roomCode, username } = socket.data;
