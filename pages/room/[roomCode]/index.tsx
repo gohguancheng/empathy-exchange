@@ -3,7 +3,7 @@ import { SharingDashboard } from "@/components/SharingDashboard/SharingDashboard
 import { TopicInput } from "@/components/TopicInput/TopicInput";
 import { WaitingRoom } from "@/components/WaitingRoom/WaitingRoom";
 import useSocket from "@/hooks/useSocket";
-import { EStage, IRoom, IUser } from "@/utils/types";
+import { EStage, IRoom, IUserData } from "@/utils/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -38,23 +38,24 @@ export default function Room() {
     }
   }, [userData]);
 
+  const roomUpdateHandler = (update: IRoom) => {
+    setContent(() => update);
+    setUserData((prev) => ({
+      ...prev,
+      ...update.users.find((e) => e.username === prev.username),
+    }));
+  };
+
   useEffect(() => {
     if (socketStatus?.isConnected || !socket) return;
     socket.emit(
       "get_room",
-      ({ update, user }: { update: IRoom; user: IUser }) => {
+      ({ update, user }: { update: IRoom; user: IUserData }) => {
         setUserData(() => user);
         setContent(() => update);
       }
     );
 
-    const roomUpdateHandler = (update: IRoom) => {
-      setContent(() => update);
-      setUserData((prev) => ({
-        ...prev,
-        ...update.users.find((e) => e.username === prev.username),
-      }));
-    };
     socket.on("room_update", roomUpdateHandler);
 
     return () => {
@@ -64,6 +65,10 @@ export default function Room() {
 
   const { current, users } = content ?? {};
 
+  const setStage = (s: EStage) => {
+    socket?.emit("set_stage", s, roomUpdateHandler);
+  };
+
   const renderStages = () => {
     const currentStage = content?.current.stage;
 
@@ -72,7 +77,13 @@ export default function Room() {
     }
 
     if (currentStage === EStage.WAITING) {
-      return <WaitingRoom />;
+      return (
+        <WaitingRoom
+          currentUser={userData}
+          users={content?.users}
+          setStage={setStage}
+        />
+      );
     }
 
     if (!userData.topic || currentStage === EStage.TOPIC_INPUT) {
@@ -92,31 +103,16 @@ export default function Room() {
     }
   };
 
-  // const updateStage = (key: any) => {
-  //   setContent((prev: any) => ({
-  //     ...prev,
-  //     current: { ...prev?.current, stage: EStage[key] },
-  //   }));
-  // };
-  // const buttons = (Object.keys(EStage) as Array<keyof typeof EStage>).map(
-  //   (key, i) => (
-  //     <button key={i} onClick={() => updateStage(key)}>
-  //       {key}
-  //     </button>
-  //   )
-  // );
-
   return (
-    <div>
+    <main>
       <div>
-        Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`} {`${socket?.id}`}{" "}
-        {`${router.isReady}`}
+        Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`}{" "}
+        {`${socket?.id}`} {`${router.isReady}`}
       </div>
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
       <div>users: {JSON.stringify(users)}</div>
-      {/* <div>{buttons}</div> */}
       {renderStages()}
-    </div>
+    </main>
   );
 }

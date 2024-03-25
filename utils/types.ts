@@ -14,6 +14,8 @@ export interface IUser {
   done?: boolean;
 }
 
+export type IUserData = IUser & { host?: boolean };
+
 export enum EStage {
   WAITING = 1,
   TOPIC_INPUT = 2,

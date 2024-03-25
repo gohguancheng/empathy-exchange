@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { NextApiResponseWithSocket } from "@/utils/types";
+import { EStage, NextApiResponseWithSocket } from "@/utils/types";
 import serverStore from "@/lib/roomStore";
 
 const attachCredentials = (socket: Socket) => {
@@ -66,6 +66,12 @@ export default function handler(
         const update = serverStore.getRoom(roomCode);
         socket.to(roomCode).emit("room_update", update);
         callback({ update, user });
+      });
+
+      socket.on("set_stage", (stage: EStage, callback) => {
+        const update = serverStore.setStageForRoom(socket.data.roomCode, stage);
+        callback(update);
+        socket.to(socket.data.roomCode).emit("room_update", update);
       });
 
       socket.on("disconnecting", async () => {

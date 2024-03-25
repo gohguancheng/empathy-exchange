@@ -1,4 +1,4 @@
-import { IRooms, ISocketUserMap, IUser } from "@/utils/types";
+import { EStage, IRooms, ISocketUserMap, IUser } from "@/utils/types";
 
 declare global {
   var serverStore: ServerStore;
@@ -59,6 +59,11 @@ class ServerStore {
       users[userIndex].online = socketId;
     }
     return { message: "OK", user: users[userIndex] };
+  }
+
+  setStageForRoom(code: string, newStage: EStage) {
+    this.rooms[code].current.stage = newStage;
+    return this.rooms[code];
   }
 
   closeRoomIfEmpty(code: string) {

@@ -1,8 +1,8 @@
-import { IUser } from "@/utils/types";
+import { IUser, IUserData } from "@/utils/types";
 import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
-type IUserData = IUser & { host?: boolean };
+
 type SocketStatus = { isValidParams?: boolean; isConnected?: boolean };
 
 export default function useSocket(
