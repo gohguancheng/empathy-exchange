@@ -39,7 +39,7 @@ export default function Room() {
   }, [userData]);
 
   useEffect(() => {
-    if (!socketStatus.isAuthenticated || !socket) return;
+    if (socketStatus?.isConnected || !socket) return;
     socket.emit(
       "get_room",
       ({ update, user }: { update: IRoom; user: IUser }) => {
@@ -60,7 +60,7 @@ export default function Room() {
     return () => {
       socket.off("room_update", roomUpdateHandler);
     };
-  }, [socketStatus.isAuthenticated]);
+  }, [socket]);
 
   const { current, users } = content ?? {};
 
@@ -109,8 +109,8 @@ export default function Room() {
   return (
     <div>
       <div>
-        Room ID: {roomCode} {username} {`${socketStatus.isAuthenticated}`}{" "}
-        {`${socket?.id}`} {`${router.isReady}`}
+        Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`} {`${socket?.id}`}{" "}
+        {`${router.isReady}`}
       </div>
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>

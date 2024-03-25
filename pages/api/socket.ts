@@ -51,8 +51,8 @@ export default function handler(
     });
 
     io.on("connection", (socket) => {
-      if (socket.data) {
-        const { roomCode, username } = socket.data || {};
+      if (socket.data.roomCode) {
+        const { roomCode, username } = socket.data;
         socket.join(roomCode);
         socket.emit("auth_success", {
           ...serverStore.getUser(roomCode, username),

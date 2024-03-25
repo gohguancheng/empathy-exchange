@@ -3,10 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
 type IUserData = IUser & { host?: boolean };
-type SocketStatus = {
-  isValidParams?: boolean;
-  isAuthenticated?: boolean;
-};
+type SocketStatus = { isValidParams?: boolean; isConnected?: boolean };
 
 export default function useSocket(
   roomCode: string,
@@ -14,22 +11,21 @@ export default function useSocket(
   handleAuthError: (query: { message: string }) => void
 ) {
   const [socket, setSocket] = useState<Socket | undefined>();
-  const [socketStatus, setSocketStatus] = useState<SocketStatus>({});
+  const [socketStatus, setSocketStatus] = useState<SocketStatus>();
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     host: false,
   });
 
   useEffect(() => {
-    setSocketStatus(() => ({ isValidParams: !!(roomCode && username) }));
+    setSocketStatus((prev) => ({
+      ...prev,
+      isValidParams: !!(roomCode && username),
+    }));
   }, [roomCode, username]);
 
   useEffect(() => {
-    if (
-      socketStatus.isValidParams &&
-      !socketStatus.isAuthenticated &&
-      !socket
-    ) {
+    if (socketStatus?.isValidParams && !socket) {
       let sock: Socket;
       const connectSocket = async () => {
         await fetch("/api/socket").finally(() => {
@@ -54,22 +50,18 @@ export default function useSocket(
       };
 
       connectSocket();
-
       return () => {
         sock.removeAllListeners("connect");
         sock.removeAllListeners("connect_error");
       };
     }
-  }, [socketStatus]);
+  }, [socketStatus?.isValidParams]);
 
   useEffect(() => {
     if (socket) {
       socket.on("auth_success", (data: IUserData) => {
         setUserData(() => data);
-        setSocketStatus((prev) => ({
-          ...prev,
-          isAuthenticated: !!data.username,
-        }));
+        setSocketStatus((prev) => ({ ...prev, isConnected: !!data.username }));
       });
 
       return () => {
