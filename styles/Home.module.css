@@ -6,6 +6,22 @@
   align-items: center;
   padding: 1rem;
   min-height: 100vh;
+  text-align: center;
+}
+
+.main h1 {
+  margin-bottom: 16px;
+}
+
+.main h3 {
+  margin-bottom: 8px;
+}
+
+.textContainer {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .container {
@@ -14,6 +30,7 @@
   align-items: center;
   gap: 2rem;
   margin: 1rem 0;
+  min-width: 400px
 }
 
 .button {
@@ -21,6 +38,7 @@
   padding: 8px 8px;
   border: 2px white solid;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .description {

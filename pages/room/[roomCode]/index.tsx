@@ -1,3 +1,4 @@
+import styles from "./../../../styles/RoomCode.module.css";
 import { SelectRole } from "@/components/SelectRole/SelectRole";
 import { SharingDashboard } from "@/components/SharingDashboard/SharingDashboard";
 import { TopicInput } from "@/components/TopicInput/TopicInput";
@@ -107,7 +108,7 @@ export default function Room() {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <div>
         Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`}{" "}
         {`${socket?.id}`} {`${router.isReady}`}

@@ -17,8 +17,8 @@ export default function Room() {
   const isHost = searchParams.get("host") === "true";
 
   const roomInputLabel = isHost
-    ? "Please enter a code to create a new room or rejoin a room you disconnected from"
-    : "Please enter the code of an existing room to join";
+    ? "Enter a code to create / rejoin a huddle you are hosting"
+    : "Enter a valid code to join an existing huddle";
 
   const showRoomInput = !validation.roomValidated;
   const showUserInput = validation.roomValidated;
@@ -119,7 +119,6 @@ export default function Room() {
 
   return (
     <main className={styles.main}>
-      <h1>{roomInputLabel}</h1>
       <form
         className={styles.form}
         onSubmit={(evt) => {
@@ -127,6 +126,7 @@ export default function Room() {
           handleSubmit();
         }}
       >
+        <h1>{roomInputLabel}</h1>
         {showRoomInput && (
           <>
             <label className={styles.label}>Room Code</label>
@@ -152,7 +152,7 @@ export default function Room() {
           <>
             <label
               className={styles.label}
-            >{`In room ${inputRoomCode}, participants can call me`}</label>
+            >{`In huddle ${inputRoomCode}, participants can address me as`}</label>
             <TextInput
               value={inputUsername}
               onChange={setInputUsername}
