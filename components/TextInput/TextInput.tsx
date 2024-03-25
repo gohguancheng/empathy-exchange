@@ -29,6 +29,7 @@ export default function TextInput(props: TextInputProps) {
       setLocalValue(value);
       handleDelayedValidation(value);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const handleDelayedValidation = (value: string) => {

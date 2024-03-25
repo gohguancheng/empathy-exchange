@@ -1,4 +1,4 @@
-import { EStage, IRooms, ISocketUserMap, IUser } from "@/utils/types";
+import { EStage, IRooms, IUser } from "@/utils/types";
 
 declare global {
   var serverStore: ServerStore;

@@ -6,7 +6,7 @@ export const WaitingRoom = (props: WaitRoomProps) => {
   const renderUsers = () => (
     <div>
       {users?.map((u) => (
-        <div>
+        <div key={u.username}>
           {JSON.stringify({ ...u, me: u.username === currentUser?.username })}
         </div>
       )) ?? "No users found"}

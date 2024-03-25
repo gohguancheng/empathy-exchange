@@ -34,7 +34,3 @@ export interface IRoom {
 export interface IRooms {
   [roomCode: string]: IRoom;
 }
-
-export interface ISocketUserMap {
-  [key: string]: { username: string; roomCode: string };
-}

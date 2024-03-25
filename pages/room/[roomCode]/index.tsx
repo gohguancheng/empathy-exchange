@@ -30,12 +30,14 @@ export default function Room() {
         query: { error: "incomplete params", roomCode, username },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady, roomCode, username]);
 
   useEffect(() => {
     if (username && userData?.username && username !== userData?.username) {
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const roomUpdateHandler = (update: IRoom) => {
@@ -61,6 +63,7 @@ export default function Room() {
     return () => {
       socket.off("room_update", roomUpdateHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   const { current, users } = content ?? {};
