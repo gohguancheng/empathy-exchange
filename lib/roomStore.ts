@@ -1,9 +1,13 @@
-import { EStage, IRooms, IUser } from "@/utils/types";
+import { EStage, IRoom, IRooms, IUser } from "@/utils/types";
 
 declare global {
   var serverStore: ServerStore;
 }
 
+// const mockRoom: IRoom = {
+//   users: [{ username: "h" }, { username: "u1" }],
+//   current: { stage: EStage.WAITING },
+// };
 class ServerStore {
   rooms: IRooms;
   constructor() {

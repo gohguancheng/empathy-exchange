@@ -1,0 +1,58 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.userContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.userCard {
+  width: 240px;
+  max-width: 100%;
+  border: 1px solid white;
+  border-radius: 0.75rem;
+  padding: 1rem 1.2rem;
+}
+
+.userCard h5 {
+  font-weight: 900;
+  font-size: 1.6rem;
+}
+
+.userCard p {
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.userIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.8rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.userIconContainer span {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 1rem 0;
+}
