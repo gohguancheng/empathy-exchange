@@ -83,6 +83,7 @@ export default function Room() {
     if (currentStage === EStage.WAITING) {
       return (
         <WaitingRoom
+          roomCode={roomCode}
           currentUser={userData}
           users={content?.users}
           setStage={setStage}
@@ -109,13 +110,13 @@ export default function Room() {
 
   return (
     <main className={styles.main}>
-      <div>
+      {/* <div>
         Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`}{" "}
         {`${socket?.id}`} {`${router.isReady}`}
       </div>
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
-      <div>users: {JSON.stringify(users)}</div>
+      <div>users: {JSON.stringify(users)}</div> */}
       {renderStages()}
     </main>
   );

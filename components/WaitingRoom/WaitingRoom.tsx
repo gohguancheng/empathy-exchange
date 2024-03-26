@@ -1,7 +1,7 @@
 import { EStage, IUserData } from "@/utils/types";
 
 export const WaitingRoom = (props: WaitRoomProps) => {
-  const { currentUser, users, setStage } = props;
+  const { roomCode, currentUser, users, setStage } = props;
 
   const renderUsers = () => (
     <div>
@@ -27,6 +27,7 @@ export const WaitingRoom = (props: WaitRoomProps) => {
 };
 
 type WaitRoomProps = {
+  roomCode: string;
   currentUser?: IUserData;
   users?: IUserData[];
   setStage: (s: EStage) => void;

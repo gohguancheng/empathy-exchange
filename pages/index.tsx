@@ -31,13 +31,12 @@ export default function Home() {
           <TextBody>
             <h3>Types of participants</h3>
             <p style={{ margin: "16px 0" }}>
-              All users participate by talking about a topic that has been on
-              their mind
+              All users participate by talking about a topic that they would like to get off their chest
             </p>
             <p>
-              Hosts can create a huddle that hosts up to 5 pax. There is only 1
+              Hosts can create a huddle that hosts up to 5 pax. There will be only 1
               host per huddle. The host sets the tone for the huddle by being
-              the first sharer and controls the flow of the huddle session
+              the first sharer and aid the flow of the huddle session
             </p>
           </TextBody>
         );
@@ -53,12 +52,12 @@ export default function Home() {
                 <h4>Host</h4>
                 <p>
                   Create a new huddle session and invite your friends to join
-                  via the huddle code
+                  through your huddle code
                 </p>
               </Link>
               <Link className={styles.card} href={{ pathname: "room" }}>
                 <h4>Participant</h4>{" "}
-                <p>Join an huddle via a code given by your host</p>
+                <p>Join a huddle using a code given by your host</p>
               </Link>
             </div>
           </TextBody>
