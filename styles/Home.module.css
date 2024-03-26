@@ -7,6 +7,7 @@
   padding: 1rem;
   min-height: 100vh;
   text-align: center;
+  width: 100vw;
 }
 
 .main h1 {
@@ -28,9 +29,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin: 1rem 0;
-  min-width: 400px
 }
 
 .button {
@@ -81,11 +81,12 @@
 }
 
 .card {
-  padding: 1rem 1.2rem;
+  padding: 1rem 1.6rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
+  min-height: 140px;
 }
 
 .card span {
@@ -93,7 +94,7 @@
   transition: transform 200ms;
 }
 
-.card h2 {
+.card h4 {
   font-weight: 600;
   margin-bottom: 0.7rem;
 }
@@ -165,6 +166,16 @@
     padding: 4rem;
   }
 
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    width: 100%;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;
@@ -173,7 +184,7 @@
   }
 
   .card {
-    padding: 1rem 2.5rem;
+    padding: 0.6rem 1.2rem;
   }
 
   .card h2 {

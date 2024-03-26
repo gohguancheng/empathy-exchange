@@ -129,7 +129,7 @@ export default function Room() {
         <h1>{roomInputLabel}</h1>
         {showRoomInput && (
           <>
-            <label className={styles.label}>Room Code</label>
+            <label className={styles.label}>Huddle Code</label>
             <TextInput
               value={inputRoomCode}
               onChange={setInputRoomCode}
@@ -150,9 +150,13 @@ export default function Room() {
         )}
         {showUserInput && (
           <>
-            <label
-              className={styles.label}
-            >{`In huddle ${inputRoomCode}, participants can address me as`}</label>
+            <label className={styles.label}>
+              In huddle{" "}
+              <span style={{ borderBottom: "1px solid", padding: "0 2px" }}>
+                {inputRoomCode}
+              </span>
+              , participants can address me as
+            </label>
             <TextInput
               value={inputUsername}
               onChange={setInputUsername}

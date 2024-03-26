@@ -18,7 +18,7 @@ export default function Home() {
             <h3>
               Please note that this app is meant to support{" "}
               <span style={{ textDecoration: "underline" }}>in-person</span>{" "}
-              huddles / sharing
+              huddles
             </h3>
             <p>
               We strongly encourage users to meet in-person to engage in
@@ -45,22 +45,20 @@ export default function Home() {
         return (
           <TextBody>
             <h3>What would you like to join as?</h3>
-            <p style={{ margin: "8px 0" }}>
-              Participant: join an huddle via a code given by your host
-            </p>
-            <p style={{}}>
-              Host: create a new huddle session and invite your friends to join
-              via the huddle code
-            </p>
             <div className={styles.container}>
               <Link
-                className={styles.button}
+                className={styles.card}
                 href={{ pathname: "room", query: { host: "true" } }}
               >
-                Host
+                <h4>Host</h4>
+                <p>
+                  Create a new huddle session and invite your friends to join
+                  via the huddle code
+                </p>
               </Link>
-              <Link className={styles.button} href={{ pathname: "room" }}>
-                Participant
+              <Link className={styles.card} href={{ pathname: "room" }}>
+                <h4>Participant</h4>{" "}
+                <p>Join an huddle via a code given by your host</p>
               </Link>
             </div>
           </TextBody>
