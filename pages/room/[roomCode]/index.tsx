@@ -92,7 +92,13 @@ export default function Room() {
     }
 
     if (!userData.topic || currentStage === EStage.TOPIC_INPUT) {
-      return <TopicInput />;
+      return (
+        <TopicInput
+          onSubmit={(topic: string) =>
+            socket?.emit("set_topic", topic, roomUpdateHandler)
+          }
+        />
+      );
     }
 
     if (!userData.role || currentStage === EStage.ROLE_SELECT) {

@@ -70,6 +70,16 @@ class ServerStore {
     return this.rooms[code];
   }
 
+  setTopicForUser(code: string, username: string, topic: string) {
+    const users = this.getRoomUsers(code);
+    const userIndex = users.findIndex((user) => user.username === username);
+    if (userIndex < 0) {
+      return { error: "User not found" };
+    }
+    users[userIndex].topic = topic;
+    return this.rooms[code];
+  }
+
   closeRoomIfEmpty(code: string) {
     if (!code || !this.rooms[code]) return;
     const allowDelete = this.rooms[code].users.every((user) => !user.online);

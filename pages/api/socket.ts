@@ -74,6 +74,16 @@ export default function handler(
         socket.to(socket.data.roomCode).emit("room_update", update);
       });
 
+      socket.on("set_topic", (topic: string, callback) => {
+        const update = serverStore.setTopicForUser(
+          socket.data.roomCode,
+          socket.data.username,
+          topic
+        );
+        callback(update);
+        socket.to(socket.data.roomCode).emit("room_update", update);
+      });
+
       socket.on("disconnecting", async () => {
         const { roomCode, username } = socket.data;
         await serverStore.setUserOnlineState(roomCode, username, "");
