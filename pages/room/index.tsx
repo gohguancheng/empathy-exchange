@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { IUser } from "@/utils/types";
 import { hasXSSChars } from "@/utils/string";
+import Filter from "bad-words";
+const filter = new Filter();
 
 export default function Room() {
   const [inputRoomCode, setInputRoomCode] = useState<string>("");
@@ -52,6 +54,15 @@ export default function Room() {
       }));
       return;
     }
+    if (filter.isProfane(value)) {
+      setValidation((prev) => ({
+        ...prev,
+        validRoom: false,
+        roomError: "Let's keep it clean 🤓",
+        roomValidated: false,
+      }));
+      return;
+    }
     try {
       const res = await fetch(
         `/api/room/validate?roomCode=${value}&host=${isHost}`
@@ -75,6 +86,15 @@ export default function Room() {
         ...prev,
         validUsername: false,
         usernameError: "Special characters not allowed",
+        usernameValidated: false,
+      }));
+      return;
+    }
+    if (filter.isProfane(value)) {
+      setValidation((prev) => ({
+        ...prev,
+        validUsername: false,
+        usernameError: "Let's keep it clean 🤓",
         usernameValidated: false,
       }));
       return;

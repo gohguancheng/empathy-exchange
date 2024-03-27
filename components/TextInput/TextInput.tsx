@@ -62,7 +62,10 @@ export default function TextInput(props: TextInputProps) {
         onChange={handleOnChange}
         disabled={disabled}
       />
-      {!!errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
+      <div style={{ height: "1.2rem" }}>
+        {!!errorMessage && <p className={styles.error}>{errorMessage}</p>}
+      </div>
     </>
   );
 }
