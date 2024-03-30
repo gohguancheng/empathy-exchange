@@ -2,6 +2,7 @@ import TextInput from "@/components/TextInput/TextInput";
 import { useState } from "react";
 import Filter from "bad-words";
 import { EStage, IUserData } from "@/utils/types";
+import { hasXSSChars } from "@/utils/string";
 
 const filter = new Filter();
 
@@ -32,6 +33,9 @@ export const TopicInput = ({
             setInput(value);
           }}
           onValidate={(value) => {
+            if (hasXSSChars(value)) {
+              setStatus({ error: "Invalid characters" });
+            }
             if (value && value.length < 5) {
               setStatus({ error: "Let's share a little more" });
             }

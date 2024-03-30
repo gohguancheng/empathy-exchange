@@ -1,3 +1,4 @@
+import { DynamicBackground } from "@/components/DynamicBackground/DynamicBackground";
 import styles from "./../../../styles/RoomCode.module.css";
 import { SelectRole } from "@/components/SelectRole/SelectRole";
 import { SharingDashboard } from "@/components/SharingDashboard/SharingDashboard";
@@ -126,6 +127,9 @@ export default function Room() {
 
   return (
     <main className={styles.main}>
+      <DynamicBackground stage={content?.current.stage as EStage}>
+        {renderStages()}
+      </DynamicBackground>
       {/* <div>
         Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`}{" "}
         {`${socket?.id}`} {`${router.isReady}`}
@@ -133,7 +137,6 @@ export default function Room() {
       <div>User data: {JSON.stringify(userData)}</div>
       <div>current: {JSON.stringify(current)}</div>
       <div>users: {JSON.stringify(users)}</div> */}
-      {renderStages()}
     </main>
   );
 }

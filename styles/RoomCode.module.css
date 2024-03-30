@@ -1,29 +1,8 @@
 .main {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  align-items: center;
-  padding: 1rem;
-  min-height: 100vh;
+  align-items: stretch;
+  width: 100vw;
+  height: 100vh;
   background: rgb(0, 0, 0);
-  background: -moz-linear-gradient(
-    45deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(9, 9, 121, 1) 70%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(9, 9, 121, 1) 70%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  background: linear-gradient(
-    45deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(9, 9, 121, 1) 70%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#00d4ff",GradientType=1);
 }

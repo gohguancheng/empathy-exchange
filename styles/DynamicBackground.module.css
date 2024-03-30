@@ -1,0 +1,30 @@
+.main {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: background-color 3s ease-in-out;
+  -moz-transition: background-color 3s ease-in-out;
+  -o-transition: background-color 3s ease-in-out;
+  transition: background-color 3s ease-in-out;
+}
+
+.stageOne {
+  background-color: #03045e;
+  background-color: #03045e;
+  background-color: #03045e;
+}
+
+.stageTwo {
+  background-color: #0077b6;
+  background-color: #0077b6;
+  background-color: #0077b6;
+}
+
+.stageThree {
+  background-color: #00b4d8;
+  background-color: #00b4d8;
+  background-color: #00b4d8;
+}
+
+.final {
+  background-color: #90e0ef;
+}
