@@ -67,7 +67,18 @@ class ServerStore {
 
   setStageForRoom(code: string, newStage: EStage) {
     this.rooms[code].current.stage = newStage;
+    if (newStage === EStage.SHARING && !this.getRoom(code)?.current?.speaker) {
+      this.setSpeakerForRoom(code, this.getRoomUsers(code)[0].username);
+    }
     return this.rooms[code];
+  }
+
+  setSpeakerForRoom(code: string, speaker: string) {
+    const selected = this.getUser(code, speaker);
+    if (selected && selected.online && !selected.done) {
+      this.rooms[code].current.speaker = speaker;
+      return this.rooms[code];
+    }
   }
 
   setTopicForUser(code: string, username: string, topic: string) {
@@ -77,6 +88,16 @@ class ServerStore {
       return { error: "User not found" };
     }
     users[userIndex].topic = topic;
+    return this.rooms[code];
+  }
+
+  setRoleForUser(code: string, username: string, role: ERoles) {
+    const users = this.getRoomUsers(code);
+    const userIndex = users.findIndex((user) => user.username === username);
+    if (userIndex < 0) {
+      return { error: "User not found" };
+    }
+    users[userIndex].role = role;
     return this.rooms[code];
   }
 

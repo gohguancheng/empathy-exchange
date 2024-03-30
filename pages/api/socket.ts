@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { EStage, NextApiResponseWithSocket } from "@/utils/types";
+import { ERoles, EStage, NextApiResponseWithSocket } from "@/utils/types";
 import serverStore from "@/lib/roomStore";
 
 const attachCredentials = (socket: Socket) => {
@@ -74,11 +74,32 @@ export default function handler(
         socket.to(socket.data.roomCode).emit("room_update", update);
       });
 
+      socket.on("set_speaker", (speaker: string, callback) => {
+        const update = serverStore.setSpeakerForRoom(
+          socket.data.roomCode,
+          speaker
+        );
+        if (update) {
+          callback(update);
+          socket.to(socket.data.roomCode).emit("room_update", update);
+        }
+      });
+
       socket.on("set_topic", (topic: string, callback) => {
         const update = serverStore.setTopicForUser(
           socket.data.roomCode,
           socket.data.username,
           topic
+        );
+        callback(update);
+        socket.to(socket.data.roomCode).emit("room_update", update);
+      });
+
+      socket.on("set_role", (role: ERoles, callback) => {
+        const update = serverStore.setRoleForUser(
+          socket.data.roomCode,
+          socket.data.username,
+          role
         );
         callback(update);
         socket.to(socket.data.roomCode).emit("room_update", update);

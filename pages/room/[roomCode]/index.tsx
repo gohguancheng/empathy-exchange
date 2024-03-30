@@ -4,7 +4,7 @@ import { SharingDashboard } from "@/components/SharingDashboard/SharingDashboard
 import { TopicInput } from "@/components/TopicInput/TopicInput";
 import { WaitingRoom } from "@/components/WaitingRoom/WaitingRoom";
 import useSocket from "@/hooks/useSocket";
-import { EStage, IRoom, IUserData } from "@/utils/types";
+import { ERoles, EStage, IRoom, IUserData } from "@/utils/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -94,15 +94,25 @@ export default function Room() {
     if (!userData.topic || currentStage === EStage.TOPIC_INPUT) {
       return (
         <TopicInput
+          currentUser={userData}
           onSubmit={(topic: string) =>
             socket?.emit("set_topic", topic, roomUpdateHandler)
           }
+          setStage={setStage}
         />
       );
     }
 
     if (!userData.role || currentStage === EStage.ROLE_SELECT) {
-      return <SelectRole />;
+      return (
+        <SelectRole
+          currentUser={userData}
+          onSelect={(role: string) =>
+            socket?.emit("set_role", role, roomUpdateHandler)
+          }
+          setStage={setStage}
+        />
+      );
     }
 
     if (currentStage === EStage.SHARING) {

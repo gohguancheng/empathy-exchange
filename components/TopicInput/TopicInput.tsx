@@ -1,10 +1,15 @@
 import TextInput from "@/components/TextInput/TextInput";
 import { useState } from "react";
 import Filter from "bad-words";
+import { EStage, IUserData } from "@/utils/types";
 
 const filter = new Filter();
 
-export const TopicInput = ({ onSubmit }: TopicInputProps) => {
+export const TopicInput = ({
+  currentUser,
+  onSubmit,
+  setStage,
+}: TopicInputProps) => {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<{ submitted?: boolean; error?: string }>(
     {}
@@ -44,10 +49,20 @@ export const TopicInput = ({ onSubmit }: TopicInputProps) => {
           disabled={!input || !!status.error || !!status.submitted}
         />
       </form>
+      {!!currentUser?.host && (
+        <button
+          onClick={() => setStage(EStage.ROLE_SELECT)}
+          disabled={!currentUser.topic}
+        >
+          To Role Selection
+        </button>
+      )}
     </div>
   );
 };
 
 type TopicInputProps = {
+  currentUser?: IUserData;
   onSubmit: (t: string) => void;
+  setStage: (s: EStage) => void;
 };

@@ -27,10 +27,16 @@ export enum EStage {
 export interface IRoom {
   users: IUser[];
   current:
-    | { stage: Omit<EStage, EStage.SHARING> }
+    | { stage: Omit<EStage, EStage.SHARING>; speaker?: string }
     | { stage: EStage.SHARING; speaker: string };
 }
 
 export interface IRooms {
   [roomCode: string]: IRoom;
+}
+
+export enum ERoles {
+  EMPATHISER = "e1",
+  SUMMARISER = "s1",
+  REFLECTOR = "r1",
 }
