@@ -6,3 +6,11 @@
   height: 100vh;
   background: rgb(0, 0, 0);
 }
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}

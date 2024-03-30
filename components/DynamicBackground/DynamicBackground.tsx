@@ -12,7 +12,7 @@ export function DynamicBackground({
 }): ReactElement {
   const applyWrapperClass = () =>
     clsx(styles.main, {
-      [styles.stageOne]: !stage || stage === EStage.WAITING,
+      [styles.stageOne]: stage === EStage.WAITING,
       [styles.stageTwo]: stage === EStage.TOPIC_INPUT,
       [styles.stageThree]: stage === EStage.ROLE_SELECT,
       [styles.final]: stage === EStage.END || stage === EStage.SHARING,

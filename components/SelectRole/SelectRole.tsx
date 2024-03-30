@@ -32,6 +32,7 @@ export const SelectRole = ({
           {roleKeys.map((k: ERoles) => {
             return (
               <button
+                key={k}
                 onClick={() => setSelection(k)}
                 style={{ backgroundColor: hasConfirmed ? "black" : "gray" }}
                 disabled={hasConfirmed}
