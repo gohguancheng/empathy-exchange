@@ -125,11 +125,11 @@ export default function Room() {
         {showUserInput && (
           <>
             <label className={styles.label}>
-              In huddle{" "}
+              Participants in{" "}
               <span style={{ borderBottom: "1px solid", padding: "0 2px" }}>
                 {codeInput.value}
-              </span>
-              , participants can address me as
+              </span>{" "}
+              can address me as
             </label>
             <TextInput
               value={userInput.value}

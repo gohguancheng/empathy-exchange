@@ -62,6 +62,7 @@ export default function TextInput(props: TextInputProps) {
   };
 
   useEffect(() => {
+    setLocalError("");
     if (value !== localValue) {
       setLocalValue(value);
     }
@@ -79,9 +80,13 @@ export default function TextInput(props: TextInputProps) {
         disabled={disabled}
       />
 
-      <div className={styles.error}>
-        {hasError && <p>{localError || errorMessage}</p>}
-      </div>
+      {hasError ? (
+        <div className={styles.error}>
+          <p>{localError || errorMessage}</p>
+        </div>
+      ) : (
+        <div style={{ height: "32px" }} />
+      )}
     </>
   );
 }

@@ -5,10 +5,15 @@
 }
 
 .error {
-  height: 1rem;
+  margin: 4px 0;
+  padding: 4px;
+  border: #ffccc7 solid 1px;
+  background-color: #fff2f0;
+  max-width: fit-content;
+  border-radius: 4px;
 }
 
 .error p {
   font-size: 0.8rem;
-  color: rgb(244, 67, 54);
+  color: rgba(0, 0, 0, 0.88);
 }
