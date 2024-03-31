@@ -1,16 +1,22 @@
 import { roles } from "@/lib/roles";
-import { IUserData, EStage, ERoles } from "@/utils/types";
-import { ReactNode, useState } from "react";
+import { IUserData, EStage, ERole } from "@/utils/types";
+import { ReactNode, useEffect, useState } from "react";
 
 export const SelectRole = ({
   currentUser,
   onSelect,
   setStage,
 }: SelectRoleProps) => {
-  const [selection, setSelection] = useState(ERoles.EMPATHISER);
-  const roleKeys = Object.values(ERoles);
+  const [selection, setSelection] = useState(ERole.EMPATHISER);
+  const roleKeys = Object.values(ERole);
   const chosenRole = roles[selection];
   const hasConfirmed = !!currentUser?.role;
+
+  useEffect(() => {
+    if (currentUser?.role) {
+      setSelection(currentUser.role);
+    }
+  }, []);
 
   const renderDescription = (): ReactNode => {
     return (
@@ -29,7 +35,7 @@ export const SelectRole = ({
     return (
       <div>
         <div>
-          {roleKeys.map((k: ERoles) => {
+          {roleKeys.map((k: ERole) => {
             return (
               <button
                 key={k}

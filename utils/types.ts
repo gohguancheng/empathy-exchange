@@ -8,7 +8,7 @@ export interface NextApiResponseWithSocket extends NextApiResponse {
 
 export interface IUser {
   username: string;
-  role?: string;
+  role?: ERole;
   topic?: string;
   online?: string | null;
   done?: boolean;
@@ -35,7 +35,7 @@ export interface IRooms {
   [roomCode: string]: IRoom;
 }
 
-export enum ERoles {
+export enum ERole {
   EMPATHISER = "e1",
   SUMMARISER = "s1",
   REFLECTOR = "r1",

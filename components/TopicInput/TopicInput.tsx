@@ -1,8 +1,7 @@
 import TextInput from "@/components/TextInput/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "bad-words";
 import { EStage, IUserData } from "@/utils/types";
-import { hasXSSChars } from "@/utils/string";
 
 const filter = new Filter();
 
@@ -16,9 +15,48 @@ export const TopicInput = ({
     {}
   );
 
+  const label = status.submitted
+    ? `You will be sharing about "${input}"`
+    : "What would you like to share about?";
+
+  useEffect(() => {
+    if (!!currentUser?.topic) {
+      setInput(currentUser.topic);
+      setStatus({ submitted: true });
+    }
+  }, []);
+
+  const renderOptions = () => (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "4px",
+        margin: "8px 0",
+      }}
+    >
+      {[
+        "Family Issues",
+        "Romantic Trouble",
+        "Academic Challenges",
+        "Career Dilemma",
+      ].map((e, i) => (
+        <button
+          key={i}
+          disabled={!!currentUser?.topic}
+          onClick={() => setInput(e)}
+        >
+          {e}{" "}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <div>
-      <h3>Topic</h3>
+      <h3>{label}</h3>
+      {renderOptions()}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -33,14 +71,8 @@ export const TopicInput = ({
             setInput(value);
           }}
           onValidate={(value) => {
-            if (hasXSSChars(value)) {
-              setStatus({ error: "Invalid characters" });
-            }
             if (value && value.length < 5) {
               setStatus({ error: "Let's share a little more" });
-            }
-            if (filter.isProfane(value)) {
-              setStatus({ error: "Let's keep it clean 🤓" });
             }
           }}
           delay={200}
@@ -53,6 +85,7 @@ export const TopicInput = ({
           disabled={!input || !!status.error || !!status.submitted}
         />
       </form>
+
       {!!currentUser?.host && (
         <button
           onClick={() => setStage(EStage.ROLE_SELECT)}

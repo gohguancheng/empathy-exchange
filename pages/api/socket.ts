@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { ERoles, EStage, NextApiResponseWithSocket } from "@/utils/types";
+import { ERole, EStage, NextApiResponseWithSocket } from "@/utils/types";
 import serverStore from "@/lib/roomStore";
 
 const attachCredentials = (socket: Socket) => {
@@ -95,7 +95,7 @@ export default function handler(
         socket.to(socket.data.roomCode).emit("room_update", update);
       });
 
-      socket.on("set_role", (role: ERoles, callback) => {
+      socket.on("set_role", (role: ERole, callback) => {
         const update = serverStore.setRoleForUser(
           socket.data.roomCode,
           socket.data.username,
