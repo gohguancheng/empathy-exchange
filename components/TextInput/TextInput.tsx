@@ -1,5 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import styles from "./index.module.css";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import styles from "@/styles/utilities/TextInput.module.css";
+import { hasXSSChars } from "@/utils/string";
+import Filter from "bad-words";
+const filter = new Filter();
 
 interface TextInputProps {
   value: string;
@@ -8,6 +11,7 @@ interface TextInputProps {
   onValidate?: (v: string) => void;
   errorMessage?: string;
   disabled?: boolean;
+  unfilter?: boolean;
 }
 
 export default function TextInput(props: TextInputProps) {
@@ -18,40 +22,52 @@ export default function TextInput(props: TextInputProps) {
     onValidate,
     errorMessage,
     disabled = false,
+    unfilter = false,
   } = props;
   const [localValue, setLocalValue] = useState<string>("");
-  const [timeoutTracker, setTimeoutTracker] = useState<
-    NodeJS.Timeout | undefined
-  >();
+  const [localError, setLocalError] = useState<string>("");
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>();
+  const hasError = !!(localError || errorMessage);
 
-  useEffect(() => {
-    if (value !== localValue) {
-      setLocalValue(value);
-      handleDelayedValidation(value);
+  const validate = (value: string) => {
+    if (hasXSSChars(value)) {
+      return setLocalError("Special characters not allowed");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+
+    if (!unfilter && filter.isProfane(value)) {
+      return setLocalError("Let's keep it clean 🤓");
+    }
+
+    if (onValidate) {
+      onValidate(value);
+    }
+  };
 
   const handleDelayedValidation = (value: string) => {
-    if (!onValidate) return;
-
-    if (timeoutTracker) {
-      clearTimeout(timeoutTracker);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
 
     const newTimeOut = setTimeout(() => {
-      onValidate(value);
-      setTimeoutTracker(undefined);
+      validate(value);
+      timeoutRef.current = undefined;
     }, delay);
 
-    setTimeoutTracker(() => newTimeOut);
+    timeoutRef.current = newTimeOut;
   };
 
   const handleOnChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setLocalValue(evt.target.value);
     onChange(evt.target.value);
-    handleDelayedValidation(evt.target.value);
   };
+
+  useEffect(() => {
+    if (value !== localValue) {
+      setLocalValue(value);
+    }
+    handleDelayedValidation(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <>
@@ -63,8 +79,8 @@ export default function TextInput(props: TextInputProps) {
         disabled={disabled}
       />
 
-      <div style={{ height: "1.2rem" }}>
-        {!!errorMessage && <p className={styles.error}>{errorMessage}</p>}
+      <div className={styles.error}>
+        {hasError && <p>{localError || errorMessage}</p>}
       </div>
     </>
   );

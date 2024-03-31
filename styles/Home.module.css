@@ -35,10 +35,7 @@
 
 .button {
   font-size: 2rem;
-  padding: 8px 8px;
   border: 2px white solid;
-  border-radius: 0.5rem;
-  cursor: pointer;
 }
 
 .description {

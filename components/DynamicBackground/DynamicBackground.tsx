@@ -1,7 +1,7 @@
 import { EStage } from "@/utils/types";
 import clsx from "clsx";
 import { ReactNode, ReactElement } from "react";
-import styles from "@/styles/DynamicBackground.module.css";
+import styles from "@/styles/utilities/DynamicBackground.module.css";
 
 export function DynamicBackground({
   children,

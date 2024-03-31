@@ -31,15 +31,18 @@
 
 .submitButton {
   font-size: 1.2rem;
-  padding: 8px 16px;
-  cursor: pointer;
+  border: 2px white solid;
+}
+
+.submitButton:disabled {
+  font-size: 1.2rem;
+  border: 2px transparent solid;
 }
 
 .backButton {
-  font-size: 1.2rem;
-  padding: 8px 16px;
   margin: 16px 0;
   border: 2px white solid;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
 }

@@ -5,6 +5,10 @@
 }
 
 .error {
+  height: 1rem;
+}
+
+.error p {
   font-size: 0.8rem;
-  color: red;
+  color: rgb(244, 67, 54);
 }

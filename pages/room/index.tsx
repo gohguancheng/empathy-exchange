@@ -4,15 +4,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { IUser } from "@/utils/types";
-import { hasXSSChars } from "@/utils/string";
-import Filter from "bad-words";
-const filter = new Filter();
 
 export default function Room() {
-  const [inputRoomCode, setInputRoomCode] = useState<string>("");
-  const [inputUsername, setInputUsername] = useState<string>("");
-  const [validation, setValidation] = useState<Validation>({});
+  const [codeInput, setCodeInput] = useState<{
+    value: string;
+    isValid?: boolean;
+    error?: string;
+  }>({ value: "" });
+  const [userInput, setUserInput] = useState<{
+    value: string;
+    isValid?: boolean;
+    error?: string;
+  }>({ value: "" });
+  const [showUserInput, setShowUserInput] = useState<boolean>();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -22,98 +26,48 @@ export default function Room() {
     ? "Enter a code to create / rejoin a huddle you are hosting"
     : "Enter a valid code to join an existing huddle";
 
-  const showRoomInput = !validation.roomValidated;
-  const showUserInput = validation.roomValidated;
-  const allowSubmit = validation.validUsername && !!inputUsername;
-
-  useEffect(() => {
-    setValidation((prev) => ({
-      ...prev,
-      validRoom: false,
-      roomError: "",
-      roomValidated: false,
-    }));
-  }, [inputRoomCode]);
-
-  useEffect(() => {
-    setValidation((prev) => ({
-      ...prev,
-      validUsername: false,
-      usernameError: "",
-      usernameValidated: false,
-    }));
-  }, [inputUsername]);
+  const showCodeInput = !showUserInput;
+  const allowSubmit = codeInput.isValid && !!userInput.isValid;
 
   const validateRoomCode = async (value: string) => {
-    if (hasXSSChars(value)) {
-      setValidation((prev) => ({
-        ...prev,
-        validRoom: false,
-        roomError: "Special characters not allowed",
-        roomValidated: false,
-      }));
-      return;
-    }
-    if (filter.isProfane(value)) {
-      setValidation((prev) => ({
-        ...prev,
-        validRoom: false,
-        roomError: "Let's keep it clean 🤓",
-        roomValidated: false,
-      }));
-      return;
-    }
+    if (!value) return;
     try {
       const res = await fetch(
         `/api/room/validate?roomCode=${value}&host=${isHost}`
       ).then((res) => res.json());
 
       if (res) {
-        setValidation((prev) => ({
+        setCodeInput((prev) => ({
           ...prev,
-          validRoom: res.isAvail,
-          roomError: res.message,
+          isValid: res.isAvail,
+          error: res.message,
         }));
       }
     } catch (e) {
-      setValidation({ roomError: "Unexpected Error" });
+      setCodeInput((prev) => ({
+        ...prev,
+        isValid: false,
+        roomError: "Unexpected Error",
+      }));
     }
   };
 
   const validateUsername = async (value: string) => {
-    if (hasXSSChars(value)) {
-      setValidation((prev) => ({
-        ...prev,
-        validUsername: false,
-        usernameError: "Special characters not allowed",
-        usernameValidated: false,
-      }));
-      return;
-    }
-    if (filter.isProfane(value)) {
-      setValidation((prev) => ({
-        ...prev,
-        validUsername: false,
-        usernameError: "Let's keep it clean 🤓",
-        usernameValidated: false,
-      }));
-      return;
-    }
+    if (!value) return;
     try {
       const res = await fetch(
-        `/api/room/validate-user?username=${value}&roomCode=${inputRoomCode}&host=${isHost}`
+        `/api/room/validate-user?username=${value}&roomCode=${codeInput.value}&host=${isHost}`
       ).then((res) => res.json());
 
       if (res) {
-        setValidation((prev) => ({
+        setUserInput((prev) => ({
           ...prev,
-          validUsername: res.isAvail,
-          usernameValidated: res.isAvail,
-          usernameError: res.message,
+          isValid: res.isAvail,
+          error: res.message,
         }));
       }
     } catch (e) {
-      setValidation((prev) => ({ ...prev, usernameError: "Unexpected Error" }));
+      setUserInput((prev) => ({ ...prev, usernameError: "Unexpected Error" }));
     }
   };
 
@@ -126,8 +80,8 @@ export default function Room() {
         },
         body: JSON.stringify({
           host: isHost,
-          roomCode: inputRoomCode,
-          username: inputUsername,
+          roomCode: codeInput.value,
+          username: userInput.value,
         }),
       }).then((res) => res.json());
       if (res) {
@@ -147,22 +101,22 @@ export default function Room() {
         }}
       >
         <h1>{roomInputLabel}</h1>
-        {showRoomInput && (
+        {showCodeInput && (
           <>
             <label className={styles.label}>Huddle Code</label>
             <TextInput
-              value={inputRoomCode}
-              onChange={setInputRoomCode}
+              value={codeInput.value}
+              onChange={(value) =>
+                setCodeInput(() => ({ value, isValid: false, error: "" }))
+              }
               onValidate={validateRoomCode}
               delay={300}
-              errorMessage={validation.roomError}
+              errorMessage={codeInput.error}
             />
             <button
               className={styles.submitButton}
-              disabled={!validation.validRoom}
-              onClick={() =>
-                setValidation((prev) => ({ ...prev, roomValidated: true }))
-              }
+              disabled={!codeInput.isValid}
+              onClick={() => setShowUserInput(true)}
             >
               Next
             </button>
@@ -173,16 +127,18 @@ export default function Room() {
             <label className={styles.label}>
               In huddle{" "}
               <span style={{ borderBottom: "1px solid", padding: "0 2px" }}>
-                {inputRoomCode}
+                {codeInput.value}
               </span>
               , participants can address me as
             </label>
             <TextInput
-              value={inputUsername}
-              onChange={setInputUsername}
+              value={userInput.value}
+              onChange={(value) =>
+                setUserInput({ value, isValid: false, error: "" })
+              }
               onValidate={validateUsername}
               delay={300}
-              errorMessage={validation.usernameError}
+              errorMessage={userInput.error}
             />
           </>
         )}
@@ -201,9 +157,6 @@ export default function Room() {
       </Link>
     </main>
   );
-}
-interface UserData extends IUser {
-  roomCode?: string;
 }
 
 interface Validation {

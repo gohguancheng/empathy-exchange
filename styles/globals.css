@@ -100,8 +100,14 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+button,
+input[type="submit"] {
+  padding: 4px 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+  cursor: unset;
 }
