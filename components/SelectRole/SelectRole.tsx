@@ -40,7 +40,6 @@ export const SelectRole = ({
               <button
                 key={k}
                 onClick={() => setSelection(k)}
-                style={{ backgroundColor: hasConfirmed ? "black" : "gray" }}
                 disabled={hasConfirmed}
               >
                 {roles[k]?.label}

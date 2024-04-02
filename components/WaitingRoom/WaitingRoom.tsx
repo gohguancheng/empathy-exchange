@@ -35,9 +35,10 @@ export const WaitingRoom = (props: WaitRoomProps) => {
 
   return (
     <div className={styles.container}>
-      <h1>
-        Huddle {roomCode} waiting for participants [{onlineUsersCount()} / 5]{" "}
-      </h1>
+      <div>
+        <h1>Huddle {roomCode} waiting for participants</h1>
+        <h2>{onlineUsersCount()} / 5</h2>
+      </div>
 
       {renderUsers()}
       <div className={styles.legend}>

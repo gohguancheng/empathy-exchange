@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 10px 0;
+}
+
+.nextButton {
+
+  max-width: max-content;
+}

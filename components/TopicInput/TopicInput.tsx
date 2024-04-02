@@ -1,9 +1,7 @@
 import TextInput from "@/components/TextInput/TextInput";
 import { useEffect, useState } from "react";
-import Filter from "bad-words";
 import { EStage, IUserData } from "@/utils/types";
-
-const filter = new Filter();
+import styles from "@/styles/TopicInput.module.css";
 
 export const TopicInput = ({
   currentUser,
@@ -56,8 +54,11 @@ export const TopicInput = ({
   return (
     <div>
       <h3>{label}</h3>
+
       {renderOptions()}
+
       <form
+        className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
           setStatus({ submitted: true });
@@ -65,6 +66,7 @@ export const TopicInput = ({
         }}
       >
         <TextInput
+          label="Topic"
           value={input}
           onChange={(value) => {
             setStatus({});
@@ -79,6 +81,7 @@ export const TopicInput = ({
           disabled={status.submitted}
           errorMessage={status.error}
         />
+
         <input
           type="submit"
           value="Submit"
@@ -87,12 +90,15 @@ export const TopicInput = ({
       </form>
 
       {!!currentUser?.host && (
-        <button
-          onClick={() => setStage(EStage.ROLE_SELECT)}
-          disabled={!currentUser.topic}
-        >
-          To Role Selection
-        </button>
+        <div className={styles.center}>
+          <button
+            className={styles.nextButton}
+            onClick={() => setStage(EStage.ROLE_SELECT)}
+            disabled={!currentUser.topic}
+          >
+            To Role Selection
+          </button>
+        </div>
       )}
     </div>
   );
