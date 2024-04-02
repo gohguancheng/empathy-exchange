@@ -112,3 +112,14 @@ button:disabled,
 input[type="submit"]:disabled {
   cursor: unset;
 }
+
+input[type="text"] {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border: none;
+}
+
+input[type="text"]:focus {
+  outline: 0;
+}

@@ -1,6 +1,6 @@
 import styles from "@/styles/Room.module.css";
 import TextInput from "@/components/TextInput/TextInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -100,11 +100,11 @@ export default function Room() {
           handleSubmit();
         }}
       >
-        <h1>{roomInputLabel}</h1>
+        <h2>{roomInputLabel}</h2>
         {showCodeInput && (
           <>
-            <label className={styles.label}>Huddle Code</label>
             <TextInput
+              label="Huddle Code"
               value={codeInput.value}
               onChange={(value) =>
                 setCodeInput(() => ({ value, isValid: false, error: "" }))
@@ -124,14 +124,8 @@ export default function Room() {
         )}
         {showUserInput && (
           <>
-            <label className={styles.label}>
-              Participants in{" "}
-              <span style={{ borderBottom: "1px solid", padding: "0 2px" }}>
-                {codeInput.value}
-              </span>{" "}
-              can address me as
-            </label>
             <TextInput
+              label="Username"
               value={userInput.value}
               onChange={(value) =>
                 setUserInput({ value, isValid: false, error: "" })

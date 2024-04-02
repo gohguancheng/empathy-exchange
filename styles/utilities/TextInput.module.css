@@ -1,19 +1,64 @@
-.textInput {
+.container {
+  width: 100%;
+  padding: 0 4px;
+  border-bottom: solid 1px !important;
+  margin-top: 1rem;
+}
+
+.container label {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.container input {
+  padding: 8px 0 !important;
+  background-color: transparent;
   font-size: 1.4rem;
-  padding: 4px 8px;
-  max-width: 100%;
+  width: 100%;
+}
+
+.dark {
+  border-color: white;
+}
+
+.dark label {
+  color: white !important;
+}
+
+.dark input {
+  color: white !important;
+}
+
+.light {
+  border-color: black;
+}
+
+.light label {
+  color: black !important;
+}
+
+.light input {
+  color: black !important;
 }
 
 .error {
-  margin: 4px 0;
-  padding: 4px;
-  border: #ffccc7 solid 1px;
-  background-color: #fff2f0;
-  max-width: fit-content;
-  border-radius: 4px;
+  border-color: rgb(244, 67, 54) !important;
 }
 
-.error p {
+.error label {
+  color: rgb(244, 67, 54) !important;
+}
+
+.error input {
+  color: rgb(244, 67, 54) !important;
+}
+
+.errorMessage {
+  margin-bottom: 0.25rem;
+  height: 0.9rem;
+}
+
+.errorMessage p {
   font-size: 0.8rem;
-  color: rgba(0, 0, 0, 0.88);
+  color: rgb(244, 67, 54);
 }

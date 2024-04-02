@@ -2,9 +2,11 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import styles from "@/styles/utilities/TextInput.module.css";
 import { hasXSSChars } from "@/utils/string";
 import Filter from "bad-words";
+import clsx from "clsx";
 const filter = new Filter();
 
 interface TextInputProps {
+  label?: string;
   value: string;
   onChange: (v: string) => void;
   delay?: number;
@@ -12,10 +14,12 @@ interface TextInputProps {
   errorMessage?: string;
   disabled?: boolean;
   unfilter?: boolean;
+  isLight?: boolean;
 }
 
 export default function TextInput(props: TextInputProps) {
   const {
+    label,
     onChange,
     value = "",
     delay = 2000,
@@ -23,6 +27,7 @@ export default function TextInput(props: TextInputProps) {
     errorMessage,
     disabled = false,
     unfilter = false,
+    isLight = false,
   } = props;
   const [localValue, setLocalValue] = useState<string>("");
   const [localError, setLocalError] = useState<string>("");
@@ -72,21 +77,25 @@ export default function TextInput(props: TextInputProps) {
 
   return (
     <>
-      <input
-        className={styles.textInput}
-        type="text"
-        value={localValue}
-        onChange={handleOnChange}
-        disabled={disabled}
-      />
+      <div
+        className={clsx(styles.container, {
+          [styles.error]: hasError,
+          [styles.dark]: !hasError && !isLight,
+          [styles.light]: !hasError && !!isLight,
+        })}
+      >
+        {!!label && <label>{label}</label>}{" "}
+        <input
+          type="text"
+          value={localValue}
+          onChange={handleOnChange}
+          disabled={disabled}
+        />
+      </div>
 
-      {hasError ? (
-        <div className={styles.error}>
-          <p>{localError || errorMessage}</p>
-        </div>
-      ) : (
-        <div style={{ height: "32px" }} />
-      )}
+      <div className={styles.errorMessage}>
+        {hasError && <p>{localError || errorMessage}</p>}
+      </div>
     </>
   );
 }
