@@ -1,5 +1,6 @@
 import { EStage, IUserData } from "@/utils/types";
 import styles from "@/styles/WaitingRoom.module.css";
+import { Card } from "../Card/Card";
 
 export const WaitingRoom = (props: WaitRoomProps) => {
   const { roomCode, currentUser, users, setStage } = props;
@@ -13,18 +14,12 @@ export const WaitingRoom = (props: WaitRoomProps) => {
   const renderUsers = () => (
     <div className={styles.userContainer}>
       {users?.map((u) => (
-        <div
-          key={u.username}
-          className={styles.userCard}
-          style={isMe(u.username) ? { border: "green 2px solid" } : {}}
-        >
-          <h5>{u.username}</h5>
-          <div className={styles.userIconContainer}>
-            {isMe(u.username) && <span>😎</span>}
-            {!!u.host && <span>🧭</span>}
-            <span>{u.online ? "🟩" : "🟥"}</span>
-          </div>
-        </div>
+        <Card
+          name={u.username}
+          highlight={isMe(u.username)}
+          isHost={u.host}
+          isOnline={!!u.online}
+        />
       )) ?? "No users found"}
     </div>
   );
@@ -37,7 +32,10 @@ export const WaitingRoom = (props: WaitRoomProps) => {
     <div className={styles.container}>
       <div>
         <h1>Huddle {roomCode} waiting for participants</h1>
-        <h2>{onlineUsersCount()} / 5</h2>
+        <h2>
+          <span>{onlineUsersCount()}</span>
+          <span> / 5</span>
+        </h2>
       </div>
 
       {renderUsers()}

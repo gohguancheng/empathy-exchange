@@ -5,6 +5,7 @@
   -moz-transition: background-color 3s ease-in-out;
   -o-transition: background-color 3s ease-in-out;
   transition: background-color 3s ease-in-out;
+  padding: 1.5rem;
 }
 
 .stageOne {
