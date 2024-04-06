@@ -1,6 +1,7 @@
 import { EStage, IUserData } from "@/utils/types";
 import styles from "@/styles/WaitingRoom.module.css";
 import { Card } from "../Card/Card";
+import { ParticipantsCounter } from "../ParticipantsCounter/ParticipantsCounter";
 
 export const WaitingRoom = (props: WaitRoomProps) => {
   const { roomCode, currentUser, users, setStage } = props;
@@ -8,8 +9,6 @@ export const WaitingRoom = (props: WaitRoomProps) => {
   const isMe = (user: string) => {
     return !!user && !!currentUser?.username && currentUser.username === user;
   };
-
-  const onlineUsersCount = () => users?.filter((u) => !!u.online).length ?? 0;
 
   const renderUsers = () => (
     <div className={styles.userContainer}>
@@ -30,14 +29,8 @@ export const WaitingRoom = (props: WaitRoomProps) => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <h1>Huddle {roomCode} waiting for participants</h1>
-        <h2>
-          <span>{onlineUsersCount()}</span>
-          <span> / 5</span>
-        </h2>
-      </div>
-
+      <h1>Huddle {roomCode} waiting for participants</h1>
+      <ParticipantsCounter users={users} />
       {renderUsers()}
       <div className={styles.legend}>
         <span>😎 You</span>
