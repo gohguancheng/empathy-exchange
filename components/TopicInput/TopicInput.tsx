@@ -22,6 +22,7 @@ export const TopicInput = ({
       setInput(currentUser.topic);
       setStatus({ submitted: true });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderOptions = () => (

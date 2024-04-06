@@ -4,7 +4,7 @@ import styles from "@/styles/utilities/ParticipantsCounter.module.css";
 
 export const ParticipantsCounter = ({ users }: AttendanceProps) => {
   const renderAttendeesIndicators = users?.map((user, i) => {
-    const color = !user.online ? "gray" : i === 0 ? "yellow" : "green";
+    const color = !user.online ? "red" : i === 0 ? "yellow" : "green";
 
     return (
       <Image
@@ -12,6 +12,7 @@ export const ParticipantsCounter = ({ users }: AttendanceProps) => {
         alt={`${color}-person`}
         width="40"
         height="40"
+        key={`${user.online}-${i}`}
       />
     );
   });

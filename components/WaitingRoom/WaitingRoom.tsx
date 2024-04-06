@@ -12,12 +12,14 @@ export const WaitingRoom = (props: WaitRoomProps) => {
 
   const renderUsers = () => (
     <div className={styles.userContainer}>
-      {users?.map((u) => (
+      {users?.map((u, i) => (
         <Card
+          key={u.username}
           name={u.username}
           highlight={isMe(u.username)}
           isHost={u.host}
           isOnline={!!u.online}
+          index={i}
         />
       )) ?? "No users found"}
     </div>

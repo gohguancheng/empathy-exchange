@@ -16,6 +16,7 @@ export const SelectRole = ({
     if (currentUser?.role) {
       setSelection(currentUser.role);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderDescription = (): ReactNode => {
