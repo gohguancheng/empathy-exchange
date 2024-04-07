@@ -4,7 +4,7 @@ import { Card } from "../Card/Card";
 import { ParticipantsCounter } from "../ParticipantsCounter/ParticipantsCounter";
 
 export const WaitingRoom = (props: WaitRoomProps) => {
-  const { roomCode, currentUser, users, setStage } = props;
+  const { roomCode, currentUser, users } = props;
 
   const isMe = (user: string) => {
     return !!user && !!currentUser?.username && currentUser.username === user;
@@ -38,13 +38,6 @@ export const WaitingRoom = (props: WaitRoomProps) => {
         <span>😎 You</span>
         <span>🧭 Host</span>
       </div>
-      <div>
-        {!!currentUser?.host && (
-          <button onClick={() => setStage(EStage.TOPIC_INPUT)}>
-            To Topic Selection
-          </button>
-        )}
-      </div>
     </div>
   );
 };
@@ -53,5 +46,4 @@ type WaitRoomProps = {
   roomCode: string;
   currentUser?: IUserData;
   users?: IUserData[];
-  setStage: (s: EStage) => void;
 };

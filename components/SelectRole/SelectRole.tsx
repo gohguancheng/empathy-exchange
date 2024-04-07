@@ -2,11 +2,7 @@ import { roles } from "@/lib/roles";
 import { IUserData, EStage, ERole } from "@/utils/types";
 import { ReactNode, useEffect, useState } from "react";
 
-export const SelectRole = ({
-  currentUser,
-  onSelect,
-  setStage,
-}: SelectRoleProps) => {
+export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
   const [selection, setSelection] = useState(ERole.EMPATHISER);
   const roleKeys = Object.values(ERole);
   const chosenRole = roles[selection];
@@ -64,14 +60,6 @@ export const SelectRole = ({
         >
           Confirm
         </button>
-        {!!currentUser?.host && (
-          <button
-            onClick={() => setStage(EStage.SHARING)}
-            disabled={!currentUser.role}
-          >
-            START
-          </button>
-        )}
       </div>
     )
   );
@@ -80,5 +68,4 @@ export const SelectRole = ({
 type SelectRoleProps = {
   currentUser?: IUserData;
   onSelect: (t: string) => void;
-  setStage: (s: EStage) => void;
 };

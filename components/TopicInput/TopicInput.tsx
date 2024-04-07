@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 import { EStage, IUserData } from "@/utils/types";
 import styles from "@/styles/TopicInput.module.css";
 
-export const TopicInput = ({
-  currentUser,
-  onSubmit,
-  setStage,
-}: TopicInputProps) => {
+export const TopicInput = ({ currentUser, onSubmit }: TopicInputProps) => {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<{ submitted?: boolean; error?: string }>(
     {}
@@ -89,18 +85,6 @@ export const TopicInput = ({
           disabled={!input || !!status.error || !!status.submitted}
         />
       </form>
-
-      {!!currentUser?.host && (
-        <div className={styles.center}>
-          <button
-            className={styles.nextButton}
-            onClick={() => setStage(EStage.ROLE_SELECT)}
-            disabled={!currentUser.topic}
-          >
-            To Role Selection
-          </button>
-        </div>
-      )}
     </div>
   );
 };
@@ -108,5 +92,4 @@ export const TopicInput = ({
 type TopicInputProps = {
   currentUser?: IUserData;
   onSubmit: (t: string) => void;
-  setStage: (s: EStage) => void;
 };

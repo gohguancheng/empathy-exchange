@@ -177,7 +177,6 @@ export default function Room() {
             roomCode={roomCode}
             currentUser={userData}
             users={content?.users}
-            setStage={setStage}
           />
         );
       case EStage.TOPIC_INPUT:
@@ -187,7 +186,6 @@ export default function Room() {
             onSubmit={(topic: string) =>
               socket?.emit("set_topic", topic, roomUpdateHandler)
             }
-            setStage={setStage}
           />
         );
       case EStage.ROLE_SELECT:
@@ -197,7 +195,6 @@ export default function Room() {
             onSelect={(role: string) =>
               socket?.emit("set_role", role, roomUpdateHandler)
             }
-            setStage={setStage}
           />
         );
       case EStage.SHARING:
@@ -210,12 +207,94 @@ export default function Room() {
     }
   };
 
+  const renderStageControl = () => {
+    const Wrapper = ({ children }: { children: ReactNode | ReactElement }) => (
+      <div className={styles.stageControls}>{children}</div>
+    );
+
+    if (!userData.host) {
+      return (
+        <Wrapper>
+          <></>
+        </Wrapper>
+      );
+    }
+
+    const hostStage = getUserStage();
+
+    switch (hostStage) {
+      case EStage.WAITING:
+        return (
+          <Wrapper>
+            <button
+              onClick={() => {
+                setStage(EStage.TOPIC_INPUT);
+              }}
+            >
+              <span>To Topic Selection</span>
+              <span>➡️</span>
+            </button>
+          </Wrapper>
+        );
+      case EStage.TOPIC_INPUT:
+        return (
+          <Wrapper>
+            <button
+              disabled={!userData.topic}
+              onClick={() => {
+                setStage(EStage.ROLE_SELECT);
+              }}
+            >
+              <span>To Role Selection</span>
+              <span>➡️</span>
+            </button>
+          </Wrapper>
+        );
+      case EStage.ROLE_SELECT:
+        return (
+          <Wrapper>
+            <button
+              disabled={!userData.role}
+              onClick={() => {
+                setStage(EStage.SHARING);
+              }}
+            >
+              <span>To Sharing</span>
+              <span>➡️</span>
+            </button>
+          </Wrapper>
+        );
+      case EStage.SHARING:
+        return (
+          <Wrapper>
+            <button
+              disabled={!content?.users.every((u) => u.done)}
+              onClick={() => {
+                setStage(EStage.END);
+              }}
+            >
+              <span>End Session</span>
+              <span>➡️</span>
+            </button>
+          </Wrapper>
+        );
+
+      default:
+        return (
+          <Wrapper>
+            <></>
+          </Wrapper>
+        );
+    }
+  };
+
   return (
     <main className={styles.main}>
       <DynamicBackground stage={getUserStage() as EStage}>
         <CenterContainer>
           {renderTitle()}
           {renderStages()}
+          {renderStageControl()}
         </CenterContainer>
       </DynamicBackground>
     </main>
