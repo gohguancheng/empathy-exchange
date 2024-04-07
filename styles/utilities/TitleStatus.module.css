@@ -11,3 +11,13 @@
   align-items: center;
 }
 
+.me {
+  margin: 0.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.me div {
+  min-width: 40%;
+}

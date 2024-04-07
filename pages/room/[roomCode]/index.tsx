@@ -116,6 +116,7 @@ export default function Room() {
             <TitleStatus
               title="Waiting for more to join.."
               users={otherUsers}
+              me={userData}
             />
           </TopWrapper>
         );
@@ -125,6 +126,7 @@ export default function Room() {
             <TitleStatus
               title="Sharing Topic"
               users={otherUsers}
+              me={userData}
               checkKey={"topic"}
             />
           </TopWrapper>
@@ -135,6 +137,7 @@ export default function Room() {
             <TitleStatus
               title="Select Role"
               users={otherUsers}
+              me={userData}
               checkKey={"role"}
             />
           </TopWrapper>
@@ -145,6 +148,7 @@ export default function Room() {
             <TitleStatus
               title="Sharing Session"
               users={otherUsers}
+              me={userData}
               checkKey={"done"}
             />
           </TopWrapper>
@@ -152,7 +156,12 @@ export default function Room() {
       case EStage.END:
         return (
           <TopWrapper>
-            <TitleStatus title="End" users={otherUsers} checkKey={"done"} />
+            <TitleStatus
+              title="End"
+              users={otherUsers}
+              me={userData}
+              checkKey={"done"}
+            />
           </TopWrapper>
         );
     }

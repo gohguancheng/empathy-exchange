@@ -22,7 +22,7 @@ export const Chip = ({
   return (
     <div className={clsx(styles.container, { [styles.grayOut]: grayOut })}>
       <p>{initials}</p>
-      <p>{checked ? "✅" : "❌"}</p>
+      <p>{checked ? "✅" : "❓"}</p>
     </div>
   );
 };
