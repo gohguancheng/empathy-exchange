@@ -15,4 +15,12 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+}
+
+.topbar {
+  position: absolute;
+  top: 2rem;
+  width: max-content;
+  margin: 0 auto;
 }

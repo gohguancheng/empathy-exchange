@@ -37,7 +37,7 @@ export const TopicInput = ({
     >
       {[
         "Family Issues",
-        "Romantic Trouble",
+        "Romantic Troubles",
         "Academic Challenges",
         "Career Dilemma",
       ].map((e, i) => (
@@ -46,7 +46,7 @@ export const TopicInput = ({
           disabled={!!currentUser?.topic}
           onClick={() => setInput(e)}
         >
-          {e}{" "}
+          {e}
         </button>
       ))}
     </div>

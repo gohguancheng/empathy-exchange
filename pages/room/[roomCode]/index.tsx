@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import useSpinnerDelay from "@/hooks/useSpinner";
+import { TitleStatus } from "@/components/TitleStatus/TitleStatus";
 
 export default function Room() {
   const router = useRouter();
@@ -97,6 +98,66 @@ export default function Room() {
     if (hostStage === EStage.END) return EStage.END;
   };
 
+  const TopWrapper = ({
+    children,
+  }: {
+    children: ReactNode | ReactElement;
+  }): ReactElement => <div className={styles.topbar}>{children}</div>;
+
+  const renderTitle = () => {
+    const userStage = getUserStage();
+    const otherUsers = content?.users.filter(
+      (u) => u.username !== userData.username
+    );
+    switch (userStage) {
+      case EStage.WAITING:
+        return (
+          <TopWrapper>
+            <TitleStatus
+              title="Waiting for more to join.."
+              users={otherUsers}
+            />
+          </TopWrapper>
+        );
+      case EStage.TOPIC_INPUT:
+        return (
+          <TopWrapper>
+            <TitleStatus
+              title="Sharing Topic"
+              users={otherUsers}
+              checkKey={"topic"}
+            />
+          </TopWrapper>
+        );
+      case EStage.ROLE_SELECT:
+        return (
+          <TopWrapper>
+            <TitleStatus
+              title="Select Role"
+              users={otherUsers}
+              checkKey={"role"}
+            />
+          </TopWrapper>
+        );
+      case EStage.SHARING:
+        return (
+          <TopWrapper>
+            <TitleStatus
+              title="Sharing Session"
+              users={otherUsers}
+              checkKey={"done"}
+            />
+          </TopWrapper>
+        );
+      case EStage.END:
+        return (
+          <TopWrapper>
+            <TitleStatus title="End" users={otherUsers} checkKey={"done"} />
+          </TopWrapper>
+        );
+    }
+  };
+
   const renderStages = () => {
     const userStage = getUserStage();
 
@@ -143,15 +204,11 @@ export default function Room() {
   return (
     <main className={styles.main}>
       <DynamicBackground stage={getUserStage() as EStage}>
-        <CenterContainer>{renderStages()}</CenterContainer>
+        <CenterContainer>
+          {renderTitle()}
+          {renderStages()}
+        </CenterContainer>
       </DynamicBackground>
-      {/* <div>
-        Room ID: {roomCode} {username} {`${socketStatus?.isConnected}`}{" "}
-        {`${socket?.id}`} {`${router.isReady}`}
-      </div>
-      <div>User data: {JSON.stringify(userData)}</div>
-      <div>current: {JSON.stringify(current)}</div>
-      <div>users: {JSON.stringify(users)}</div> */}
     </main>
   );
 }

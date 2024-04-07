@@ -1,0 +1,15 @@
+.container {
+  background-color: white;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.6rem;
+  color: black;
+}
+
+.grayOut {
+  opacity: 0.6;
+}
