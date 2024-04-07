@@ -1,5 +1,5 @@
 import { roles } from "@/lib/roles";
-import { IUserData, EStage, ERole } from "@/utils/types";
+import { IUserData, ERole } from "@/utils/types";
 import { ReactNode, useEffect, useState } from "react";
 
 export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {

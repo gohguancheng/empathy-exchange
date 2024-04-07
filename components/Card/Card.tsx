@@ -17,20 +17,22 @@ export const Card = ({
         grayOut={!isOnline}
         outline={highlight}
       />
-      <h5>
-        {isOnline ? (
-          <span
-            className={clsx(styles.dot, { [styles.dotGreen]: isOnline })}
-          ></span>
-        ) : (
-          <span className={styles.dot}></span>
-        )}
-        {name || "—"}
-      </h5>
+      <div>
+        <h5>
+          {isOnline ? (
+            <span
+              className={clsx(styles.dot, { [styles.dotGreen]: isOnline })}
+            ></span>
+          ) : (
+            <span className={styles.dot}></span>
+          )}
+          {name || "—"}
+        </h5>
 
-      <div className={styles.userIconContainer}>
-        {highlight && <span>😎</span>}
-        {isHost && <span>🧭</span>}
+        <div className={styles.userIconContainer}>
+          {highlight && <span>😎</span>}
+          {isHost && <span>🧭</span>}
+        </div>
       </div>
     </div>
   );

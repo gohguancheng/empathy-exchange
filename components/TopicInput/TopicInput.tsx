@@ -1,6 +1,6 @@
 import TextInput from "@/components/TextInput/TextInput";
 import { useEffect, useState } from "react";
-import { EStage, IUserData } from "@/utils/types";
+import { IUserData } from "@/utils/types";
 import styles from "@/styles/TopicInput.module.css";
 
 export const TopicInput = ({ currentUser, onSubmit }: TopicInputProps) => {
@@ -22,15 +22,7 @@ export const TopicInput = ({ currentUser, onSubmit }: TopicInputProps) => {
   }, []);
 
   const renderOptions = () => (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "4px",
-        margin: "8px 0",
-      }}
-    >
+    <div className={styles.optionsContainer}>
       {[
         "Family Issues",
         "Romantic Troubles",
@@ -49,7 +41,7 @@ export const TopicInput = ({ currentUser, onSubmit }: TopicInputProps) => {
   );
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>{label}</h3>
 
       {renderOptions()}

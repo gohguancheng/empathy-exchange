@@ -22,6 +22,7 @@
   position: absolute;
   top: 2rem;
   width: max-content;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -32,4 +33,14 @@
   height: 2.4rem;
   display: flex;
   justify-content: flex-end;
+}
+
+@media only screen and (max-width: 768px) {
+  .topbar {
+    position: absolute;
+    top: 0;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
+  }
 }

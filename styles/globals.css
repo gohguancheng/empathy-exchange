@@ -106,7 +106,7 @@ input[type="submit"] {
   padding: 4px 8px;
   border-radius: 0.5rem;
   cursor: pointer;
-  border: 0
+  border: 0;
 }
 
 button:disabled,
@@ -123,4 +123,34 @@ input[type="text"] {
 
 input[type="text"]:focus {
   outline: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  * {
+    text-wrap: wrap;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1.1rem;
+  }
 }

@@ -14,8 +14,9 @@ export const TitleStatus = ({
       {!!checkKey && (
         <>
           <div className={styles.topGrid}>
-            {users?.map((user) => (
+            {users?.map((user, i) => (
               <Chip
+                key={`${user.online}-${i}`}
                 text={user.username}
                 checked={!!user[checkKey]}
                 grayOut={!user.online}

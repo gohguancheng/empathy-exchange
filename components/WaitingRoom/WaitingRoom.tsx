@@ -1,4 +1,4 @@
-import { EStage, IUserData } from "@/utils/types";
+import { IUserData } from "@/utils/types";
 import styles from "@/styles/WaitingRoom.module.css";
 import { Card } from "../Card/Card";
 import { ParticipantsCounter } from "../ParticipantsCounter/ParticipantsCounter";
@@ -33,11 +33,11 @@ export const WaitingRoom = (props: WaitRoomProps) => {
     <div className={styles.container}>
       <h1>Huddle {roomCode} waiting for participants</h1>
       <ParticipantsCounter users={users} />
-      {renderUsers()}
       <div className={styles.legend}>
         <span>😎 You</span>
         <span>🧭 Host</span>
       </div>
+      {renderUsers()}
     </div>
   );
 };
