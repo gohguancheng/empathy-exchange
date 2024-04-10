@@ -15,20 +15,28 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  position: relative;
+}
+
+.centerContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  gap: 0.25rem;
+}
+
+.centerContainer > div > *:nth-child(2) {
+  flex: 1 1 auto;
 }
 
 .topbar {
-  position: absolute;
-  top: 2rem;
   width: max-content;
   max-width: 100%;
   margin: 0 auto;
 }
 
 .stageControls {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: 2.4rem;
   display: flex;
@@ -37,8 +45,6 @@
 
 @media only screen and (max-width: 768px) {
   .topbar {
-    position: absolute;
-    top: 0;
     width: max-content;
     max-width: 100%;
     margin: 0 auto;

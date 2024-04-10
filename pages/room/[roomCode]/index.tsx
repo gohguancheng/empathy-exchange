@@ -299,7 +299,11 @@ export default function Room() {
     children,
   }: {
     children: ReactNode | ReactElement;
-  }): ReactElement => <div className={styles.centerContainer}>{children}</div>;
+  }): ReactElement => (
+    <div className={styles.centerContainer}>
+      <div>{children}</div>
+    </div>
+  );
 
   return (
     <main className={styles.main}>
