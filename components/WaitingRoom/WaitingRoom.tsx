@@ -4,7 +4,7 @@ import { Card } from "../Card/Card";
 import { ParticipantsCounter } from "../ParticipantsCounter/ParticipantsCounter";
 
 export const WaitingRoom = (props: WaitRoomProps) => {
-  const { roomCode, currentUser, users } = props;
+  const { currentUser, users } = props;
 
   const isMe = (user: string) => {
     return !!user && !!currentUser?.username && currentUser.username === user;

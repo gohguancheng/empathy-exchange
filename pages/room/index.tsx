@@ -92,7 +92,7 @@ export default function Room() {
   };
 
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main} slide-fade`}>
       <form
         className={styles.form}
         onSubmit={(evt) => {

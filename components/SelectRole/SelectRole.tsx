@@ -24,8 +24,8 @@ export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
             <p>
               As <span className={styles.large}>{chosenRole.label}</span>,
             </p>
-            {chosenRole.description.map((l) => (
-              <p>- {l}</p>
+            {chosenRole.description.map((l, i) => (
+              <p key={`${chosenRole.label} - ${i}`}>- {l}</p>
             ))}
           </div>
         </div>

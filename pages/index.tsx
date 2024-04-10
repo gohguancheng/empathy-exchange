@@ -8,7 +8,7 @@ export default function Home() {
     children,
   }: {
     children: ReactNode | ReactElement;
-  }): ReactElement => <div className={styles.textContainer}>{children}</div>;
+  }): ReactElement => <div className={`${styles.textContainer} slide-fade`}>{children}</div>;
 
   const renderBody = () => {
     switch (order) {
@@ -66,7 +66,7 @@ export default function Home() {
   };
 
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main} slide-fade`}>
       <h1>Empathy Exchange</h1>
 
       {renderBody()}

@@ -61,7 +61,7 @@ export const SharingDashboard = (props: SharingDashboardProps) => {
         <div>
           <p>{speakerDetails.username}</p>
           <span> sharing about </span>
-          <p>"{speakerDetails.topic}"</p>
+          <p>{`"${speakerDetails.topic}"`}</p>
         </div>
       </div>
       <div className={styles.roleInfo}>{renderRoleContent()}</div>

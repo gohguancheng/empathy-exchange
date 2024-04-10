@@ -154,3 +154,18 @@ input[type="text"]:focus {
     font-size: 1.1rem;
   }
 }
+
+.slide-fade {
+  animation: slide-fade 1s;
+}
+
+@keyframes slide-fade {
+  from {
+    translate: -10px;
+    opacity: 0;
+  }
+  to {
+    translate: 0px;
+    opacity: 100;
+  }
+}

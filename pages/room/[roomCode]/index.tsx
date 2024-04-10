@@ -218,7 +218,7 @@ export default function Room() {
     if (!userData.host) {
       return <></>;
     }
-    
+
     const Wrapper = ({ children }: { children: ReactNode | ReactElement }) => (
       <div className={styles.stageControls}>
         <p>
@@ -305,7 +305,7 @@ export default function Room() {
   }: {
     children: ReactNode | ReactElement;
   }): ReactElement => (
-    <div className={styles.centerContainer}>
+    <div className={`${styles.centerContainer} slide-fade`} id="main-content">
       <div>{children}</div>
     </div>
   );
