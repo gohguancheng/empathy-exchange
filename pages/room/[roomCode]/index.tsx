@@ -206,7 +206,11 @@ export default function Room() {
         return <div>End</div>;
 
       default:
-        return <Spinner size={80} />;
+        return (
+          <CenterContainer>
+            <Spinner size={80} />
+          </CenterContainer>
+        );
     }
   };
 
