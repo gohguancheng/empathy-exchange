@@ -25,19 +25,14 @@ export const WaitingRoom = (props: WaitRoomProps) => {
     </div>
   );
 
-  const renderButtons = () => {
-    // TODO
-  };
-
   return (
     <div className={styles.container}>
-      <h1>Huddle {roomCode} waiting for participants</h1>
       <ParticipantsCounter users={users} />
+      {renderUsers()}
       <div className={styles.legend}>
         <span>😎 You</span>
         <span>🧭 Host</span>
       </div>
-      {renderUsers()}
     </div>
   );
 };

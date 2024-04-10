@@ -31,7 +31,6 @@
 
 .userIconContainer span {
   font-size: 1rem;
-  font-weight: 800;
 }
 
 .dot {
@@ -53,14 +52,48 @@
     max-width: 400px;
     background-color: #ffffff88;
     border-radius: 0.75rem;
-    padding: 1rem 1.2rem;
+    padding: 0.2rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
-  .userCard div:last-child {
+  .userCard > div:last-child {
     flex-grow: 1;
+  }
+
+  .userCard h5 {
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .userIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+    background-color: #606dbb;
+    padding: 0.2rem;
+    border-radius: 0.4rem;
+    margin: 0;
+  }
+
+  .userIconContainer span {
+    font-size: 0.8rem;
+  }
+
+  .dot {
+    display: inline-block;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #e5383b;
+    margin: auto 0.5rem 0.1rem 0;
+  }
+
+  .dotGreen {
+    background-color: #76ff03;
   }
 }
