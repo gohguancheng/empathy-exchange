@@ -216,7 +216,12 @@ export default function Room() {
 
   const renderStageControl = () => {
     const Wrapper = ({ children }: { children: ReactNode | ReactElement }) => (
-      <div className={styles.stageControls}>{children}</div>
+      <div className={styles.stageControls}>
+        <p>
+          <span>{roomCode}</span>
+        </p>
+        {children}
+      </div>
     );
 
     if (!userData.host) {
