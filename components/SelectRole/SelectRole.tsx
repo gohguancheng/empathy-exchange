@@ -1,6 +1,7 @@
 import { roles } from "@/lib/roles";
 import { IUserData, ERole } from "@/utils/types";
 import { ReactNode, useEffect, useState } from "react";
+import styles from "@/styles/SelectRole.module.css";
 
 export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
   const [selection, setSelection] = useState(ERole.EMPATHISER);
@@ -18,32 +19,43 @@ export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
   const renderDescription = (): ReactNode => {
     return (
       <div>
+        <div className={styles.description}>
+          <div>
+            <p>
+              As <span className={styles.large}>{chosenRole.label}</span>,
+            </p>
+            {chosenRole.description.map((l) => (
+              <p>- {l}</p>
+            ))}
+          </div>
+        </div>
         {hasConfirmed ? (
-          <p>You will be taking part as a {chosenRole.label}</p>
+          <p className={styles.instruction}>
+            You will be taking part as a {chosenRole.label}
+          </p>
         ) : (
-          <p>Click below to confirm your role as a {chosenRole.label}</p>
+          <p className={styles.instruction}>
+            Click below to confirm your role as a {chosenRole.label}
+          </p>
         )}
-        <p>{chosenRole.description}</p>
       </div>
     );
   };
 
   const renderRoleSelector = (): ReactNode => {
     return (
-      <div>
-        <div>
-          {roleKeys.map((k: ERole) => {
-            return (
-              <button
-                key={k}
-                onClick={() => setSelection(k)}
-                disabled={hasConfirmed}
-              >
-                {roles[k]?.label}
-              </button>
-            );
-          })}
-        </div>
+      <div className={styles.optionsContainer}>
+        {roleKeys.map((k: ERole) => {
+          return (
+            <button
+              key={k}
+              onClick={() => setSelection(k)}
+              disabled={hasConfirmed}
+            >
+              {roles[k]?.label}
+            </button>
+          );
+        })}
       </div>
     );
   };
@@ -52,8 +64,8 @@ export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
     chosenRole && (
       <div>
         <h3>Select Role</h3>
-        {renderDescription()}
         <div>{renderRoleSelector()}</div>
+        {renderDescription()}
         <button
           onClick={() => onSelect(selection)}
           disabled={!!currentUser?.role}

@@ -75,17 +75,6 @@ export default function Room() {
     socket?.emit("set_stage", s, roomUpdateHandler);
   };
 
-  const CenterContainer = ({
-    children,
-  }: {
-    children: ReactNode | ReactElement;
-  }): ReactElement => <div className={styles.centerContainer}>{children}</div>;
-
-  const Spinner = dynamic(() => import("@/components/Spinner/Spinner"), {
-    ssr: false,
-  });
-
-  const { showSpinner } = useSpinnerDelay({ show: !userData?.username });
   const hostStage = content?.current.stage;
   const getUserStage = () => {
     if (showSpinner) return;
@@ -97,6 +86,11 @@ export default function Room() {
     if (hostStage === EStage.SHARING) return EStage.SHARING;
     if (hostStage === EStage.END) return EStage.END;
   };
+
+  const Spinner = dynamic(() => import("@/components/Spinner/Spinner"), {
+    ssr: false,
+  });
+  const { showSpinner } = useSpinnerDelay({ show: !userData?.username });
 
   const TopWrapper = ({
     children,
@@ -198,7 +192,13 @@ export default function Room() {
           />
         );
       case EStage.SHARING:
-        return <SharingDashboard />;
+        return (
+          <SharingDashboard
+            currentUser={userData}
+            users={content?.users}
+            speaker={content?.current.speaker}
+          />
+        );
       case EStage.SHARING:
         return <div>End</div>;
 
@@ -287,6 +287,12 @@ export default function Room() {
         );
     }
   };
+
+  const CenterContainer = ({
+    children,
+  }: {
+    children: ReactNode | ReactElement;
+  }): ReactElement => <div className={styles.centerContainer}>{children}</div>;
 
   return (
     <main className={styles.main}>

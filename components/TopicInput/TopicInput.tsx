@@ -44,7 +44,7 @@ export const TopicInput = ({ currentUser, onSubmit }: TopicInputProps) => {
     <div className={styles.container}>
       <h3>{label}</h3>
 
-      {renderOptions()}
+      {!currentUser?.topic && renderOptions()}
 
       <form
         className={styles.form}

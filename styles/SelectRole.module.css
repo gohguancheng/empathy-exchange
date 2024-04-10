@@ -1,0 +1,27 @@
+.optionsContainer {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.optionsContainer button {
+  font-size: 0.8rem;
+}
+
+.description {
+  font-size: 0.8rem;
+  margin: 0.8rem 0;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  line-height: 1.4rem;
+}
+
+.large {
+  font-size: 1.2rem;
+}
+
+.instruction {
+  margin: 0.8rem 0;
+}
