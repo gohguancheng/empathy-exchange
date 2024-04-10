@@ -37,7 +37,7 @@ export const SharingDashboard = (props: SharingDashboardProps) => {
             <p>{u.username}</p>
             {!!currentUser.host && (
               <button
-                disabled={!u.online}
+                disabled={!!(!!i && (!u.online || !!u.done))}
                 onClick={() => setNextUser(u.username)}
               >
                 Select
