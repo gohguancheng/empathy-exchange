@@ -197,9 +197,12 @@ export default function Room() {
             currentUser={userData}
             users={content?.users}
             speaker={content?.current.speaker}
+            onUpdate={async (speaker: string) => {
+              await socket?.emit("set_speaker", speaker, roomUpdateHandler);
+            }}
           />
         );
-      case EStage.SHARING:
+      case EStage.END:
         return <div>End</div>;
 
       default:
@@ -268,7 +271,11 @@ export default function Room() {
         return (
           <Wrapper>
             <button
-              disabled={!content?.users.every((u) => u.done)}
+              disabled={
+                !content?.users
+                  .filter((u, i) => i !== 0 && u.online)
+                  .every((u) => u.done)
+              }
               onClick={() => {
                 setStage(EStage.END);
               }}
