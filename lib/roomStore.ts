@@ -1,17 +1,25 @@
-import { EStage, IRoom, IRooms, IUser } from "@/utils/types";
+import { ERole, EStage, IRooms, IUser } from "@/utils/types";
 
 declare global {
   var serverStore: ServerStore;
 }
 
 // const mockRoom: IRoom = {
-//   users: [{ username: "h" }, { username: "u1" }],
-//   current: { stage: EStage.WAITING },
+//   users: [
+//     { username: "h", topic: "host-topic", role: ERole.EMPATHISER },
+//     { username: "u1", topic: "user-topic1", role: ERole.EMPATHISER },
+//     { username: "u2", topic: "user-topic2", role: ERole.EMPATHISER },
+//     { username: "u3", topic: "user-topic3", role: ERole.EMPATHISER },
+//     { username: "u4", topic: "user-topic4", role: ERole.EMPATHISER },
+//   ],
+//   current: { stage: EStage.SHARING, speaker: "h" },
 // };
 class ServerStore {
   rooms: IRooms;
   constructor() {
-    this.rooms = {};
+    this.rooms = {
+      // r1: mockRoom,
+    };
   }
 
   getRoom(code: string) {
@@ -75,10 +83,14 @@ class ServerStore {
 
   setSpeakerForRoom(code: string, speaker: string) {
     const selected = this.getUser(code, speaker);
+    const previous = this.getUser(code, this.rooms[code].current.speaker ?? "");
     if (selected && selected.online && !selected.done) {
       this.rooms[code].current.speaker = speaker;
-      return this.rooms[code];
+      if (previous) {
+        previous.done = true;
+      }
     }
+    return this.rooms[code];
   }
 
   setTopicForUser(code: string, username: string, topic: string) {
@@ -91,7 +103,7 @@ class ServerStore {
     return this.rooms[code];
   }
 
-  setRoleForUser(code: string, username: string, role: ERoles) {
+  setRoleForUser(code: string, username: string, role: ERole) {
     const users = this.getRoomUsers(code);
     const userIndex = users.findIndex((user) => user.username === username);
     if (userIndex < 0) {
