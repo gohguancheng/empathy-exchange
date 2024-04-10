@@ -215,6 +215,10 @@ export default function Room() {
   };
 
   const renderStageControl = () => {
+    if (!userData.host) {
+      return <></>;
+    }
+    
     const Wrapper = ({ children }: { children: ReactNode | ReactElement }) => (
       <div className={styles.stageControls}>
         <p>
@@ -223,14 +227,6 @@ export default function Room() {
         {children}
       </div>
     );
-
-    if (!userData.host) {
-      return (
-        <Wrapper>
-          <></>
-        </Wrapper>
-      );
-    }
 
     const hostStage = getUserStage();
 
