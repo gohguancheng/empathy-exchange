@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.userContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 1rem 0;
+}

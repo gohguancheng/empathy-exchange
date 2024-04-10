@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+}
+
+.container h3 {
+  text-align: center;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+.optionsContainer button {
+  font-size: 0.8rem !important;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 10px 0;
+}
+
+.nextButton {
+  max-width: max-content;
+}

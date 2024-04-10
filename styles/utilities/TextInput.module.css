@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  padding: 0 4px;
+  border-bottom: solid 1px !important;
+  margin-top: 1rem;
+}
+
+.container label {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.container input {
+  padding: 8px 0 !important;
+  background-color: transparent;
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+.dark {
+  border-color: white;
+}
+
+.dark label {
+  color: white !important;
+}
+
+.dark input {
+  color: white !important;
+}
+
+.light {
+  border-color: black;
+}
+
+.light label {
+  color: black !important;
+}
+
+.light input {
+  color: black !important;
+}
+
+.error {
+  border-color: rgb(244, 67, 54) !important;
+}
+
+.error label {
+  color: rgb(244, 67, 54) !important;
+}
+
+.error input {
+  color: rgb(244, 67, 54) !important;
+}
+
+.errorMessage {
+  margin-bottom: 0.25rem;
+  height: 0.9rem;
+}
+
+.errorMessage p {
+  font-size: 0.8rem;
+  color: rgb(244, 67, 54);
+}

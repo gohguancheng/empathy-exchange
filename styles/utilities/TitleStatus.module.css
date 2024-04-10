@@ -1,0 +1,23 @@
+.title {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.1rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.me {
+  margin: 0.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.me div {
+  min-width: 40%;
+}

@@ -82,7 +82,8 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 body {
@@ -100,8 +101,71 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button,
+input[type="submit"] {
+  padding: 4px 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 0;
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+  cursor: unset;
+}
+
+input[type="text"] {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border: none;
+}
+
+input[type="text"]:focus {
+  outline: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  * {
+    text-wrap: wrap;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  h6 {
+    font-size: 1.1rem;
+  }
+}
+
+.slide-fade {
+  animation: slide-fade 1s;
+}
+
+@keyframes slide-fade {
+  from {
+    translate: -10px;
+    opacity: 0;
+  }
+  to {
+    translate: 0px;
+    opacity: 100;
   }
 }

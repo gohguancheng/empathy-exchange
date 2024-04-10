@@ -1,0 +1,48 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  padding: 1rem;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main h1 {
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.label {
+  margin-top: 1rem;
+  padding-bottom: 1px;
+}
+
+.submitButton {
+  font-size: 1.2rem;
+  border: 2px white solid;
+}
+
+.submitButton:disabled {
+  font-size: 1.2rem;
+  border: 2px transparent solid;
+}
+
+.backButton {
+  margin: 16px 0;
+  border: 2px white solid;
+  padding: 4px 8px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
