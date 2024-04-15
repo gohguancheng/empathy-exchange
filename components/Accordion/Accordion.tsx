@@ -1,7 +1,6 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import styles from "@/styles/utilities/Accordion.module.css";
 import clsx from "clsx";
-import Image from "next/image";
 
 export default function Accordion({
   titleComponent,
@@ -15,7 +14,7 @@ export default function Accordion({
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(shouldOpen);
-  }, [setOpen]);
+  }, [shouldOpen]);
 
   return (
     <div className={styles.container}>

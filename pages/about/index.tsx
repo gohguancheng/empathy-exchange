@@ -13,7 +13,7 @@ export default function AboutPage() {
         </h1>
       </div>
     ),
-    [styles]
+    []
   );
 
   const renderBody = useCallback(
@@ -24,7 +24,7 @@ export default function AboutPage() {
         ))}
       </div>
     ),
-    [styles]
+    []
   );
 
   return (
