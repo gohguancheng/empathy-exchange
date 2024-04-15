@@ -1,0 +1,67 @@
+.container:hover > div {
+  background-color: #f2f2f2dd;
+  color: #00020f;
+}
+
+.container:hover .minus {
+  background-image: url("/icons/minus-black.svg");
+}
+.container:hover .plus {
+  background-image: url("/icons/plus-black.svg");
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.divider {
+  border-bottom: #f2f2f2dd 1px solid;
+  width: 100%;
+}
+
+.container:hover .divider {
+  border-bottom: #00020f 1px solid;
+}
+
+.bodyContainer {
+  border-radius: 0 0 0.5rem 0.5rem;
+  overflow: hidden;
+  height: auto;
+  max-height: 0;
+  transition: max-height 1s;
+}
+
+.expanded {
+  max-height: 500px;
+}
+
+.icon {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.minus {
+  background: url("/icons/minus-white.svg") no-repeat center;
+  background-size: 40px;
+}
+
+.plus {
+  background: url("/icons/plus-white.svg") no-repeat center;
+  background-size: 40px;
+}
+@media only screen and (max-width: 640px) {
+  .container:hover > div {
+    background-color: #00020f;
+    color: #f2f2f2dd;
+  }
+  .container:hover .minus {
+    background-image: url("/icons/minus-white.svg");
+  }
+  .container:hover .plus {
+    background-image: url("/icons/plus-white.svg");
+  }
+}
