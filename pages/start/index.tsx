@@ -1,7 +1,9 @@
 import styles from "@/styles/Start.module.css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function StartPage() {
+  const router = useRouter();
   return (
     <main className={`${styles.main} slide-fade`}>
       <div className={styles.topbar}>
@@ -26,6 +28,9 @@ export default function StartPage() {
             <p>Join a Space using a passcode given by your host</p>
           </Link>
         </div>
+        {router.query.message && (
+          <p className="error-text">Error: {router.query.message}</p>
+        )}
       </div>
     </main>
   );

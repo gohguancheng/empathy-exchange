@@ -19,7 +19,7 @@ export default function Room() {
     username: string;
   };
   const handleAuthError = (query: { message: string }) => {
-    router.replace({ pathname: "/", query });
+    router.replace({ pathname: "/start", query });
   };
   const { socket, setUserData, userData, socketStatus } = useSocket(
     roomCode,
@@ -31,7 +31,7 @@ export default function Room() {
   useEffect(() => {
     if (router.isReady && !(roomCode && username)) {
       router.replace({
-        pathname: "/",
+        pathname: "/start",
         query: { error: "incomplete params", roomCode, username },
       });
     }
@@ -40,7 +40,7 @@ export default function Room() {
 
   useEffect(() => {
     if (username && userData?.username && username !== userData?.username) {
-      router.replace("/");
+      router.replace("/start");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
