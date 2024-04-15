@@ -54,6 +54,17 @@ input[type="text"]:focus {
   outline: 0;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 @media only screen and (max-width: 640px) {
   * {
     text-wrap: wrap;
@@ -96,6 +107,19 @@ input[type="text"]:focus {
   to {
     translate: 0px;
     opacity: 100;
+  }
+}
+
+.height-grow {
+  animation: height-grow 3s;
+}
+
+@keyframes height-grow {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 2000px;
   }
 }
 
