@@ -1,0 +1,104 @@
+.main {
+  padding: 0 2rem;
+  height: 100dvh;
+  width: 100vw;
+  background-color: #00020f;
+  color: #f2f2f2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  padding-top: 0.5rem;
+  height: 2rem;
+  font-weight: 900;
+}
+
+.container {
+  height: 100%;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.container > h1 {
+  font-weight: 900;
+  font-size: 3rem;
+  text-align: left;
+}
+
+.linkContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.linkContainer > a {
+  padding: 2rem;
+  border: #f2f2f255 1px solid;
+  border-radius: 1rem;
+  width: 48%;
+}
+
+.linkContainer > a:hover {
+  background-color: #f2f2f2dd;
+  color: #00020f;
+}
+
+.linkContainer > a > h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.linkContainer > a > p {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .container {
+    height: 100%;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .container > h1 {
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .linkContainer {
+    width: 100%;
+    display: block;
+  }
+
+  .linkContainer > a {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    min-height: 160px;
+  }
+
+  .linkContainer > a > h3 {
+    font-size: 1.5rem;
+  }
+}
