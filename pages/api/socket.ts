@@ -13,7 +13,7 @@ const attachCredentials = (socket: Socket) => {
   const user = serverStore.getUser(roomCode, username);
   let error;
   if (!user) {
-    error = "User is not registered";
+    error = `User,${username}, has been logged out`;
     // socket.emit("auth_error", { error });
     throw error;
   }
