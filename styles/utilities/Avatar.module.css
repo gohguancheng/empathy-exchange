@@ -13,7 +13,7 @@
   outline: 4px solid #4615b2aa;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 640px) {
   .avatar {
     width: 3rem;
     height: 3rem;

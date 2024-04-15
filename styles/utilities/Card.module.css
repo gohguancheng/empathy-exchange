@@ -46,7 +46,7 @@
   background-color: #76ff03;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 640px) {
   .userCard {
     width: 100%;
     max-width: 400px;
