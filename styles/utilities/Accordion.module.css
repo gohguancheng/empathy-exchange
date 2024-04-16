@@ -43,8 +43,8 @@
   width: 50px;
   margin: 10px;
   cursor: pointer;
-  -webkit-transition: background-image 1s ease-in-out;
-  transition: background-image 1s ease-in-out;
+  -webkit-transition: background-image 0.3s ease-in-out;
+  transition: background-image 0.3s ease-in-out;
 }
 
 .minus {
@@ -66,5 +66,15 @@
   }
   .container:hover .plus {
     background-image: url("/icons/plus-white.svg");
+  }
+
+  .minus {
+    background: url("/icons/minus-white.svg") no-repeat center;
+    background-size: 30px;
+  }
+  
+  .plus {
+    background: url("/icons/plus-white.svg") no-repeat center;
+    background-size: 30px;
   }
 }
