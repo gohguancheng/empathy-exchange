@@ -30,7 +30,8 @@
   overflow: hidden;
   height: auto;
   max-height: 0;
-  transition: max-height 1s;
+  -webkit-transition: max-height 1s ease-in-out;
+  transition: max-height 1s ease-in-out;
 }
 
 .expanded {
@@ -42,6 +43,8 @@
   width: 50px;
   margin: 10px;
   cursor: pointer;
+  -webkit-transition: background-image 1s ease-in-out;
+  transition: background-image 1s ease-in-out;
 }
 
 .minus {
