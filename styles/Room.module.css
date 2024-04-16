@@ -1,7 +1,6 @@
 .main {
   background-color: #00020f;
-  color: #f2f2f2;
-
+  color: #f2f2f2dd;
   height: 100dvh;
   width: 100%;
 }
@@ -9,48 +8,100 @@
 .main > div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  gap: 2rem;
+  padding: 1rem 2rem;
   height: 100%;
   width: 100%;
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
-.main h1 {
+.main a {
+  font-size: 1rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  border: #f2f2f2dd solid 1px;
+  border-radius: 0.5rem;
+  width: max-content;
+  max-width: 100%;
+  margin: 1rem auto;
+}
+
+.main a:hover {
+  background-color: #f2f2f2dd;
+  color: #00020f;
+}
+
+.topSection {
   text-align: center;
-  font-size: 1.6rem;
+  margin-bottom: 4rem;
+}
+
+.topSection > a {
+  font-size: 1rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  border: #f2f2f2dd solid 1px;
+  border-radius: 0.5rem;
+  width: max-content;
+  max-width: 100%;
+  margin: 1rem auto;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex: 1 0 auto;
 }
 
-.label {
-  margin-top: 1rem;
-  padding-bottom: 1px;
+.form > h2 {
+  font-size: 2.5rem;
+  min-height: 120px;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
 }
 
 .submitButton {
-  font-size: 1.2rem;
-  border: 2px white solid;
+  display: block;
+  font-size: 1.5rem;
+  border: 2px #f2f2f2dd solid;
+  padding: 0.25rem 1rem;
 }
 
 .submitButton:disabled {
-  font-size: 1.2rem;
   border: 2px transparent solid;
 }
 
-.backButton {
-  margin: 16px 0;
-  border: 2px white solid;
-  padding: 4px 8px;
-  border-radius: 0.5rem;
-  cursor: pointer;
+@media only screen and (max-width: 640px) {
+  .main a {
+    font-size: 0.8rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border: #f2f2f2dd solid 1px;
+    border-radius: 0.5rem;
+    width: max-content;
+    max-width: 100%;
+    margin: 1rem auto;
+  }
+
+  .main a:hover {
+    background-color: #00020f;
+    color: #f2f2f2dd;
+  }
+
+  .form > h2 {
+    font-size: 1.75rem;
+    min-height: 100px;
+  }
+
+  .topSection {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }

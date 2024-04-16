@@ -1,6 +1,6 @@
 import styles from "@/styles/Room.module.css";
 import TextInput from "@/components/TextInput/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -91,9 +91,55 @@ export default function Room() {
     } catch (e) {}
   };
 
+  useEffect(() => {
+    setCodeInput({ value: "" });
+    setUserInput({ value: "" });
+    setShowUserInput(false);
+  }, [isHost]);
+
+  const renderTopSection = () => {
+    if (isHost) {
+      return (
+        <div className={styles.topSection}>
+          <div>Creating a Space</div>
+          <Link href="/room">Join a space as Peer instead</Link>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.topSection}>
+        <div>Joining a Space</div>
+        <Link href={{ pathname: "/room", query: { host: "true" } }}>
+          Host a Space instead
+        </Link>
+      </div>
+    );
+  };
+
+  const renderInputLabel = () => {
+    if (showUserInput) {
+      return <h2>Enter your display name</h2>;
+    }
+
+    if (isHost) {
+      return (
+        <h2>
+          Enter a passcode that Peers will use to access your Space
+        </h2>
+      );
+    }
+
+    if (!isHost) {
+      return <h2>Enter a passcode given by your Host to access the Space</h2>;
+    }
+  };
+
   return (
     <main className={styles.main}>
       <div className="slide-fade">
+        {renderTopSection()}
+
         <form
           className={styles.form}
           onSubmit={(evt) => {
@@ -101,17 +147,20 @@ export default function Room() {
             handleSubmit();
           }}
         >
-          <h2>{roomInputLabel}</h2>
+          {renderInputLabel()}
           {showCodeInput && (
             <>
               <TextInput
-                label="Huddle Code"
+                label="Space Passcode"
+                placeholder={`Enter ${
+                  isHost ? "a unique" : "the given"
+                } passcode`}
                 value={codeInput.value}
                 onChange={(value) =>
                   setCodeInput(() => ({ value, isValid: false, error: "" }))
                 }
                 onValidate={validateRoomCode}
-                delay={300}
+                delay={200}
                 errorMessage={codeInput.error}
               />
               <button
@@ -126,13 +175,14 @@ export default function Room() {
           {showUserInput && (
             <>
               <TextInput
-                label="Username"
+                label="Display Name"
+                placeholder="Use a unique display name"
                 value={userInput.value}
                 onChange={(value) =>
                   setUserInput({ value, isValid: false, error: "" })
                 }
                 onValidate={validateUsername}
-                delay={300}
+                delay={200}
                 errorMessage={userInput.error}
               />
             </>
