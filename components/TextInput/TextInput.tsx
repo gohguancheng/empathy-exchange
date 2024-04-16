@@ -7,6 +7,7 @@ const filter = new Filter();
 
 interface TextInputProps {
   label?: string;
+  placeholder?: string;
   value: string;
   onChange: (v: string) => void;
   delay?: number;
@@ -20,6 +21,7 @@ interface TextInputProps {
 export default function TextInput(props: TextInputProps) {
   const {
     label,
+    placeholder = "",
     onChange,
     value = "",
     delay = 2000,
@@ -87,6 +89,7 @@ export default function TextInput(props: TextInputProps) {
         {!!label && <label>{label}</label>}{" "}
         <input
           type="text"
+          placeholder={placeholder}
           value={localValue}
           onChange={handleOnChange}
           disabled={disabled}
