@@ -2,7 +2,7 @@
   height: 100dvh;
   width: 100dvw;
   background-color: #00020f;
-  color: #f2f2f2;
+  color: #f2f2f2dd;
   padding: 0 1rem 1rem 1rem;
   overflow-y: auto;
 }
@@ -15,7 +15,7 @@
   font-size: 2rem;
   display: block;
   padding: 0.5rem 1rem;
-  border: #f2f2f2 solid 1px;
+  border: #f2f2f2dd solid 1px;
   border-radius: 0.5rem;
   width: max-content;
   max-width: 100%;
@@ -23,7 +23,7 @@
 }
 
 .container > a:hover {
-  background-color: #f2f2f2;
+  background-color: #f2f2f2dd;
   color: #00020f;
 }
 
@@ -70,6 +70,7 @@
 
 .bodyComponent > p {
   margin-bottom: 1rem;
+  line-height: 1.5rem;
 }
 
 @media only screen and (max-width: 640px) {
@@ -84,7 +85,17 @@
     text-transform: lowercase;
   }
 
+  .bodyComponent {
+    padding: 0.25rem 1rem;
+  }
+
   .bodyComponent > p {
-    font-size: 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.35rem;
+  }
+
+  .container > a {
+    margin: 2rem auto;
   }
 }
