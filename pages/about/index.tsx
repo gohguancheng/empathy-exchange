@@ -28,8 +28,8 @@ export default function AboutPage() {
   );
 
   return (
-    <main className={`${styles.main} slide-fade no-scrollbar`}>
-      <div className={styles.container}>
+    <main className={`${styles.main} no-scrollbar`}>
+      <div className={`${styles.container} slide-fade`}>
         <div className={styles.topbar}>
           <Link href="/">Empathy Exchange</Link>
         </div>

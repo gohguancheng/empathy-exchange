@@ -92,63 +92,65 @@ export default function Room() {
   };
 
   return (
-    <main className={`${styles.main} slide-fade`}>
-      <form
-        className={styles.form}
-        onSubmit={(evt) => {
-          evt.preventDefault();
-          handleSubmit();
-        }}
-      >
-        <h2>{roomInputLabel}</h2>
-        {showCodeInput && (
-          <>
-            <TextInput
-              label="Huddle Code"
-              value={codeInput.value}
-              onChange={(value) =>
-                setCodeInput(() => ({ value, isValid: false, error: "" }))
-              }
-              onValidate={validateRoomCode}
-              delay={300}
-              errorMessage={codeInput.error}
-            />
-            <button
+    <main className={styles.main}>
+      <div className="slide-fade">
+        <form
+          className={styles.form}
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <h2>{roomInputLabel}</h2>
+          {showCodeInput && (
+            <>
+              <TextInput
+                label="Huddle Code"
+                value={codeInput.value}
+                onChange={(value) =>
+                  setCodeInput(() => ({ value, isValid: false, error: "" }))
+                }
+                onValidate={validateRoomCode}
+                delay={300}
+                errorMessage={codeInput.error}
+              />
+              <button
+                className={styles.submitButton}
+                disabled={!codeInput.isValid}
+                onClick={() => setShowUserInput(true)}
+              >
+                Next
+              </button>
+            </>
+          )}
+          {showUserInput && (
+            <>
+              <TextInput
+                label="Username"
+                value={userInput.value}
+                onChange={(value) =>
+                  setUserInput({ value, isValid: false, error: "" })
+                }
+                onValidate={validateUsername}
+                delay={300}
+                errorMessage={userInput.error}
+              />
+            </>
+          )}
+          {showUserInput && (
+            <input
               className={styles.submitButton}
-              disabled={!codeInput.isValid}
-              onClick={() => setShowUserInput(true)}
-            >
-              Next
-            </button>
-          </>
-        )}
-        {showUserInput && (
-          <>
-            <TextInput
-              label="Username"
-              value={userInput.value}
-              onChange={(value) =>
-                setUserInput({ value, isValid: false, error: "" })
-              }
-              onValidate={validateUsername}
-              delay={300}
-              errorMessage={userInput.error}
+              type="submit"
+              value="Submit"
+              disabled={!allowSubmit}
             />
-          </>
-        )}
-        {showUserInput && (
-          <input
-            className={styles.submitButton}
-            type="submit"
-            value="Submit"
-            disabled={!allowSubmit}
-          />
-        )}
-      </form>
+          )}
+        </form>
 
-      <Link tabIndex={-1} className={styles.backButton} href="/">
-        Back to Home
-      </Link>
+        <Link tabIndex={-1} className={styles.backButton} href="/">
+          Back to Home
+        </Link>
+      </div>
     </main>
   );
 }
