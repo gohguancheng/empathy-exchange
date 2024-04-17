@@ -30,31 +30,6 @@
   flex: 1 1 auto;
 }
 
-.topbar {
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.stageControls {
-  width: 100%;
-  height: 2.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stageControls > p {
-  font-size: 0.8rem;
-  padding: 0.25rem;
-  border-radius: 0.4rem;
-  border: #ffffff 2px solid;
-}
-
 @media only screen and (max-width: 640px) {
-  .topbar {
-    width: max-content;
-    max-width: 100%;
-    margin: 0 auto;
-  }
+ 
 }

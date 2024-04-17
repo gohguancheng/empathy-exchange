@@ -50,7 +50,7 @@ export const SharingDashboard = (props: SharingDashboardProps) => {
   };
 
   const handleConfirm = async () => {
-    await onUpdate(nextUser);
+    onUpdate(nextUser);
     setNextUser(() => "");
   };
 
@@ -88,5 +88,5 @@ type SharingDashboardProps = {
   currentUser: IUserData;
   users?: IUser[];
   speaker?: string;
-  onUpdate: (spker: string) => Promise<void>;
+  onUpdate: (spker: string) => void;
 };
