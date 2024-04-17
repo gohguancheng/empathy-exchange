@@ -29,7 +29,7 @@ export function SpaceTopBar() {
   }, [currentStage, me, users]);
 
   return (
-    <div className={styles.tobar}>
+    <div className={styles.topbar}>
       <TitleStatus {...topbarData} />
     </div>
   );
