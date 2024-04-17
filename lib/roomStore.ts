@@ -84,7 +84,7 @@ class ServerStore {
   setSpeakerForRoom(code: string, speaker: string) {
     const selected = this.getUser(code, speaker);
     const previous = this.getUser(code, this.rooms[code].current.speaker ?? "");
-    if (selected && selected.online && !selected.done) {
+    if (selected && selected.online && (!selected.done || selected.host)) {
       this.rooms[code].current.speaker = speaker;
       if (previous) {
         previous.done = true;
