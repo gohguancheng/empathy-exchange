@@ -22,10 +22,6 @@ export default function Room() {
   const searchParams = useSearchParams();
   const isHost = searchParams.get("host") === "true";
 
-  const roomInputLabel = isHost
-    ? "Enter a code to create / rejoin a huddle you are hosting"
-    : "Enter a valid code to join an existing huddle";
-
   const showCodeInput = !showUserInput;
   const allowSubmit = codeInput.isValid && !!userInput.isValid;
 
