@@ -7,20 +7,48 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
+  position: relative;
 }
 
 .outline {
   outline: 4px solid #4615b2aa;
 }
 
-@media only screen and (max-width: 640px) {
+.indicator {
+  position: absolute;
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: rgb(244, 67, 54);
+  border-radius: 1.2em;
+  bottom: 0.125rem;
+  right: -0.1rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.dotGreen {
+  background-color: #76ff03;
+}
+
+@media only screen and (max-width: 768px) {
   .avatar {
     width: 3rem;
     height: 3rem;
-    border-radius: 3rem; margin: 1rem auto;;
+    border-radius: 3rem;
+    margin: 1rem auto;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+  }
+
+  .indicator {
+    height: 0.8rem;
+    width: 0.8rem;
+    border-radius: 0.8rem;
+    bottom: 0.125rem;
+    right: -0.1rem;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5),
+      0 8px 10px -6px rgb(0 0 0 / 0.5);
   }
 }

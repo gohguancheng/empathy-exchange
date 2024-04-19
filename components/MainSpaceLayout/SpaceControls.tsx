@@ -2,11 +2,11 @@ import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { EStage } from "@/utils/types";
 import { useContext } from "react";
 import styles from "@/styles/SpaceControls.module.css";
+import { useRouter } from "next/router";
 
 export function SpaceControls() {
-  const { setStage, roomCode, me, currentStage, users } =
-    useContext(SocketStateContext);
-
+  const { setStage, me, currentStage, users } = useContext(SocketStateContext);
+  const { roomCode } = useRouter().query;
   const renderStageControl = () => {
     if (!me?.host) {
       return <></>;
@@ -14,8 +14,10 @@ export function SpaceControls() {
 
     switch (currentStage) {
       case EStage.WAITING:
+        const [_, ...otherUsers] = users || [];
         return (
           <button
+            disabled={otherUsers.every((u) => !u.online)}
             onClick={() => {
               setStage(EStage.TOPIC_INPUT);
             }}
@@ -71,7 +73,8 @@ export function SpaceControls() {
   return (
     <div className={styles.stageControls}>
       <p>
-        <span>{roomCode}</span>
+        <span>🗝️</span>
+        {roomCode}
       </p>
       {renderStageControl()}
     </div>

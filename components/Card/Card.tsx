@@ -9,30 +9,27 @@ export const Card = ({
   isOnline = false,
   index = 0,
 }: CardProps) => {
+  const subtitle = `${isHost ? "Host" : "Peer"}`;
   return (
-    <div key={name} className={styles.userCard}>
+    <div
+      key={name}
+      className={clsx(styles.userCard, { [styles.hostBackground]: isHost })}
+    >
       <Avatar
-        name={name}
+        name={name ?? ""}
         index={index}
         grayOut={!isOnline}
         outline={highlight}
+        online={isOnline}
       />
       <div>
-        <h5>
-          {isOnline ? (
-            <span
-              className={clsx(styles.dot, { [styles.dotGreen]: isOnline })}
-            ></span>
-          ) : (
-            <span className={styles.dot}></span>
-          )}
-          {name || "—"}
-        </h5>
+        <h5>{name || "—"}</h5>
 
-        <div className={styles.userIconContainer}>
-          {highlight && <span>😎</span>}
-          {isHost && <span>🧭</span>}
-        </div>
+        <p>
+          {subtitle} {highlight ? "(You)" : ""}
+          {" "}
+          <span>{isHost ? "😉" : "😊"}</span>
+        </p>
       </div>
     </div>
   );

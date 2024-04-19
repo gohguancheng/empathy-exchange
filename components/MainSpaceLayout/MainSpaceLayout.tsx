@@ -6,7 +6,7 @@ import { SpaceBody } from "./SpaceBody";
 import { SpaceControls } from "./SpaceControls";
 
 export function MainSpaceLayout() {
-  const { showSpinner, currentStage } = useContext(SocketStateContext);
+  const { showSpinner } = useContext(SocketStateContext);
   const Spinner = memo(
     dynamic(() => import("@/components/Spinner/Spinner"), {
       ssr: false,

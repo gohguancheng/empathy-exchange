@@ -8,7 +8,8 @@ export const Avatar = ({
   outline = false,
   grayOut = false,
   index = 0,
-}) => {
+  online,
+}: AvatarProps) => {
   const initials = useMemo(() => {
     if ([1, 2].includes(name.length)) {
       return name.toUpperCase();
@@ -35,6 +36,11 @@ export const Avatar = ({
       })}
     >
       {initials}
+      {typeof online === "boolean" && (
+        <div
+          className={clsx(styles.indicator, { [styles.dotGreen]: online })}
+        />
+      )}
     </div>
   );
 };
@@ -44,4 +50,5 @@ type AvatarProps = {
   index: number;
   grayOut?: boolean;
   outline?: boolean;
+  online?: boolean;
 };

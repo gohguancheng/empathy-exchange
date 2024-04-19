@@ -10,7 +10,6 @@ export function SpaceBody() {
   const {
     currentStage,
     me,
-    roomCode = "",
     users,
     currentSpeaker,
     setTopic,
@@ -22,9 +21,7 @@ export function SpaceBody() {
     if (!me) return <></>;
     switch (currentStage) {
       case EStage.WAITING:
-        return (
-          <WaitingRoom roomCode={roomCode} currentUser={me} users={users} />
-        );
+        return <WaitingRoom />;
       case EStage.TOPIC_INPUT:
         return <TopicInput currentUser={me} onSubmit={setTopic} />;
       case EStage.ROLE_SELECT:
