@@ -1,16 +1,20 @@
 import { IUser } from "@/utils/types";
 import styles from "@/styles/utilities/TitleStatus.module.css";
 import { Chip } from "../Chip/Chip";
+import clsx from "clsx";
 
 export const TitleStatus = ({
   title,
   users,
   checkKey,
   me,
+  darkFont,
 }: TitleStatusProps) => {
   return (
     <>
-      <h1 className={styles.title}>{title}</h1>
+      <h1 className={clsx(styles.title, { [styles.darkFont]: darkFont })}>
+        {title}
+      </h1>
       {!!checkKey && (
         <>
           <div className={styles.topGrid}>
@@ -41,4 +45,5 @@ type TitleStatusProps = {
   users?: IUser[];
   checkKey?: keyof IUser;
   me: IUser;
+  darkFont: boolean;
 };

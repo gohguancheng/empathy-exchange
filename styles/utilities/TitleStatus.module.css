@@ -1,6 +1,11 @@
 .title {
   text-align: center;
   margin-bottom: 0.5rem;
+  color: #f2f2f2dd;
+}
+
+.darkFont {
+  color: #00020f;
 }
 
 .topGrid {
