@@ -24,13 +24,13 @@ export function SpaceTopBar() {
         return { ...base, title: "Sharing Topic", checkKey: "topic" };
       case EStage.WAITING:
       default:
-        return { ...base, title: "Waiting for more to join.." };
+        return { ...base, title: "Waiting for more Peers.." };
     }
   }, [currentStage, me, users]);
 
   return (
     <div className={styles.topbar}>
-      <TitleStatus {...topbarData} />
+      <TitleStatus {...topbarData} darkFont={currentStage === EStage.SHARING} />
     </div>
   );
 }

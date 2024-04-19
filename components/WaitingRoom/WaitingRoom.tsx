@@ -1,44 +1,41 @@
-import { IUserData } from "@/utils/types";
 import styles from "@/styles/WaitingRoom.module.css";
 import { Card } from "../Card/Card";
 import { ParticipantsCounter } from "../ParticipantsCounter/ParticipantsCounter";
+import { useCallback, useContext } from "react";
+import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 
-export const WaitingRoom = (props: WaitRoomProps) => {
-  const { currentUser, users } = props;
+export const WaitingRoom = () => {
+  const { me, users } = useContext(SocketStateContext);
 
-  const isMe = (user: string) => {
-    return !!user && !!currentUser?.username && currentUser.username === user;
-  };
+  const isMe = useCallback(
+    (user: string) => {
+      return !!user && !!me?.username && me.username === user;
+    },
+    [me]
+  );
 
-  const renderUsers = () => (
-    <div className={styles.userContainer}>
-      {users?.map((u, i) => (
-        <Card
-          key={u.username}
-          name={u.username}
-          highlight={isMe(u.username)}
-          isHost={u.host}
-          isOnline={!!u.online}
-          index={i}
-        />
-      )) ?? "No users found"}
-    </div>
+  const renderUsers = useCallback(
+    () => (
+      <div className={styles.userContainer}>
+        {users?.map((u, i) => (
+          <Card
+            key={u.username}
+            name={u.username}
+            highlight={isMe(u.username)}
+            isHost={i === 0}
+            isOnline={!!u.online}
+            index={i}
+          />
+        )) ?? "No users found"}
+      </div>
+    ),
+    [users, isMe]
   );
 
   return (
     <div className={styles.container}>
       <ParticipantsCounter users={users} />
       {renderUsers()}
-      <div className={styles.legend}>
-        <span>😎 You</span>
-        <span>🧭 Host</span>
-      </div>
     </div>
   );
-};
-
-type WaitRoomProps = {
-  roomCode: string;
-  currentUser?: IUserData;
-  users?: IUserData[];
 };
