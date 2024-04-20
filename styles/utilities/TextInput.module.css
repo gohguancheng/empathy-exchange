@@ -29,12 +29,22 @@
   color: white !important;
 }
 
+.dark > input::-webkit-input-placeholder {
+  color: white !important;
+  opacity: 50%;
+}
+
 .dark > input::-moz-placeholder {
   color: white !important;
   opacity: 50%;
 }
 
-.dark > input::-webkit-input-placeholder {
+.dark > input::-ms-placeholder {
+  color: white !important;
+  opacity: 50%;
+}
+
+.dark > input::placeholder {
   color: white !important;
   opacity: 50%;
 }
@@ -57,6 +67,16 @@
 }
 
 .light > input::-moz-placeholder {
+  color: black !important;
+  opacity: 50%;
+}
+
+.light > input::-ms-placeholder {
+  color: black !important;
+  opacity: 50%;
+}
+
+.light > input::placeholder {
   color: black !important;
   opacity: 50%;
 }
