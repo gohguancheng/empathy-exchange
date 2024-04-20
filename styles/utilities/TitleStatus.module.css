@@ -2,6 +2,7 @@
   text-align: center;
   margin-bottom: 0.5rem;
   color: #f2f2f2dd;
+  font-weight: 800;
 }
 
 .darkFont {
@@ -10,19 +11,56 @@
 
 .topGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 0.1rem;
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-items: stretch;
+  align-items: stretch;
+  border-bottom-left-radius: 8px;
 }
 
-.me {
-  margin: 0.5rem auto;
+.tab {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  padding: 1rem 2rem;
+  text-align: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 }
 
-.me div {
-  min-width: 40%;
+.done {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+}
+
+.offline {
+  opacity: 75%;
+  background-color: #f5f5f5;
+  color: #212121;
+}
+
+.tab > div:first-child {
+  margin-bottom: 0.25rem;
+  font-weight: 800;
+}
+
+.tab > div:nth-child(2) {
+  font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .tab {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .tab > div:nth-child(2) {
+    font-size: 0.8rem;
+  }
 }

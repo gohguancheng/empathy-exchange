@@ -12,7 +12,10 @@ export function SpaceTopBar() {
   } = useContext(SocketStateContext);
 
   const topbarData = useMemo((): TopbarData => {
-    const base = { me, users: users.filter((u) => u.username !== me.username) };
+    const base = {
+      me,
+      users,
+    };
     switch (currentStage) {
       case EStage.END:
         return { ...base, title: "End", checkKey: "done" };
@@ -30,7 +33,11 @@ export function SpaceTopBar() {
 
   return (
     <div className={styles.topbar}>
-      <TitleStatus {...topbarData} darkFont={currentStage === EStage.SHARING} />
+      <TitleStatus
+        {...topbarData}
+        stage={currentStage as EStage}
+        darkFont={currentStage === EStage.SHARING}
+      />
     </div>
   );
 }
@@ -40,4 +47,5 @@ type TopbarData = {
   users: IUser[];
   me: IUserData;
   checkKey?: keyof IUser;
+  stage?: EStage | Omit<EStage, EStage.SHARING>;
 };
