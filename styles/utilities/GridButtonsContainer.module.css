@@ -19,7 +19,7 @@
   .optionsContainer {
     gap: 0.5rem;
     max-width: 100%;
-    margin: 0.8rem auto;
+    margin: 0.5rem auto;
   }
 
   .optionsContainer > button {

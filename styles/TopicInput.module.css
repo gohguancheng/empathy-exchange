@@ -17,10 +17,17 @@
 }
 
 .form > input[type="submit"] {
+  font-size: 1.5rem;
+}
+
+.submittedContainer > button {
+  font-size: 1rem;
+  margin: 1rem auto;
 }
 
 .submittedContainer {
   padding: 2rem;
+  text-align: center;
 }
 
 .reset {
@@ -35,6 +42,12 @@
   padding: 10px 0;
 }
 
+.emphasize {
+  font-family: monospace;
+  letter-spacing: 0.1rem;
+  font-size: 2rem;
+}
+
 @media only screen and (max-width: 640px) {
   .container h3 {
     font-size: 1.5rem;
@@ -43,5 +56,9 @@
 
   .form {
     gap: 0;
+  }
+
+  .form > input[type="submit"] {
+    font-size: 1.2rem;
   }
 }
