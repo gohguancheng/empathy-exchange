@@ -1,13 +1,15 @@
 .userCard {
   width: 220px;
   max-width: 100%;
+  height: 100%;
   background-color: #97d077;
   border-radius: 0.5rem;
   padding: 1rem;
   color: #00020f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-
 
 .hostBackground {
   background-color: #ffdb57;
@@ -16,6 +18,7 @@
 .userCard h5 {
   font-weight: 900;
   font-size: 1.6rem;
+  min-height: 60px;
 }
 
 .userCard p {
@@ -52,11 +55,13 @@
     max-width: 400px;
     background-color: #97d077;
     border-radius: 0.5rem;
-    padding: 0.2rem 1.5rem;
+    padding: 0.2rem 1rem;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
+    overflow: hidden;
   }
 
   .hostBackground {
@@ -67,20 +72,30 @@
     text-align: left;
   }
 
+  .userCard > div {
+    min-width: max-content;
+  }
+
   .userCard > div:last-child {
-    flex-grow: 1;
+    flex: 1 1 auto;
   }
 
   .userCard h5 {
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    max-width: 200px;
+    height: auto;
+    min-height: auto;
     margin-bottom: 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .userCard p {
     font-weight: 900;
     font-size: 0.7rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.1rem 0.2rem;
     margin: 0;
   }
 
