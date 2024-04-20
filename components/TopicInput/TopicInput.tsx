@@ -30,7 +30,7 @@ export const TopicInput = () => {
         "Romantic Troubles",
         "Academic Challenges",
         "Career Dilemma",
-        "Financial Stresses",
+        "Financial Stress",
         "Identity and Self Esteem",
       ].map((e, i) => (
         <button key={i} disabled={!!me?.topic} onClick={() => setInput(e)}>
@@ -61,6 +61,7 @@ export const TopicInput = () => {
           >
             <TextInput
               label="Sharing Topic"
+              placeholder="Enter a topic"
               value={input}
               onChange={(value) => {
                 setStatus({});
@@ -86,7 +87,8 @@ export const TopicInput = () => {
       ) : (
         <>
           <div className={styles.submittedContainer}>
-            <h3>{`You have decided to share about ${me?.topic}`}</h3>
+            <h3>You will share about</h3>
+            <p className={styles.emphasize}>{me?.topic}</p>
             <button onClick={() => setTopic("")} className={styles.reset}>
               Reset Sharing Topic
             </button>
