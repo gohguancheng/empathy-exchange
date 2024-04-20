@@ -25,8 +25,18 @@
   color: white !important;
 }
 
-.dark input {
+.dark > input {
   color: white !important;
+}
+
+.dark > input::-moz-placeholder {
+  color: white !important;
+  opacity: 50%;
+}
+
+.dark > input::-webkit-input-placeholder {
+  color: white !important;
+  opacity: 50%;
 }
 
 .light {
@@ -37,8 +47,18 @@
   color: black !important;
 }
 
-.light input {
+.light > input {
   color: black !important;
+}
+
+.light > input::-webkit-input-placeholder {
+  color: black !important;
+  opacity: 50%;
+}
+
+.light > input::-moz-placeholder {
+  color: black !important;
+  opacity: 50%;
 }
 
 .error {

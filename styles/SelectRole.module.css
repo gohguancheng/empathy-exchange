@@ -50,12 +50,14 @@
 .description > p > span {
   font-size: 1.5rem;
 }
+
 .instruction {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
 
 .container > h4 {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
   padding-bottom: 0.25rem;
   font-style: italic;
 }
@@ -68,5 +70,13 @@
   .container h3 {
     font-size: 1.75rem;
     line-height: 2rem;
+  }
+
+  .instruction {
+    margin: 0.5rem 0;
+  }
+
+  .container > h4 {
+    font-size: 1.25rem;
   }
 }
