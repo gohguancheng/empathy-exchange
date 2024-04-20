@@ -23,7 +23,7 @@ export function SpaceBody() {
       case EStage.WAITING:
         return <WaitingRoom />;
       case EStage.TOPIC_INPUT:
-        return <TopicInput currentUser={me} onSubmit={setTopic} />;
+        return <TopicInput />;
       case EStage.ROLE_SELECT:
         return <SelectRole currentUser={me} onSelect={setRole} />;
       case EStage.SHARING:
