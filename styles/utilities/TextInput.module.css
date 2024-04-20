@@ -56,6 +56,9 @@
 .errorMessage {
   margin-bottom: 0.25rem;
   height: 0.9rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
 }
 
 .errorMessage p {

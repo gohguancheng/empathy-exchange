@@ -1,7 +1,7 @@
 import { EStage, IUser } from "@/utils/types";
 import styles from "@/styles/utilities/TitleStatus.module.css";
 import clsx from "clsx";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { getInitials } from "@/utils/string";
 
@@ -35,7 +35,13 @@ export const TitleStatus = ({
       case EStage.SHARING: {
         return {
           isMe: me.username === user.username,
-          status: currentSpeaker && user.username === currentSpeaker,
+          status: !!(currentSpeaker && user.username === currentSpeaker),
+        };
+      }
+      case EStage.END: {
+        return {
+          isMe: me.username === user.username,
+          status: !!user.done,
         };
       }
       default:
@@ -43,10 +49,25 @@ export const TitleStatus = ({
     }
   };
 
-  const elements = Array.from(Array(5).keys()).map((i) => ({
+  const elements: TabElement[] = Array.from(Array(5).keys()).map((i) => ({
     ...(users[i] || {}),
     ...getStatusKey(users[i]),
   }));
+
+  const getStatusEmoji = useCallback(
+    (user: TabElement): string => {
+      const isTrue = stage === EStage.SHARING ? "🎙️" : "✅";
+      const isFalse = stage === EStage.SHARING ? "🎧" : "🤔";
+
+      if (!(user && user.username)) return "";
+      if (!user.online) return "❌";
+      if (user.status === false) return isFalse;
+      if (user.status) return isTrue;
+
+      return "";
+    },
+    [stage]
+  );
 
   return (
     <>
@@ -56,8 +77,9 @@ export const TitleStatus = ({
 
       {!!checkKey && (
         <div className={styles.topGrid}>
-          {elements.map((user) => (
+          {elements.map((user, i) => (
             <div
+              key={`${user.username}-${i}`}
               className={clsx(styles.tab, {
                 [styles.done]: user.status,
                 [styles.offline]: !user.online,
@@ -67,7 +89,9 @@ export const TitleStatus = ({
                 {user.username ? getInitials(user.username) : "—"}{" "}
                 {user.isMe ? "(You)" : ""}
               </div>
-              <div>{user?.status ? "✅" : user.username ? "🤔" : ""}</div>
+              <div key={`${user.status}`} className="slide-fade">
+                {getStatusEmoji(user)}
+              </div>
             </div>
           ))}
         </div>
@@ -84,3 +108,5 @@ type TitleStatusProps = {
   darkFont: boolean;
   stage?: EStage;
 };
+
+type TabElement = IUser & { isMe?: boolean; status?: boolean };
