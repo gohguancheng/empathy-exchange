@@ -1,5 +1,6 @@
 import styles from "@/styles/utilities/Avatar.module.css";
 import color from "@/styles/utilities/CommonColors.module.css";
+import { getInitials } from "@/utils/string";
 import clsx from "clsx";
 import { useMemo } from "react";
 
@@ -11,16 +12,7 @@ export const Avatar = ({
   online,
 }: AvatarProps) => {
   const initials = useMemo(() => {
-    if ([1, 2].includes(name.length)) {
-      return name.toUpperCase();
-    } else {
-      return name
-        .replace(/[_-]/g, " ")
-        .split(" ")
-        .map((str) => str[0].toUpperCase())
-        .join("")
-        .slice(0, 2);
-    }
+    return getInitials(name);
   }, [name]);
 
   return (
