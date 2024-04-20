@@ -15,8 +15,6 @@ export const TitleStatus = ({
 }: TitleStatusProps) => {
   const { currentSpeaker } = useContext(SocketStateContext);
 
-  if (!users || !stage) return <></>;
-
   const getStatusKey = (user: IUser) => {
     if (!user) return {};
     switch (stage) {
@@ -49,11 +47,6 @@ export const TitleStatus = ({
     }
   };
 
-  const elements: TabElement[] = Array.from(Array(5).keys()).map((i) => ({
-    ...(users[i] || {}),
-    ...getStatusKey(users[i]),
-  }));
-
   const getStatusEmoji = useCallback(
     (user: TabElement): string => {
       const isTrue = stage === EStage.SHARING ? "🎙️" : "✅";
@@ -68,6 +61,12 @@ export const TitleStatus = ({
     },
     [stage]
   );
+
+  if (!users || !stage) return <></>;
+  const elements: TabElement[] = Array.from(Array(5).keys()).map((i) => ({
+    ...(users[i] || {}),
+    ...getStatusKey(users[i]),
+  }));
 
   return (
     <>
