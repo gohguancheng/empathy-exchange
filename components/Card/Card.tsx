@@ -13,7 +13,9 @@ export const Card = ({
   return (
     <div
       key={name}
-      className={clsx(styles.userCard, { [styles.hostBackground]: isHost })}
+      className={clsx(styles.userCard, "slide-fade", {
+        [styles.hostBackground]: isHost,
+      })}
     >
       <Avatar
         name={name ?? ""}
@@ -26,8 +28,7 @@ export const Card = ({
         <h5>{name || "—"}</h5>
 
         <p>
-          {subtitle} {highlight ? "(You)" : ""}
-          {" "}
+          {subtitle} {highlight ? "(You)" : ""}{" "}
           <span>{isHost ? "😉" : "😊"}</span>
         </p>
       </div>
