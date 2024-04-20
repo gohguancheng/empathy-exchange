@@ -1,9 +1,10 @@
 import { roles } from "@/lib/roles";
-import {  ERole } from "@/utils/types";
-import { ReactNode, useContext, useMemo, useState } from "react";
+import { ERole } from "@/utils/types";
+import { ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import styles from "@/styles/SelectRole.module.css";
 import { GridButtonsContainer } from "../GridButtonsContainer/GridButtonsContainer";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
+import { ScrollContainer } from "../ScrollContainer/ScrollContainer";
 
 export const SelectRole = () => {
   const { setRole, me } = useContext(SocketStateContext);
@@ -15,20 +16,26 @@ export const SelectRole = () => {
     [me?.role]
   );
 
-  const renderDescription = (): ReactNode => {
+  const renderDescription = useCallback((): ReactNode => {
     return (
       <div className={styles.description}>
-        <div>
-          <p>
-            As <span className={styles.large}>{selectedRole.label}</span>,
-          </p>
+        <p>
+          As <span className={styles.large}>{selectedRole.label}</span>,
+        </p>
+
+        <ScrollContainer>
           {selectedRole.description.map((l, i) => (
-            <p key={`${selectedRole.label} - ${i}`}>- {l}</p>
+            <p
+              key={`${selectedRole.label} - ${i}`}
+              className={styles.instruction}
+            >
+              - {l}
+            </p>
           ))}
-        </div>
+        </ScrollContainer>
       </div>
     );
-  };
+  }, [selectedRole]);
 
   return (
     selectedRole && (
@@ -53,9 +60,26 @@ export const SelectRole = () => {
           </>
         ) : (
           <>
-            <h3>You will be listening as an {chosenRole.label}</h3>
-<div></div>
-            <button onClick={() => setRole("")}>Change Role</button>
+            <h3>You have chosen the role of {chosenRole.label}</h3>
+            <h4>To be a great listener</h4>
+            <ScrollContainer>
+              {selectedRole.description.map((l, i) => (
+                <p
+                  key={`${selectedRole.label} - ${i}`}
+                  className={styles.instruction}
+                >
+                  - {l}
+                </p>
+              ))}
+            </ScrollContainer>
+            <button
+              onClick={() => {
+                setRole("");
+                setSelection(me?.role || ERole.EMPATHISER);
+              }}
+            >
+              Choose a different Role
+            </button>
           </>
         )}
       </div>

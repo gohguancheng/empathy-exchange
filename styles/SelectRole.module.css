@@ -1,41 +1,72 @@
 .container {
   margin-top: 2rem;
-  color: #f5f5f5dd;
+  color: #00020fdd;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
-.container > h3 {
+.container h3 {
   font-size: 2rem;
+}
+
+.container > div > button {
+  color: #00020fdd;
+  border: #00020fdd solid 1px;
 }
 
 .container > button {
   width: max-content;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 .description {
+  width: 100%;
   font-size: 0.8rem;
   margin: 0.8rem 0;
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
-  align-items: center;
-  line-height: 1.4rem;
+  flex-direction: column;
+  align-items: stretch;
+  line-height: 1.2rem;
 }
 
-.large {
-  font-size: 1.2rem;
+.description > div {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
+.description > p {
+  margin: 0.25rem 0;
+}
+
+.description > p > span {
+  font-size: 1.5rem;
+}
 .instruction {
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
+}
+
+.container > h4 {
+  margin-top: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-style: italic;
 }
 
 @media only screen and (max-width: 640px) {
-  .container > h3 {
-    font-size: 1.5rem;
+  .container {
+    margin-top: 1rem;
+  }
+
+  .container h3 {
+    font-size: 1.75rem;
     line-height: 2rem;
   }
 }

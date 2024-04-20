@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+  inset: 0;
+}
+
+.overflowContainer {
+  padding: 0.25rem 0;
+}

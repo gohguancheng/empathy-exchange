@@ -25,7 +25,7 @@ export function SpaceBody() {
       case EStage.TOPIC_INPUT:
         return <TopicInput />;
       case EStage.ROLE_SELECT:
-        return <SelectRole currentUser={me} onSelect={setRole} />;
+        return <SelectRole />;
       case EStage.SHARING:
         return (
           <SharingDashboard
