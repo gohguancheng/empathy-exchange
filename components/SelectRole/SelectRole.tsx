@@ -1,83 +1,64 @@
 import { roles } from "@/lib/roles";
-import { IUserData, ERole } from "@/utils/types";
-import { ReactNode, useEffect, useState } from "react";
+import {  ERole } from "@/utils/types";
+import { ReactNode, useContext, useMemo, useState } from "react";
 import styles from "@/styles/SelectRole.module.css";
+import { GridButtonsContainer } from "../GridButtonsContainer/GridButtonsContainer";
+import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 
-export const SelectRole = ({ currentUser, onSelect }: SelectRoleProps) => {
+export const SelectRole = () => {
+  const { setRole, me } = useContext(SocketStateContext);
   const [selection, setSelection] = useState(ERole.EMPATHISER);
   const roleKeys = Object.values(ERole);
-  const chosenRole = roles[selection];
-  const hasConfirmed = !!currentUser?.role;
-
-  useEffect(() => {
-    if (currentUser?.role) {
-      setSelection(currentUser.role);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const selectedRole = useMemo(() => roles[selection], [selection]);
+  const chosenRole = useMemo(
+    () => (me?.role ? roles[me.role] : ""),
+    [me?.role]
+  );
 
   const renderDescription = (): ReactNode => {
     return (
-      <div>
-        <div className={styles.description}>
-          <div>
-            <p>
-              As <span className={styles.large}>{chosenRole.label}</span>,
-            </p>
-            {chosenRole.description.map((l, i) => (
-              <p key={`${chosenRole.label} - ${i}`}>- {l}</p>
-            ))}
-          </div>
+      <div className={styles.description}>
+        <div>
+          <p>
+            As <span className={styles.large}>{selectedRole.label}</span>,
+          </p>
+          {selectedRole.description.map((l, i) => (
+            <p key={`${selectedRole.label} - ${i}`}>- {l}</p>
+          ))}
         </div>
-        {hasConfirmed ? (
-          <p className={styles.instruction}>
-            You will be taking part as a {chosenRole.label}
-          </p>
-        ) : (
-          <p className={styles.instruction}>
-            Click below to confirm your role as a {chosenRole.label}
-          </p>
-        )}
-      </div>
-    );
-  };
-
-  const renderRoleSelector = (): ReactNode => {
-    return (
-      <div className={styles.optionsContainer}>
-        {roleKeys.map((k: ERole) => {
-          return (
-            <button
-              key={k}
-              onClick={() => setSelection(k)}
-              disabled={hasConfirmed}
-            >
-              {roles[k]?.label}
-            </button>
-          );
-        })}
       </div>
     );
   };
 
   return (
-    chosenRole && (
-      <div>
-        <h3>Select Role</h3>
-        <div>{renderRoleSelector()}</div>
-        {renderDescription()}
-        <button
-          onClick={() => onSelect(selection)}
-          disabled={!!currentUser?.role}
-        >
-          Confirm
-        </button>
+    selectedRole && (
+      <div className={styles.container}>
+        {!chosenRole ? (
+          <>
+            <h3>Select a listener Role</h3>
+
+            <GridButtonsContainer>
+              {roleKeys.map((k: ERole) => {
+                return (
+                  <button key={k} onClick={() => setSelection(k)}>
+                    {roles[k]?.label}
+                  </button>
+                );
+              })}
+            </GridButtonsContainer>
+
+            {renderDescription()}
+
+            <button onClick={() => setRole(selection)}>Confirm</button>
+          </>
+        ) : (
+          <>
+            <h3>You will be listening as an {chosenRole.label}</h3>
+<div></div>
+            <button onClick={() => setRole("")}>Change Role</button>
+          </>
+        )}
       </div>
     )
   );
-};
-
-type SelectRoleProps = {
-  currentUser?: IUserData;
-  onSelect: (t: string) => void;
 };
