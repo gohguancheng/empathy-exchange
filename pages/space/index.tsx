@@ -1,11 +1,11 @@
-import styles from "@/styles/Room.module.css";
+import styles from "@/styles/Space.module.css";
 import TextInput from "@/components/TextInput/TextInput";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function Room() {
+export default function Space() {
   const [codeInput, setCodeInput] = useState<{
     value: string;
     isValid?: boolean;
@@ -82,7 +82,7 @@ export default function Room() {
       }).then((res) => res.json());
       if (res) {
         const { roomCode, username } = res;
-        router.push({ pathname: "/room/" + roomCode, query: { username } });
+        router.push({ pathname: "/space/" + roomCode, query: { username } });
       }
     } catch (e) {}
   };
@@ -98,7 +98,7 @@ export default function Room() {
       return (
         <div className={styles.topSection}>
           <div>Creating a Space</div>
-          <Link href="/room">Join a space as Peer instead</Link>
+          <Link href="/space">Join a space as Peer instead</Link>
         </div>
       );
     }
@@ -106,7 +106,7 @@ export default function Room() {
     return (
       <div className={styles.topSection}>
         <div>Joining a Space</div>
-        <Link href={{ pathname: "/room", query: { host: "true" } }}>
+        <Link href={{ pathname: "/space", query: { host: "true" } }}>
           Host a Space instead
         </Link>
       </div>
@@ -119,11 +119,7 @@ export default function Room() {
     }
 
     if (isHost) {
-      return (
-        <h2>
-          Enter a passcode that Peers will use to access your Space
-        </h2>
-      );
+      return <h2>Enter a passcode that Peers will use to access your Space</h2>;
     }
 
     if (!isHost) {

@@ -53,9 +53,9 @@ export function SpaceControls() {
       case EStage.SHARING:
         return (
           <button
-            disabled={users
-              ?.filter((u, i) => i !== 0 && u.online)
-              .every((u) => u.done)}
+            disabled={
+              !users?.filter((u, i) => i !== 0 && u.online).every((u) => u.done)
+            }
             onClick={() => {
               setStage(EStage.END);
             }}

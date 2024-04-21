@@ -21,12 +21,14 @@ export default function roomHandler(
         users: [{ username }],
       };
     } else if (!!users[0].online) {
-      return res.status(400).json({ error: `Room host ${username} is online` });
+      return res
+        .status(400)
+        .json({ error: `Space host [${username}] is online` });
     }
 
     return res.status(200).json({ message: "OK", roomCode, username });
   } else {
-    if (!room) return res.status(400).json({ error: `Room does not exist!` });
+    if (!room) return res.status(400).json({ error: `Space does not exist!` });
 
     const user = users.find((p) => p.username === username);
 

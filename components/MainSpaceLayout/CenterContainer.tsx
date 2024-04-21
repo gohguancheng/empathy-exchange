@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useContext } from "react";
-import styles from "@/styles/RoomCode.module.css";
+import styles from "@/styles/SpaceCode.module.css";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 export default function CenterContainer({
   children,

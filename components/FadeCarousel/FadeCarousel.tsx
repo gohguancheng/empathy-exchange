@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useRef, useState } from "react";
 import styles from "@/styles/utilities/FadeCarousel.module.css";
 import clsx from "clsx";
 
-export const FadeCarousel = memo(({ list }: Props) => {
+const FadeCarouselRaw = ({ list }: Props) => {
   const [index, setIndex] = useState(0);
   const time = useRef<NodeJS.Timeout>();
 
@@ -13,7 +13,7 @@ export const FadeCarousel = memo(({ list }: Props) => {
     }, 8000);
     time.current = timeout;
     return timeout;
-  }, []);
+  }, [list.length]);
 
   useEffect(() => {
     updateIndex();
@@ -22,7 +22,7 @@ export const FadeCarousel = memo(({ list }: Props) => {
       clearTimeout(time.current);
       time.current = undefined;
     };
-  }, [index]);
+  }, [index, updateIndex]);
 
   return (
     <div
@@ -33,7 +33,7 @@ export const FadeCarousel = memo(({ list }: Props) => {
       onMouseLeave={() => updateIndex()}
     >
       <div
-        className={clsx("fade",{ [styles.invisible]: index === 0 })}
+        className={clsx("fade", { [styles.invisible]: index === 0 })}
         onClick={() => {
           if (index === 0) return;
           clearTimeout(time.current);
@@ -48,7 +48,9 @@ export const FadeCarousel = memo(({ list }: Props) => {
         </p>
       ))}
       <div
-        className={clsx("fade",{ [styles.invisible]: index === list.length - 1 })}
+        className={clsx("fade", {
+          [styles.invisible]: index === list.length - 1,
+        })}
         onClick={() => {
           if (index === list.length - 1) return;
           clearTimeout(time.current);
@@ -59,8 +61,10 @@ export const FadeCarousel = memo(({ list }: Props) => {
       </div>
     </div>
   );
-});
+};
 
 type Props = {
   list: string[];
 };
+
+export const FadeCarousel = memo(FadeCarouselRaw);

@@ -17,14 +17,14 @@ export default function StartPage() {
             participate as?
           </h1>
           <div className={styles.linkContainer}>
-            <Link href="/room?host=true">
+            <Link href="/space?host=true">
               <h3>Host</h3>
               <p>
                 Create a new Space and invite your friends to join access your
                 Space using this passcode
               </p>
             </Link>
-            <Link href="/room">
+            <Link href="/space">
               <h3>Peer</h3>
               <p>Join a Space using a passcode given by your host</p>
             </Link>

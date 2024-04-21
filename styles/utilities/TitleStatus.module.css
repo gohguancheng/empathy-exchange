@@ -20,12 +20,12 @@
 .tab {
   background-color: #ffcdd2;
   color: #b71c1c;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   min-width: 120px;
 }
 
@@ -55,11 +55,11 @@
 
   .tab {
     padding: 0.25rem;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     min-width: 80px;
   }
 
   .tab > div:nth-child(2) {
-    font-size: 0.65rem;
+    font-size: 0.8rem;
   }
 }

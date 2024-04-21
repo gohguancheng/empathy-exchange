@@ -22,7 +22,11 @@ export const SharingDashboard = () => {
     ? roles[me.role]
     : roles.e1;
 
-  const tips = useMemo(() => currentRole.description, [currentRole.label]);
+  const tips = useMemo(
+    () => currentRole.description,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentRole.label]
+  );
 
   const renderUsers = () => {
     if (!users || !me?.host) return <></>;
@@ -30,6 +34,7 @@ export const SharingDashboard = () => {
     return (
       <div>
         <h3 className={styles.selectUserTitle}>Select Next User</h3>
+        <p className={styles.selectUserTip}>Select yourself as speaker again once you are ready to end the session</p>
         <div className={styles.userContainer}>
           {users?.map((u, i) => (
             <button
@@ -64,9 +69,7 @@ export const SharingDashboard = () => {
         <h3>As {currentRole.label},</h3>
         {isSpeaker ? (
           <>
-            <p>
-              Speak openly
-            </p>
+            <p>Speak openly</p>
             <p>Engage in comfortable eye contact with listeners</p>
           </>
         ) : (

@@ -27,16 +27,13 @@ export function SpaceBody() {
       case EStage.ROLE_SELECT:
         return <SelectRole />;
       case EStage.SHARING:
-        return (
-          <SharingDashboard
-            currentUser={me}
-            users={users}
-            speaker={currentSpeaker}
-            onUpdate={setSpeaker}
-          />
-        );
+        return <SharingDashboard />;
       case EStage.END:
-        return <div>End</div>;
+        return (
+          <div style={{ margin: "2rem", textAlign: "center" }}>
+            <p>Close the browser tab to logout from the Space</p>
+          </div>
+        );
     }
   };
   return renderStages();

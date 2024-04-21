@@ -13,12 +13,12 @@ export default function validateHandler(
   const { roomCode, host = "" } = req.query;
   const isHost = (host as string).toLowerCase() === "true";
   /**
-   * Validate room code
+   * Validate Space code
    * - host can proceed when:
-   *    - room does not exist, OR
-   *    - room host is disconnected
+   *    - Space does not exist, OR
+   *    - Space host is disconnected
    * - non-host can proceed when:
-   *    - room exists and is not full
+   *    - Space exists and is not full
    */
 
   let isAvail = false;
@@ -36,6 +36,6 @@ export default function validateHandler(
     isAvail = !!users && users.length < 5;
   }
 
-  const message = isAvail ? undefined : "Room is not available";
+  const message = isAvail ? undefined : "Space is not available";
   return res.status(200).json({ isAvail, roomCode, username, message });
 }
