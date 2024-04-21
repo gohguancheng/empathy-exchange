@@ -23,7 +23,7 @@ export const SelectRole = () => {
           As <span className={styles.large}>{selectedRole.label}</span>,
         </p>
 
-        <ScrollContainer>
+        <ScrollContainer key={selectedRole.label}>
           {selectedRole.description.map((l, i) => (
             <p
               key={`${selectedRole.label} - ${i}`}

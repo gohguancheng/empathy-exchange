@@ -10,24 +10,23 @@
 }
 
 .topGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  justify-items: stretch;
+  display: flex;
+  justify-content: center;
   align-items: stretch;
-  border-bottom-left-radius: 8px;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .tab {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   background-color: #ffcdd2;
   color: #b71c1c;
-  padding: 1rem 2rem;
-  text-align: center;
+  padding: 0.5rem 1rem;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  min-width: 120px;
 }
 
 .done {
@@ -42,12 +41,11 @@
 }
 
 .tab > div:first-child {
-  margin-bottom: 0.25rem;
   font-weight: 800;
 }
 
 .tab > div:nth-child(2) {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 @media only screen and (max-width: 640px) {
@@ -56,11 +54,12 @@
   }
 
   .tab {
-    padding: 0.5rem;
-    font-size: 0.7rem;
+    padding: 0.25rem;
+    font-size: 0.6rem;
+    min-width: 80px;
   }
 
   .tab > div:nth-child(2) {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
   }
 }
