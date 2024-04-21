@@ -30,16 +30,11 @@ export const TitleStatus = ({
           status: !!user.role,
         };
       }
-      case EStage.SHARING: {
-        return {
-          isMe: me.username === user.username,
-          status: !!(currentSpeaker && user.username === currentSpeaker),
-        };
-      }
+      case EStage.SHARING:
       case EStage.END: {
         return {
           isMe: me.username === user.username,
-          status: !!user.done,
+          status: !!user.done || currentSpeaker === user.username,
         };
       }
       default:
@@ -49,17 +44,20 @@ export const TitleStatus = ({
 
   const getStatusEmoji = useCallback(
     (user: TabElement): string => {
-      const isTrue = stage === EStage.SHARING ? "🎙️" : "✅";
-      const isFalse = stage === EStage.SHARING ? "🎧" : "🤔";
-
       if (!(user && user.username)) return "";
       if (!user.online) return "❌";
-      if (user.status === false) return isFalse;
-      if (user.status) return isTrue;
+
+      if (stage === EStage.SHARING) {
+        if (user.username === currentSpeaker) return "🎙️";
+        return "🎧";
+      } else {
+        if (user.status) return "✅";
+        return "🤔";
+      }
 
       return "";
     },
-    [stage]
+    [stage, currentSpeaker]
   );
 
   if (!users || !stage) return <></>;
@@ -80,8 +78,8 @@ export const TitleStatus = ({
             <div
               key={`${user.username}-${i}`}
               className={clsx(styles.tab, {
-                [styles.done]: user.status,
                 [styles.offline]: !user.online,
+                [styles.done]: user.status,
               })}
             >
               <div>
