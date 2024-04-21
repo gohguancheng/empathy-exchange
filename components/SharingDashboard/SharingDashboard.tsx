@@ -1,71 +1,87 @@
-import { IUser, IUserData } from "@/utils/types";
+import { IUser } from "@/utils/types";
 import styles from "@/styles/SharingDashboard.module.css";
-import { roles } from "@/lib/roles";
-import { useState } from "react";
+import { roles, speakerRole } from "@/lib/roles";
+import { useContext, useMemo, useState } from "react";
+import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
+import { FadeCarousel } from "@/components/FadeCarousel/FadeCarousel";
 
-export const SharingDashboard = (props: SharingDashboardProps) => {
+export const SharingDashboard = () => {
   const [nextUser, setNextUser] = useState("");
 
-  const { currentUser, users, speaker, onUpdate } = props;
-  const index = users?.findIndex((u) => u.username === speaker) ?? -1;
+  const { me, users, currentSpeaker, setSpeaker } =
+    useContext(SocketStateContext);
+  const index = users?.findIndex((u) => u.username === currentSpeaker) ?? -1;
   const speakerDetails = (
     users && index !== -1 ? { ...users[index], index } : {}
   ) as IUser;
 
-  const renderRoleContent = () => {
-    const currentRole = !!currentUser.role ? roles[currentUser.role] : roles.e1;
-    return (
-      <>
-        <h3>As {currentRole.label}, </h3>
-        <ul className={styles.list}>
-          <li>Listen attentively to the speaker</li>
-          {currentRole.description.map((line, i) => (
-            <li key={`${currentRole.label}-${i}`}>{line}</li>
-          ))}
-        </ul>
-      </>
-    );
-  };
+  const isSpeaker = me?.username === currentSpeaker;
+  const currentRole = isSpeaker
+    ? speakerRole
+    : !!me?.role
+    ? roles[me.role]
+    : roles.e1;
+
+  const tips = useMemo(() => currentRole.description, [currentRole.label]);
 
   const renderUsers = () => {
-    if (!users) return <></>;
+    if (!users || !me?.host) return <></>;
 
     return (
-      <div className={styles.userContainer}>
-        {users?.map((u, i) => (
-          <div key={`${u.online}-${i}`}>
-            <p>{u.username}</p>
-            {!!currentUser.host && (
-              <button
-                disabled={!!(!!i && (!u.online || !!u.done))}
-                onClick={() => setNextUser(u.username)}
-              >
-                Select
-              </button>
-            )}
-          </div>
-        ))}
+      <div>
+        <h3 className={styles.selectUserTitle}>Select Next User</h3>
+        <div className={styles.userContainer}>
+          {users?.map((u, i) => (
+            <button
+              key={`${u.online}-${i}`}
+              onClick={() => setNextUser(u.username)}
+            >
+              {u.username}
+            </button>
+          ))}
+        </div>
       </div>
     );
   };
 
   const handleConfirm = async () => {
-    onUpdate(nextUser);
+    setSpeaker(nextUser);
     setNextUser(() => "");
   };
 
   return (
     <section className={styles.container}>
       <div className={styles.spotlight}>
-        <h3>Current Topic</h3>
         <div>
+          <p>Speaker:</p>
           <p>{speakerDetails.username}</p>
-          <span> sharing about </span>
-          <p>{`"${speakerDetails.topic}"`}</p>
+          <p>Topic:</p>
+          <p>{speakerDetails.topic}</p>
         </div>
       </div>
-      <div className={styles.roleInfo}>{renderRoleContent()}</div>
+
+      <div className={styles.roleInfo}>
+        <h3>As {currentRole.label},</h3>
+        {isSpeaker ? (
+          <>
+            <p>
+              Speak openly
+            </p>
+            <p>Engage in comfortable eye contact with listeners</p>
+          </>
+        ) : (
+          <>
+            <p>Listen attentively</p>
+            <p>Maintain comfortable eye contact with speaker</p>
+          </>
+        )}
+        <div className={styles.tipsContainer}>
+          {<FadeCarousel key={currentRole.label} list={tips} />}
+        </div>
+      </div>
+
       {renderUsers()}
+
       {!!nextUser && (
         <div className={styles.modal}>
           <div>
@@ -82,11 +98,4 @@ export const SharingDashboard = (props: SharingDashboardProps) => {
       )}
     </section>
   );
-};
-
-type SharingDashboardProps = {
-  currentUser: IUserData;
-  users?: IUser[];
-  speaker?: string;
-  onUpdate: (spker: string) => void;
 };
