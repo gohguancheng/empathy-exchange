@@ -88,9 +88,11 @@ export const TitleStatus = ({
                 {user.username ? getInitials(user.username) : "—"}{" "}
                 {user.isMe ? "(You)" : ""}
               </div>
-              <div key={`${user.status}`} className="slide-fade">
-                {getStatusEmoji(user)}
-              </div>
+              {!!user.online && (
+                <div key={`${user.status}`} className="slide-fade">
+                  {getStatusEmoji(user)}
+                </div>
+              )}
             </div>
           ))}
         </div>
