@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.container > p {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.container > div {
+  cursor: pointer;
+  margin: 1.5rem 0;
+}
+
+.hide {
+  display: none;
+}
+
+.invisible {
+  opacity: 0;
+  cursor: default !important;
+}
