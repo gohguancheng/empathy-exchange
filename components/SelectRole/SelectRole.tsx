@@ -62,16 +62,18 @@ export const SelectRole = () => {
           <>
             <h3>You have chosen the role of {chosenRole.label}</h3>
             <h4>To be a great listener</h4>
-            <ScrollContainer>
-              {selectedRole.description.map((l, i) => (
-                <p
-                  key={`${selectedRole.label} - ${i}`}
-                  className={styles.instruction}
-                >
-                  - {l}
-                </p>
-              ))}
-            </ScrollContainer>
+            <div className={styles.description}>
+              <ScrollContainer>
+                {selectedRole.description.map((l, i) => (
+                  <p
+                    key={`${selectedRole.label} - ${i}`}
+                    className={styles.instruction}
+                  >
+                    - {l}
+                  </p>
+                ))}
+              </ScrollContainer>
+            </div>
             <button
               onClick={() => {
                 setRole("");
