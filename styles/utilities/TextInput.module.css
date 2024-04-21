@@ -50,34 +50,34 @@
 }
 
 .light {
-  border-color: black;
+  border-color: #00020f;
 }
 
 .light label {
-  color: black !important;
+  color: #00020f !important;
 }
 
 .light > input {
-  color: black !important;
+  color: #00020f !important;
 }
 
 .light > input::-webkit-input-placeholder {
-  color: black !important;
+  color: #00020f !important;
   opacity: 50%;
 }
 
 .light > input::-moz-placeholder {
-  color: black !important;
+  color: #00020f !important;
   opacity: 50%;
 }
 
 .light > input::-ms-placeholder {
-  color: black !important;
+  color: #00020f !important;
   opacity: 50%;
 }
 
 .light > input::placeholder {
-  color: black !important;
+  color: #00020f !important;
   opacity: 50%;
 }
 
