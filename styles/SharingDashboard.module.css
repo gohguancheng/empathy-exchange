@@ -51,13 +51,18 @@
 
 .roleInfo > h3 {
   font-size: 2rem;
-  margin-bottom: 0.75rem;
 }
 
 .tipsContainer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 90%;
+}
+
+.tipsContainer > div {
+  width: 100%;
 }
 
 .roleInfo > p,
@@ -149,13 +154,12 @@
 
 @media only screen and (max-width: 640px) {
   .roleInfo > h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .roleInfo > p,
   .tipsContainer p {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     text-align: center;
   }
 

@@ -23,9 +23,21 @@ export const SharingDashboard = () => {
     : roles.e1;
 
   const tips = useMemo(
-    () => currentRole.description,
+    () => {
+      const baseTips = isSpeaker
+        ? [
+            "Speak openly",
+            "Pause where appropriate to allow other to digest your words",
+          ]
+        : [
+            "Listen attentively",
+            "Maintain comfortable eye contact with speaker",
+          ];
+
+      return [...baseTips, ...currentRole.description];
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentRole.label]
+    [currentRole.label, isSpeaker]
   );
 
   const renderUsers = () => {
@@ -34,7 +46,9 @@ export const SharingDashboard = () => {
     return (
       <div>
         <h3 className={styles.selectUserTitle}>Select Next User</h3>
-        <p className={styles.selectUserTip}>Select yourself as speaker again once you are ready to end the session</p>
+        <p className={styles.selectUserTip}>
+          Select yourself as speaker again once you are ready to end the session
+        </p>
         <div className={styles.userContainer}>
           {users?.map((u, i) => (
             <button
@@ -67,17 +81,6 @@ export const SharingDashboard = () => {
 
       <div className={styles.roleInfo}>
         <h3>As {currentRole.label},</h3>
-        {isSpeaker ? (
-          <>
-            <p>Speak openly</p>
-            <p>Engage in comfortable eye contact with listeners</p>
-          </>
-        ) : (
-          <>
-            <p>Listen attentively</p>
-            <p>Maintain comfortable eye contact with speaker</p>
-          </>
-        )}
         <div className={styles.tipsContainer}>
           {<FadeCarousel key={currentRole.label} list={tips} />}
         </div>

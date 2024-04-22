@@ -1,17 +1,28 @@
 .container {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  justify-content: center;
   gap: 0.25rem;
+  height: 100%;
+}
+.container > div:first-child {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container > p {
-  flex: 1 1 auto;
-  min-width: 0;
   text-align: center;
 }
 
-.container > div {
+.buttonsContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttonsContainer > div {
   cursor: pointer;
   margin: 1.5rem 0;
 }

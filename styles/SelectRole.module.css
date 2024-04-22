@@ -14,8 +14,15 @@
 }
 
 .container > div > button {
-  color: #00020fdd;
-  border: #00020fdd solid 1px;
+  color: #f5f5f5dd;
+  background-color: #436fde;
+  padding: 0.5rem 0.25rem;
+  border: 0px;
+}
+
+.container > div > button:hover {
+  background-color: #f5f5f5dd;
+  color: #436fde;
 }
 
 .container > button {
@@ -26,7 +33,6 @@
 
 .description {
   width: 100%;
-  font-size: 0.8rem;
   margin: 0.8rem 0;
   flex: 1 1 auto;
   min-height: 0;
@@ -44,22 +50,22 @@
   min-height: 0;
 }
 
-.description > p {
+.description > h4 {
   margin: 0.25rem 0;
 }
 
-.description > p > span {
+.description > h4 > span {
   font-size: 1.5rem;
 }
 
 .instruction {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
 
 .container > h4 {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   font-size: 1.5rem;
-  padding-bottom: 0.25rem;
   font-style: italic;
 }
 
@@ -79,7 +85,7 @@
   }
 
   .instruction {
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
   }
 
   .container > h4 {

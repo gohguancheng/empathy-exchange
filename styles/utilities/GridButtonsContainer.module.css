@@ -2,6 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
   gap: 1rem;
   margin: 1rem auto;
 }
@@ -12,7 +13,11 @@
   background-color: transparent;
   border: 1px #f5f5f5dd solid;
   color: #f5f5f5dd;
-  font-weight: 200;
+}
+
+.optionsContainer > button:hover {
+  background-color: #f5f5f5dd;
+  color: #00020f;
 }
 
 @media only screen and (max-width: 640px) {

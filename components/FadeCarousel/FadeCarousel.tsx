@@ -32,32 +32,37 @@ const FadeCarouselRaw = ({ list }: Props) => {
       onMouseEnter={() => clearTimeout(time.current)}
       onMouseLeave={() => updateIndex()}
     >
-      <div
-        className={clsx("fade", { [styles.invisible]: index === 0 })}
-        onClick={() => {
-          if (index === 0) return;
-          clearTimeout(time.current);
-          setIndex((p) => p - 1);
-        }}
-      >
-        ⬅️
+      <div>
+        {list.map((str, i) => (
+          <p key={i} className={clsx("fade", { [styles.hide]: index !== i })}>
+            {str}
+          </p>
+        ))}
       </div>
-      {list.map((str, i) => (
-        <p key={i} className={clsx("fade", { [styles.hide]: index !== i })}>
-          {str}
-        </p>
-      ))}
-      <div
-        className={clsx("fade", {
-          [styles.invisible]: index === list.length - 1,
-        })}
-        onClick={() => {
-          if (index === list.length - 1) return;
-          clearTimeout(time.current);
-          setIndex((p) => p + 1);
-        }}
-      >
-        ➡️
+
+      <div className={styles.buttonsContainer}>
+        <div
+          className={clsx("fade", { [styles.invisible]: index === 0 })}
+          onClick={() => {
+            if (index === 0) return;
+            clearTimeout(time.current);
+            setIndex((p) => p - 1);
+          }}
+        >
+          ⬅️
+        </div>
+        <div
+          className={clsx("fade", {
+            [styles.invisible]: index === list.length - 1,
+          })}
+          onClick={() => {
+            if (index === list.length - 1) return;
+            clearTimeout(time.current);
+            setIndex((p) => p + 1);
+          }}
+        >
+          ➡️
+        </div>
       </div>
     </div>
   );

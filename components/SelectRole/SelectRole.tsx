@@ -19,9 +19,9 @@ export const SelectRole = () => {
   const renderDescription = useCallback((): ReactNode => {
     return (
       <div className={styles.description}>
-        <p>
+        <h4>
           As <span className={styles.large}>{selectedRole.label}</span>,
-        </p>
+        </h4>
 
         <ScrollContainer key={selectedRole.label}>
           {selectedRole.description.map((l, i) => (
