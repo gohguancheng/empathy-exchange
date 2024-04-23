@@ -2,7 +2,7 @@
   width: 220px;
   max-width: 100%;
   height: 100%;
-  background-color: #97d077;
+  background-color: #cbf79d;
   border-radius: 0.5rem;
   padding: 1rem;
   color: #00020f;
@@ -12,7 +12,7 @@
 }
 
 .hostBackground {
-  background-color: #ffdb57;
+  background-color: #fdc67d;
 }
 
 .userCard h5 {
@@ -36,24 +36,10 @@
   font-style: normal;
 }
 
-.dot {
-  display: inline-block;
-  height: 0.8rem;
-  width: 0.8rem;
-  border-radius: 1rem;
-  background-color: #e5383b;
-  margin: auto 0.5rem 0.2rem 0;
-}
-
-.dotGreen {
-  background-color: #76ff03;
-}
-
 @media only screen and (max-width: 768px) {
   .userCard {
     width: 100%;
     max-width: 400px;
-    background-color: #97d077;
     border-radius: 0.5rem;
     padding: 0.2rem 1rem;
     display: flex;
@@ -62,10 +48,6 @@
     justify-content: center;
     gap: 1rem;
     overflow: hidden;
-  }
-
-  .hostBackground {
-    background-color: #ffdb57;
   }
 
   .userCard > div {
@@ -97,18 +79,5 @@
     font-size: 0.7rem;
     padding: 0.1rem 0.2rem;
     margin: 0;
-  }
-
-  .dot {
-    display: inline-block;
-    height: 0.5rem;
-    width: 0.5rem;
-    border-radius: 0.5rem;
-    background-color: #e5383b;
-    margin: auto 0.5rem 0.1rem 0;
-  }
-
-  .dotGreen {
-    background-color: #76ff03;
   }
 }

@@ -18,8 +18,8 @@
 }
 
 .tab {
-  background-color: #ffcdd2;
-  color: #b71c1c;
+  background-color: #feddb0;
+  color: #e14502;
   padding: 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
@@ -30,8 +30,8 @@
 }
 
 .done {
-  background-color: #c8e6c9;
-  color: #1b5e20;
+  background-color: #e0fac4;
+  color: #008c00;
 }
 
 .offline {

@@ -15,14 +15,14 @@
 
 .container > div > button {
   color: #f5f5f5dd;
-  background-color: #436fde;
+  background-color: #4921f8;
   padding: 0.5rem 0.25rem;
   border: 0px;
 }
 
 .container > div > button:hover {
   background-color: #f5f5f5dd;
-  color: #436fde;
+  color: #4921f8;
 }
 
 .container > button {

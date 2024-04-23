@@ -13,14 +13,14 @@
 }
 
 .outline {
-  outline: 2px solid #4615b2aa;
+  outline: 2px solid #4e00e2;
 }
 
 .indicator {
   position: absolute;
   height: 1rem;
   width: 1rem;
-  background-color: rgb(244, 67, 54);
+  background-color: #d8006d;
   border-radius: 1em;
   bottom: 0.25rem;
   right: 0.25rem;
@@ -29,7 +29,7 @@
 }
 
 .dotGreen {
-  background-color: #76ff03;
+  background-color: #77d900;
 }
 
 @media only screen and (max-width: 768px) {
