@@ -15,14 +15,14 @@
 
 .container > div > button {
   color: var(--primary-white);
-  background-color: var(--primary-purple);
+  background-color: var(--accent-1);
   padding: 0.5rem 0.25rem;
   border: 0px;
 }
 
 .container > div > button:hover {
   background-color: var(--primary-white);
-  color: var(--primary-purple);
+  color: var(--accent-1);
 }
 
 .container > button {

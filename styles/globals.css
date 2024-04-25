@@ -2,24 +2,24 @@
   --primary-black: #00020f;
   --primary-white: #f5f5f5dd;
 
-  --primary-purple: #4921f8;
-  --error-text-red: #ff3333;
+  --accent-1: #a070fe;
+  --error-text-red: #d82400;
 
   --indicator-bg-pink: #d8006d;
   --indicator-bg-green: #77d900;
 
-  --success-bg-green: #e0fac4;
-  --success-text-green: #008c00;
-  --warning-bg-orange: #feddb0;
-  --warning-text-orange: #e14502;
+  --success-bg-green: #98fce4;
+  --success-text-green: #008b4d;
+  --warning-bg-orange: #ffcbb7;
+  --warning-text-orange: #bd3100;
 
-  --card-bg-orange: #fdc67d;
-  --card-bg-green: #cbf79d;
+  --card-bg-orange: #ffcbb7;
+  --card-bg-green: #98f9d6;
 
-  --dynamic-bg-1: #0000d855;
-  --dynamic-bg-2: #6e08f0;
-  --dynamic-bg-3: #a069f6;
-  --dynamic-bg-4: #d7c1fa;
+  --dynamic-bg-1: #0a75c3;
+  --dynamic-bg-2: #00a7fb;
+  --dynamic-bg-3: #4cc2fd;
+  --dynamic-bg-4: #b3e4ff;
 }
 
 * {

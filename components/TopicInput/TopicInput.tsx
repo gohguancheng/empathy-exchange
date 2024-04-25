@@ -33,7 +33,7 @@ export const TopicInput = () => {
         "Financial Stress",
         "Identity and Self Esteem",
       ].map((e, i) => (
-        <button key={i} disabled={!!me?.topic} onClick={() => setInput(e)}>
+        <button key={i} disabled={!!me?.topic} className={styles.optionButton} onClick={() => setInput(e)}>
           {e}
         </button>
       ))}

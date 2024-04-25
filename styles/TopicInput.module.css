@@ -8,6 +8,17 @@
   font-size: 2rem;
 }
 
+.optionButton {
+  background-color: var(--accent-1) !important;
+  color: var(--primary-white) !important;
+  border: none !important;
+}
+
+.optionButton:hover {
+  color: var(--accent-1) !important;
+  background-color: var(--primary-white) !important;
+}
+
 .form {
   display: flex;
   flex-direction: column;
