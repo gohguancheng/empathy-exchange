@@ -1,6 +1,6 @@
 .main {
-  background-color: #00020f;
-  color: #f2f2f2dd;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
   height: 100dvh;
   width: 100%;
 }
@@ -22,7 +22,7 @@
   font-size: 1rem;
   display: block;
   padding: 0.5rem 1rem;
-  border: #f2f2f2dd solid 1px;
+  border: var(--primary-white) solid 1px;
   border-radius: 0.5rem;
   width: max-content;
   max-width: 100%;
@@ -30,8 +30,8 @@
 }
 
 .main a:hover {
-  background-color: #f2f2f2dd;
-  color: #00020f;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 .topSection {
@@ -43,7 +43,7 @@
   font-size: 1rem;
   display: block;
   padding: 0.5rem 1rem;
-  border: #f2f2f2dd solid 1px;
+  border: var(--primary-white) solid 1px;
   border-radius: 0.5rem;
   width: max-content;
   max-width: 100%;
@@ -70,7 +70,7 @@
 .submitButton {
   display: block;
   font-size: 1.5rem;
-  border: 2px #f2f2f2dd solid;
+  border: 2px var(--primary-white) solid;
   padding: 0.25rem 1rem;
 }
 
@@ -83,7 +83,7 @@
     font-size: 0.8rem;
     display: block;
     padding: 0.25rem 0.5rem;
-    border: #f2f2f2dd solid 1px;
+    border: var(--primary-white) solid 1px;
     border-radius: 0.5rem;
     width: max-content;
     max-width: 100%;
@@ -91,8 +91,8 @@
   }
 
   .main a:hover {
-    background-color: #00020f;
-    color: #f2f2f2dd;
+    background-color: var(--primary-black);
+    color: var(--primary-white);
   }
 
   .form > h2 {

@@ -2,8 +2,8 @@
   padding: 2rem;
   height: 100dvh;
   width: 100vw;
-  background-color: #00020f;
-  color: #f2f2f2;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
 }
 
 .centerContainer {
@@ -51,14 +51,14 @@
   font-size: 1.5rem;
   text-wrap: wrap;
   width: 45%;
-  border: #f2f2f255 1px solid;
+  border: var(--primary-white) 1px solid;
   border-radius: 4px;
   padding: 0.75rem;
 }
 
 .linkContainer > a:hover {
-  background-color: #f2f2f2dd;
-  color: #00020f;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 @media only screen and (max-width: 640px) {
@@ -84,7 +84,7 @@
   }
 
   .linkContainer > a {
-    border: #f5f5f5bb 1px solid;
+    border: var(--primary-white) 1px solid;
     border-radius: 4px;
     padding: 0.8rem;
     width: 100%;
@@ -92,7 +92,7 @@
   }
 
   .linkContainer > a:hover {
-    color: #f2f2f2dd;
-    background-color: #00020f;
+    color: var(--primary-white);
+    background-color: var(--primary-black);
   }
 }

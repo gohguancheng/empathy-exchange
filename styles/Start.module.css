@@ -1,8 +1,8 @@
 .main {
   height: 100dvh;
   width: 100vw;
-  background-color: #00020f;
-  color: #f2f2f2dd;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
 }
 
 .main > div {
@@ -50,14 +50,14 @@
 
 .linkContainer > a {
   padding: 2rem;
-  border: #f2f2f255 1px solid;
+  border: var(--primary-white) 1px solid;
   border-radius: 1rem;
   width: 48%;
 }
 
 .linkContainer > a:hover {
-  background-color: #f2f2f2dd;
-  color: #00020f;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 .linkContainer > a > h3 {

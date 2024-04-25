@@ -1,6 +1,6 @@
 .container:hover > div {
-  background-color: #f2f2f2dd;
-  color: #00020f;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 .container:hover .minus {
@@ -17,12 +17,12 @@
 }
 
 .divider {
-  border-bottom: #f2f2f2dd 1px solid;
+  border-bottom: var(--primary-white) 1px solid;
   width: 100%;
 }
 
 .container:hover .divider {
-  border-bottom: #00020f 1px solid;
+  border-bottom: var(--primary-black) 1px solid;
 }
 
 .bodyContainer {
@@ -58,8 +58,8 @@
 }
 @media only screen and (max-width: 640px) {
   .container:hover > div {
-    background-color: #00020f;
-    color: #f2f2f2dd;
+    background-color: var(--primary-black);
+    color: var(--primary-white);
   }
   .container:hover .minus {
     background-image: url("/icons/minus-white.svg");

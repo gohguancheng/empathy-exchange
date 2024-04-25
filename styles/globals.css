@@ -1,3 +1,27 @@
+:root {
+  --primary-black: #00020f;
+  --primary-white: #f5f5f5dd;
+
+  --primary-purple: #4921f8;
+  --error-text-red: #ff3333;
+
+  --indicator-bg-pink: #d8006d;
+  --indicator-bg-green: #77d900;
+
+  --success-bg-green: #e0fac4;
+  --success-text-green: #008c00;
+  --warning-bg-orange: #feddb0;
+  --warning-text-orange: #e14502;
+
+  --card-bg-orange: #fdc67d;
+  --card-bg-green: #cbf79d;
+
+  --dynamic-bg-1: #0000d855;
+  --dynamic-bg-2: #6e08f0;
+  --dynamic-bg-3: #a069f6;
+  --dynamic-bg-4: #d7c1fa;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
