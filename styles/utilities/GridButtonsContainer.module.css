@@ -11,13 +11,13 @@
   font-size: 1.5rem;
   padding: 0.5rem;
   background-color: transparent;
-  border: 1px #f5f5f5dd solid;
-  color: #f5f5f5dd;
+  border: 1px var(--primary-white) solid;
+  color: var(--primary-white);
 }
 
 .optionsContainer > button:hover {
-  background-color: #f5f5f5dd;
-  color: #00020f;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 @media only screen and (max-width: 640px) {

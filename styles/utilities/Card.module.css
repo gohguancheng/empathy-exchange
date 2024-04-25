@@ -2,17 +2,17 @@
   width: 220px;
   max-width: 100%;
   height: 100%;
-  background-color: #cbf79d;
+  background-color: var(--card-bg-green);
   border-radius: 0.5rem;
   padding: 1rem;
-  color: #00020f;
+  color: var(--primary-black);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .hostBackground {
-  background-color: #fdc67d;
+  background-color: var(--card-bg-orange);
 }
 
 .userCard h5 {
@@ -24,7 +24,7 @@
 .userCard p {
   font-weight: 900;
   font-size: 0.8rem;
-  background-color: #e5e5e5;
+  background-color: var(--primary-white);
   max-width: fit-content;
   margin: 0.5rem auto;
   padding: 0.5rem;

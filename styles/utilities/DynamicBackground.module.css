@@ -9,17 +9,17 @@
 }
 
 .stageOne {
-  background-color: #0000d855;
+  background-color: var(--dynamic-bg-1);
 }
 
 .stageTwo {
-  background-color: #6e08f0;
+  background-color: var(--dynamic-bg-2);
 }
 
 .stageThree {
-  background-color: #a069f6;
+  background-color: var(--dynamic-bg-3);
 }
 
 .final {
-  background-color: #d7c1fa;
+  background-color: var(--dynamic-bg-4);
 }

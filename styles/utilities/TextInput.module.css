@@ -18,79 +18,79 @@
 }
 
 .dark {
-  border-color: white;
+  border-color: var(--primary-white);
 }
 
 .dark label {
-  color: white !important;
+  color: var(--primary-white) !important;
 }
 
 .dark > input {
-  color: white !important;
+  color: var(--primary-white) !important;
 }
 
 .dark > input::-webkit-input-placeholder {
-  color: white !important;
+  color: var(--primary-white) !important;
   opacity: 50%;
 }
 
 .dark > input::-moz-placeholder {
-  color: white !important;
+  color: var(--primary-white) !important;
   opacity: 50%;
 }
 
 .dark > input::-ms-placeholder {
-  color: white !important;
+  color: var(--primary-white) !important;
   opacity: 50%;
 }
 
 .dark > input::placeholder {
-  color: white !important;
+  color: var(--primary-white) !important;
   opacity: 50%;
 }
 
 .light {
-  border-color: #00020f;
+  border-color: var(--primary-black);
 }
 
 .light label {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
 }
 
 .light > input {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
 }
 
 .light > input::-webkit-input-placeholder {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
   opacity: 50%;
 }
 
 .light > input::-moz-placeholder {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
   opacity: 50%;
 }
 
 .light > input::-ms-placeholder {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
   opacity: 50%;
 }
 
 .light > input::placeholder {
-  color: #00020f !important;
+  color: var(--primary-black) !important;
   opacity: 50%;
 }
 
 .error {
-  border-color: rgb(244, 67, 54) !important;
+  border-color: var(--error-text-red) !important;
 }
 
 .error label {
-  color: rgb(244, 67, 54) !important;
+  color: var(--error-text-red) !important;
 }
 
 .error input {
-  color: rgb(244, 67, 54) !important;
+  color: var(--error-text-red) !important;
 }
 
 .errorMessage {
@@ -103,5 +103,5 @@
 
 .errorMessage p {
   font-size: 0.8rem;
-  color: rgb(244, 67, 54);
+  color: var(--error-text-red);
 }

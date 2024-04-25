@@ -1,6 +1,6 @@
 .container {
   margin-top: 2rem;
-  color: #00020fdd;
+  color: var(--primary-black);
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -14,15 +14,15 @@
 }
 
 .container > div > button {
-  color: #f5f5f5dd;
-  background-color: #4921f8;
+  color: var(--primary-white);
+  background-color: var(--primary-purple);
   padding: 0.5rem 0.25rem;
   border: 0px;
 }
 
 .container > div > button:hover {
-  background-color: #f5f5f5dd;
-  color: #4921f8;
+  background-color: var(--primary-white);
+  color: var(--primary-purple);
 }
 
 .container > button {

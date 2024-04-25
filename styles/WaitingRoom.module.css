@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  color: #f2f2f2dd;
+  color: var(--primary-white);
   margin: 0 auto;
   text-align: center;
 }
