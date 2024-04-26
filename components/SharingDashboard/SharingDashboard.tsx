@@ -4,9 +4,11 @@ import { roles, speakerRole } from "@/lib/roles";
 import { useContext, useMemo, useState } from "react";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { FadeCarousel } from "@/components/FadeCarousel/FadeCarousel";
+import { ModalContainer } from "@/components/ModalContainer/ModalContainer";
+import clsx from "clsx";
 
 export const SharingDashboard = () => {
-  const [nextUser, setNextUser] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const { me, users, currentSpeaker, setSpeaker } =
     useContext(SocketStateContext);
@@ -40,34 +42,6 @@ export const SharingDashboard = () => {
     [currentRole.label, isSpeaker]
   );
 
-  const renderUsers = () => {
-    if (!users || !me?.host) return <></>;
-
-    return (
-      <div>
-        <h3 className={styles.selectUserTitle}>Select Next User</h3>
-        <p className={styles.selectUserTip}>
-          Select yourself as speaker again once you are ready to end the session
-        </p>
-        <div className={styles.userContainer}>
-          {users?.map((u, i) => (
-            <button
-              key={`${u.online}-${i}`}
-              onClick={() => setNextUser(u.username)}
-            >
-              {u.username}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  const handleConfirm = async () => {
-    setSpeaker(nextUser);
-    setNextUser(() => "");
-  };
-
   return (
     <section className={styles.container}>
       <div className={styles.spotlight}>
@@ -86,22 +60,37 @@ export const SharingDashboard = () => {
         </div>
       </div>
 
-      {renderUsers()}
+      {!!me?.host && (
+        <button
+          className={styles.hostButton}
+          onClick={() => setShowModal(true)}
+        >
+          Select next speaker
+        </button>
+      )}
 
-      {!!nextUser && (
-        <div className={styles.modal}>
-          <div>
-            <div className={styles.modalContent}>
-              <h5>Switch to {nextUser}?</h5>
-              <p>Is {speakerDetails.username} done sharing?</p>
-              <div className={styles.modalButtons}>
-                <button onClick={handleConfirm}>Yes</button>
-                <button onClick={() => setNextUser("")}>No</button>
-              </div>
+      {
+        <ModalContainer show={showModal} close={() => setShowModal(false)}>
+          <div className={styles.modalContent}>
+            <h5>Select the next speaker</h5>
+
+            <div className={styles.modalButtonsContainer}>
+              {users?.map((u, i) => (
+                <button
+                  key={`${u.username}-${u.done}-${u.online}`}
+                  disabled={
+                    (i !== 0 && !!u.done) || u.username === currentSpeaker
+                  }
+                  onClick={() => setSpeaker(u.username)}
+                  className={clsx({ [styles.done]: u.done })}
+                >
+                  {u.username}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-      )}
+        </ModalContainer>
+      }
     </section>
   );
 };
