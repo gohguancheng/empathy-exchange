@@ -9,18 +9,31 @@
 }
 
 .stageControls > p {
-  padding: 0.3rem 1rem 0.3rem 0.75rem;
+  padding: 0.3rem 1rem;
   border-radius: 4px;
   color: var(--primary-black);
   background-color: var(--primary-white);
   font-family: monospace;
   font-weight: 700;
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.stageControls > p > span {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+.iconKey {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  background: url("/icons/key.svg") no-repeat center;
+  background-size: 0.85rem;
+}
+
+.iconRight {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: url("/icons/arrow-right.svg") no-repeat center;
+  background-size: 0.75rem;
+  margin-left: 0.5rem;
 }

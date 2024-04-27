@@ -13,7 +13,7 @@
 }
 
 .outline {
-  outline: 2px solid var(--accent-1);
+  outline: 4px solid var(--accent-1);
 }
 
 .indicator {
@@ -22,9 +22,9 @@
   width: 1rem;
   background-color: var(--indicator-bg-pink);
   border-radius: 1em;
-  bottom: 0.25rem;
+  bottom: 0.2rem;
   right: 0.25rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .dotGreen {

@@ -23,7 +23,7 @@ export function SpaceControls() {
             }}
           >
             <span>To Topic Selection</span>
-            <span>➡️</span>
+            <span className={styles.iconRight}></span>
           </button>
         );
       case EStage.TOPIC_INPUT:
@@ -35,7 +35,7 @@ export function SpaceControls() {
             }}
           >
             <span>To Role Selection</span>
-            <span>➡️</span>
+            <span className={styles.iconRight}></span>
           </button>
         );
       case EStage.ROLE_SELECT:
@@ -47,7 +47,7 @@ export function SpaceControls() {
             }}
           >
             <span>To Sharing</span>
-            <span>➡️</span>
+            <span className={styles.iconRight}></span>
           </button>
         );
       case EStage.SHARING:
@@ -61,7 +61,7 @@ export function SpaceControls() {
             }}
           >
             <span>End Session</span>
-            <span>➡️</span>
+            <span className={styles.iconRight}></span>
           </button>
         );
 
@@ -73,7 +73,7 @@ export function SpaceControls() {
   return (
     <div className={styles.stageControls}>
       <p>
-        <span>🗝️</span>
+        <span className={styles.iconKey}></span>
         {roomCode}
       </p>
       {renderStageControl()}

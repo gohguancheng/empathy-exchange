@@ -22,9 +22,9 @@ export function SpaceTopBar() {
       case EStage.SHARING:
         return { ...base, title: "Sharing Session", checkKey: "done" };
       case EStage.ROLE_SELECT:
-        return { ...base, title: "Select Role", checkKey: "role" };
+        return { ...base, title: "Select a Role", checkKey: "role" };
       case EStage.TOPIC_INPUT:
-        return { ...base, title: "Sharing Topic", checkKey: "topic" };
+        return { ...base, title: "Prepare a Topic", checkKey: "topic" };
       case EStage.WAITING:
       default:
         return { ...base, title: "Waiting for more Peers.." };
@@ -36,7 +36,11 @@ export function SpaceTopBar() {
       <TitleStatus
         {...topbarData}
         stage={currentStage as EStage}
-        darkFont={currentStage === EStage.SHARING || currentStage === EStage.ROLE_SELECT}
+        darkFont={
+          currentStage === EStage.END ||
+          currentStage === EStage.SHARING ||
+          currentStage === EStage.ROLE_SELECT
+        }
       />
     </div>
   );

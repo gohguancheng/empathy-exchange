@@ -29,7 +29,7 @@ export const Card = ({
 
         <p>
           {subtitle} {highlight ? "(You)" : ""}{" "}
-          <span>{isHost ? "😉" : "😊"}</span>
+          <div className={clsx(styles.icon, { [styles.hostIcon]: isHost })} />
         </p>
       </div>
     </div>

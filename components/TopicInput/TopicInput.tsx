@@ -89,7 +89,7 @@ export const TopicInput = () => {
       ) : (
         <>
           <div className={styles.submittedContainer}>
-            <h3>You are discussing</h3>
+            <h3>You will be discussing</h3>
             <p className={styles.emphasize}>{me?.topic}</p>
             <button onClick={() => setTopic("")} className={styles.reset}>
               Reset Sharing Topic

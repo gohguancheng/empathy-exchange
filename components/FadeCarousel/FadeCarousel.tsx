@@ -25,34 +25,35 @@ const FadeCarouselRaw = ({ list }: Props) => {
   }, [index, updateIndex]);
 
   return (
-    <div
-      className={styles.container}
-      onTouchStart={() => clearTimeout(time.current)}
-      onTouchEnd={() => updateIndex()}
-      onMouseEnter={() => clearTimeout(time.current)}
-      onMouseLeave={() => updateIndex()}
-    >
+    <div className={styles.container}>
       <div>
-        {list.map((str, i) => (
-          <p key={i} className={clsx("fade", { [styles.hide]: index !== i })}>
-            {str}
-          </p>
-        ))}
+        <div className={styles.square}>
+          {list.map((str, i) => (
+            <p
+              key={i}
+              onTouchStart={() => clearTimeout(time.current)}
+              onTouchEnd={() => updateIndex()}
+              onMouseEnter={() => clearTimeout(time.current)}
+              onMouseLeave={() => updateIndex()}
+              className={clsx("fade", { [styles.hide]: index !== i })}
+            >
+              {str}
+            </p>
+          ))}
+        </div>
       </div>
 
       <div className={styles.buttonsContainer}>
         <div
-          className={clsx("fade", { [styles.invisible]: index === 0 })}
+          className={clsx(styles.iconLeft, { [styles.invisible]: index === 0 })}
           onClick={() => {
             if (index === 0) return;
             clearTimeout(time.current);
             setIndex((p) => p - 1);
           }}
-        >
-          ⬅️
-        </div>
+        ></div>
         <div
-          className={clsx("fade", {
+          className={clsx(styles.iconRight, {
             [styles.invisible]: index === list.length - 1,
           })}
           onClick={() => {
@@ -60,9 +61,7 @@ const FadeCarouselRaw = ({ list }: Props) => {
             clearTimeout(time.current);
             setIndex((p) => p + 1);
           }}
-        >
-          ➡️
-        </div>
+        ></div>
       </div>
     </div>
   );

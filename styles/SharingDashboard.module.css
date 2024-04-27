@@ -18,10 +18,6 @@
   padding-bottom: 0.5rem;
 }
 
-.spotlight > h3 {
-  margin-bottom: 0.5rem;
-}
-
 .spotlight > div {
   width: max-content;
   max-width: 100%;
@@ -50,7 +46,8 @@
 }
 
 .roleInfo > h3 {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .tipsContainer {
@@ -69,14 +66,6 @@
 .tipsContainer p {
   font-size: 1.5rem;
   text-align: center;
-}
-.roleInfo > p::after,
-.tipsContainer p::after {
-  display: block;
-  content: "";
-  width: 2rem;
-  margin: 1.5rem auto;
-  border-bottom: var(--primary-black) 2px solid;
 }
 
 .modalContent {

@@ -70,7 +70,6 @@
 .submitButton {
   display: block;
   font-size: 1.5rem;
-  border: 2px var(--primary-white) solid;
   padding: 0.25rem 1rem;
 }
 
