@@ -41,7 +41,7 @@ export const ScrollContainer = ({ children }: { children: ReactNode }) => {
       <div ref={ref} className={styles.scrollContainer} onScroll={handleScroll}>
         <div className={styles.overflowContainer}>{children}</div>
       </div>
-      {show && <div className={styles.arrow}>⬇️</div>}
+      {show && <div className={styles.arrow} />}
     </div>
   );
 };

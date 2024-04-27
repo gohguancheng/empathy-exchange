@@ -1,5 +1,6 @@
 .main {
   padding: 2rem;
+  min-height: 100dvh;
   height: 100dvh;
   width: 100vw;
   background-color: var(--primary-black);

@@ -13,16 +13,16 @@
 }
 
 .square {
-  margin: 1rem auto;
-  padding: 1rem 2rem;
+  margin: 0 auto;
+  padding: 0 2rem;
   min-width: 250px;
   min-height: 250px;
-  width: 50vmin;
-  height: 50vmin;
+  width: 45vmin;
+  height: 45vmin;
   background-image: radial-gradient(
     ellipse at center,
     #9eaafe 0%,
-    #9eaafe55 95%,
+    #9eaafe88 85%,
     transparent 100%
   );
   display: flex;
@@ -42,7 +42,7 @@
 
 .buttonsContainer > div {
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 0.25rem;
 }
 
 .hide {

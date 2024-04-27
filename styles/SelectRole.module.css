@@ -1,5 +1,5 @@
 .container {
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: var(--primary-black);
   display: flex;
   flex-direction: column;
@@ -38,8 +38,8 @@
 .description {
   width: 100%;
   margin: 0.8rem 0;
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 1 1 250px;
+  min-height: 0;  max-height: 250px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -48,7 +48,7 @@
 }
 
 .description > div {
-  flex: 1 1 400px;
+  flex: 1 1 0px;
   display: flex;
   flex-direction: column;
   min-height: 0;

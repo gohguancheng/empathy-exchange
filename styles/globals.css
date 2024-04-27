@@ -39,11 +39,18 @@ html,
 body {
   width: 100vw;
   height: 100dvh;
-  overflow-x: hidden;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 #__next {
   height: 100dvh;
+  overflow-y: auto;
+  background-color: var(--primary-black);
+}
+
+#__next > * {
+  min-height: 100dvh;
 }
 
 a {

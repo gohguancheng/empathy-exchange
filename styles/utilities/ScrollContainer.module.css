@@ -27,6 +27,9 @@
   position: absolute;
   right: 0;
   bottom: 0px;
-  background-color: var(--primary-white);
-  border-radius: 4px;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url("/icons/arrow-right.svg") no-repeat center;
+  transform: rotate(90deg);
+  background-size: 1.5rem;
 }

@@ -7,15 +7,7 @@ import { WaitingRoom } from "../WaitingRoom/WaitingRoom";
 import { SharingDashboard } from "../SharingDashboard/SharingDashboard";
 
 export function SpaceBody() {
-  const {
-    currentStage,
-    me,
-    users,
-    currentSpeaker,
-    setTopic,
-    setRole,
-    setSpeaker,
-  } = useContext(SocketStateContext);
+  const { currentStage, me } = useContext(SocketStateContext);
 
   const renderStages = () => {
     if (!me) return <></>;

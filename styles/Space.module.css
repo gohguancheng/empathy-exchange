@@ -1,7 +1,6 @@
 .main {
   background-color: var(--primary-black);
   color: var(--primary-white);
-  height: 100dvh;
   width: 100%;
 }
 
@@ -12,6 +11,7 @@
   align-items: center;
   gap: 2rem;
   padding: 1rem 2rem;
+  min-height: 100dvh;
   height: 100%;
   width: 100%;
   max-width: 640px;
