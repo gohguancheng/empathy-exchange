@@ -13,16 +13,19 @@
   font-size: 2rem;
 }
 
-.container > div > button {
-  color: var(--primary-white);
-  background-color: var(--accent-1);
-  padding: 0.5rem 0.25rem;
-  border: 0px;
+.optionButton {
+  background-color: var(--accent-1) !important;
+  color: var(--primary-white) !important;
+  border: none !important;
+  font-size: 1.25rem !important;
+  padding: 0.75rem 0 !important;
 }
 
-.container > div > button:hover {
-  background-color: var(--primary-white);
-  color: var(--accent-1);
+.optionButton:hover,
+.selected {
+  color: var(--accent-1) !important;
+  background-color: var(--primary-white) !important;
+  font-weight: 600 !important;
 }
 
 .container > button {
@@ -77,6 +80,11 @@
   .container h3 {
     font-size: 1.75rem;
     line-height: 2rem;
+  }
+
+  .optionButton {
+    font-size: 0.9rem !important;
+    padding: 0.5rem !important;
   }
 
   .description {

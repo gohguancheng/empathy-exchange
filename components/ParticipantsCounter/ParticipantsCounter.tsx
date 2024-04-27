@@ -19,7 +19,6 @@ export const ParticipantsCounter = ({ users }: AttendanceProps) => {
         alt={`${color}-person`}
         width="40"
         height="40"
-        style={!user? {opacity:"25%"}:{}}
         key={`${user?.online}-${i}`}
       />
     );

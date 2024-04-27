@@ -5,6 +5,7 @@ import styles from "@/styles/SelectRole.module.css";
 import { GridButtonsContainer } from "../GridButtonsContainer/GridButtonsContainer";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { ScrollContainer } from "../ScrollContainer/ScrollContainer";
+import clsx from "clsx";
 
 export const SelectRole = () => {
   const { setRole, me } = useContext(SocketStateContext);
@@ -47,7 +48,13 @@ export const SelectRole = () => {
             <GridButtonsContainer>
               {roleKeys.map((k: ERole) => {
                 return (
-                  <button key={k} onClick={() => setSelection(k)}>
+                  <button
+                    key={k}
+                    className={clsx(styles.optionButton, {
+                      [styles.selected]: k === selection,
+                    })}
+                    onClick={() => setSelection(k)}
+                  >
                     {roles[k]?.label}
                   </button>
                 );

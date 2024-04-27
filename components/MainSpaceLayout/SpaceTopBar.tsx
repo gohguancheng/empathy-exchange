@@ -36,7 +36,7 @@ export function SpaceTopBar() {
       <TitleStatus
         {...topbarData}
         stage={currentStage as EStage}
-        darkFont={currentStage === EStage.SHARING}
+        darkFont={currentStage === EStage.SHARING || currentStage === EStage.ROLE_SELECT}
       />
     </div>
   );

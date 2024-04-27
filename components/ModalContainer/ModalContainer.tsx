@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styles from "@/styles/utilities/ModalContainer.module.css";
 

@@ -12,11 +12,15 @@
   background-color: var(--accent-1) !important;
   color: var(--primary-white) !important;
   border: none !important;
+  font-size: 1.25rem !important;
+  padding: 0.75rem 0 !important;
 }
 
+.selected,
 .optionButton:hover {
   color: var(--accent-1) !important;
   background-color: var(--primary-white) !important;
+  font-weight: 600;
 }
 
 .form {
@@ -37,13 +41,12 @@
 }
 
 .submittedContainer {
-  padding: 2rem;
+  margin-top: 4rem;
   text-align: center;
 }
 
 .reset {
-  display: block;
-  margin: 1rem 0;
+  margin: 2rem 0 !important;
 }
 
 .center {
@@ -56,13 +59,19 @@
 .emphasize {
   font-family: monospace;
   letter-spacing: 0.1rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  margin: 1rem;
 }
 
 @media only screen and (max-width: 640px) {
   .container h3 {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+
+  .optionButton {
+    font-size: 0.9rem !important;
+    padding: 0.5rem !important;
   }
 
   .form {

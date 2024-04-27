@@ -1,9 +1,9 @@
 import TextInput from "@/components/TextInput/TextInput";
 import { useContext, useEffect, useState } from "react";
-import { IUserData } from "@/utils/types";
 import styles from "@/styles/TopicInput.module.css";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { GridButtonsContainer } from "../GridButtonsContainer/GridButtonsContainer";
+import clsx from "clsx";
 
 export const TopicInput = () => {
   const { me, setTopic } = useContext(SocketStateContext);
@@ -12,8 +12,6 @@ export const TopicInput = () => {
   const [status, setStatus] = useState<{ submitted?: boolean; error?: string }>(
     {}
   );
-
-  const label = status.submitted ? `You will be sharing about "${input}"` : "";
 
   useEffect(() => {
     if (!!me?.topic) {
@@ -33,7 +31,14 @@ export const TopicInput = () => {
         "Financial Stress",
         "Identity and Self Esteem",
       ].map((e, i) => (
-        <button key={i} disabled={!!me?.topic} className={styles.optionButton} onClick={() => setInput(e)}>
+        <button
+          key={i}
+          disabled={!!me?.topic}
+          className={clsx(styles.optionButton, {
+            [styles.selected]: input === e,
+          })}
+          onClick={() => setInput(e)}
+        >
           {e}
         </button>
       ))}
@@ -41,10 +46,7 @@ export const TopicInput = () => {
   );
 
   return (
-    <div
-      key={`${status.submitted}`}
-      className={`${styles.container} slide-fade`}
-    >
+    <div key={`${me?.topic}`} className={`${styles.container} slide-fade`}>
       {!status.submitted ? (
         <>
           <h3>What would you like to share with the Space about?</h3>
@@ -87,7 +89,7 @@ export const TopicInput = () => {
       ) : (
         <>
           <div className={styles.submittedContainer}>
-            <h3>You will share about</h3>
+            <h3>You are discussing</h3>
             <p className={styles.emphasize}>{me?.topic}</p>
             <button onClick={() => setTopic("")} className={styles.reset}>
               Reset Sharing Topic
@@ -97,9 +99,4 @@ export const TopicInput = () => {
       )}
     </div>
   );
-};
-
-type TopicInputProps = {
-  currentUser?: IUserData;
-  onSubmit: (t: string) => void;
 };
