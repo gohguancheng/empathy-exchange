@@ -96,6 +96,47 @@ input[type="text"]:focus {
   scrollbar-width: none; /* Firefox */
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ea1a6;
+  border: 1px none white;
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ea1a6;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #9ea1a6;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5dd;
+  border: 1px none white;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #f5f5f5dd;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #f5f5f5dd;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f5f5f5dd;
+}
+
 @media only screen and (max-width: 640px) {
   * {
     text-wrap: wrap;
