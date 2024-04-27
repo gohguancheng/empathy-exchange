@@ -105,10 +105,22 @@
   background-color: var(--success-bg-green);
 }
 
+.hostContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hostContainer > p {
+  text-align: center;
+  font-size: 0.75rem;
+}
+
 .hostButton {
   padding: 0.5rem 1rem;
-  width: max-content;
-  max-width: 100%;
   margin: 0 auto;
   background-color: var(--accent-1);
   color: var(--primary-white);
@@ -123,5 +135,10 @@
   .tipsContainer p {
     font-size: 1.2rem;
     text-align: center;
+  }
+
+  .hostContainer > p {
+    text-align: center;
+    font-size: 0.6rem;
   }
 }

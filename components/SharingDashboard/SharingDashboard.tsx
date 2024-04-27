@@ -61,14 +61,17 @@ export const SharingDashboard = () => {
       </div>
 
       {!!me?.host && (
-        <button
-          className={styles.hostButton}
-          onClick={() => setShowModal(true)}
-        >
-          Select next speaker
-        </button>
-      )}
+        <div className={styles.hostContainer}>
+          <button
+            className={styles.hostButton}
+            onClick={() => setShowModal(true)}
+          >
+            Select next speaker
+          </button>
 
+          <p>Select yourself after the rest have spoken to end session</p>
+        </div>
+      )}
       {
         <ModalContainer show={showModal} close={() => setShowModal(false)}>
           <div className={styles.modalContent}>

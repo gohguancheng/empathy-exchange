@@ -41,7 +41,7 @@ export function SpaceControls() {
       case EStage.ROLE_SELECT:
         return (
           <button
-            disabled={!me.role}
+            disabled={users?.some((u) => !!u.online && !u.role)}
             onClick={() => {
               setStage(EStage.SHARING);
             }}

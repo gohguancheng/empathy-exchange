@@ -19,6 +19,7 @@
   border: none !important;
   font-size: 1.25rem !important;
   padding: 0.75rem 0 !important;
+  box-shadow: var(--shadow-sm) !important;
 }
 
 .optionButton:hover,
