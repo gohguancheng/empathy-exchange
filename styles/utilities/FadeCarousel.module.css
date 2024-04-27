@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.25rem;
   height: 100%;
 }
 .container > div:first-child {
@@ -11,6 +10,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.square {
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  min-width: 250px;
+  min-height: 250px;
+  width: 50vmin;
+  height: 50vmin;
+  background-image: radial-gradient(
+    ellipse at center,
+    #9eaafe 0%,
+    #9eaafe55 95%,
+    transparent 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 
 .container > p {
@@ -24,7 +42,7 @@
 
 .buttonsContainer > div {
   cursor: pointer;
-  margin: 1.5rem 0;
+  margin-top: 1rem;
 }
 
 .hide {
@@ -32,6 +50,45 @@
 }
 
 .invisible {
-  opacity: 0;
+  opacity: 0 !important;
   cursor: default !important;
+}
+
+.iconLeft {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: url("/icons/arrow-right.svg") no-repeat center;
+  transform: rotate(180deg);
+  background-size: 2rem;
+  margin-left: 0.5rem;
+  opacity: 0.75;
+}
+
+.iconRight {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: url("/icons/arrow-right.svg") no-repeat center;
+  background-size: 2rem;
+  margin-left: 0.5rem;
+  opacity: 0.75;
+}
+
+@media only screen and (max-width: 768px) {
+  .iconLeft {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: 1.5rem;
+    margin-left: 0.5rem;
+    opacity: 0.75;
+  }
+
+  .iconRight {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: 1.5rem;
+    margin-left: 0.5rem;
+    opacity: 0.75;
+  }
 }
