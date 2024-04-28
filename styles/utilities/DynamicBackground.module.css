@@ -1,12 +1,10 @@
 .main {
   width: 100%;
   min-height: 100dvh;
-  height: min-content;
   -webkit-transition: background-color 3s ease-in-out;
   -moz-transition: background-color 3s ease-in-out;
   -o-transition: background-color 3s ease-in-out;
   transition: background-color 3s ease-in-out;
-
 }
 
 .stageOne {
