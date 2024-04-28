@@ -22,6 +22,7 @@ export default function validateHandler(
    */
 
   let isAvail = false;
+  let message;
   let username;
   const users = serverStore.getRoomUsers(roomCode as string);
 
@@ -29,13 +30,14 @@ export default function validateHandler(
     if (users) {
       isAvail = !users[0].online;
       username = isAvail ? users[0].username : undefined;
+      if (!isAvail) message = "Room is in use with an online host";
     } else {
       isAvail = true;
     }
   } else {
-    isAvail = !!users && users.length < 5;
+    isAvail = !!users && users.filter((u) => u.online).length < 5;
+    if (!isAvail) message = "Room is at maximum capacity";
   }
 
-  const message = isAvail ? undefined : "Space is not available";
   return res.status(200).json({ isAvail, roomCode, username, message });
 }
