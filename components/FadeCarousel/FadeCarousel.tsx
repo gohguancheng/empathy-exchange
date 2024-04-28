@@ -27,7 +27,9 @@ const FadeCarouselRaw = ({ list }: Props) => {
   return (
     <div className={styles.container}>
       <div>
-        <div className={styles.square}>
+        <div
+          className={clsx(styles.square, { [styles.altBg]: index % 2 !== 0 })}
+        >
           {list.map((str, i) => (
             <p
               key={i}

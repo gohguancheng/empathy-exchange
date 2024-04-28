@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: center;
   height: 100%;
 }
 .container > div:first-child {
@@ -22,13 +23,24 @@
   background-image: radial-gradient(
     ellipse at center,
     #9eaafe 0%,
-    #9eaafe88 85%,
-    transparent 100%
+    #9eaafebb 100%
   );
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  -webkit-transition: background-image 5s ease-in-out;
+  -moz-transition: background-image 5s ease-in-out;
+  -o-transition: background-image 5s ease-in-out;
+  transition: background-image 5s ease-in-out;
+}
+
+.altBg {
+  background-image: radial-gradient(
+    ellipse at center,
+    #c39efe 0%,
+    #c39efebb 100%
+  );
 }
 
 .container > p {
@@ -76,6 +88,15 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .square {
+    min-width: 250px;
+    min-height: 250px;
+    width: 75vmin;
+    height: 75vmin;
+    max-width: 450px;
+    max-height: 450px;
+  }
+
   .iconLeft {
     width: 1.5rem;
     height: 1.5rem;
