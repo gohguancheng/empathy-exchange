@@ -23,15 +23,27 @@ export default function validateUserHandler(
 
   let isAvail = false;
   const users = serverStore.getRoomUsers(roomCode as string);
+  let message;
 
   if (isHost) {
     isAvail = !users || (users[0].username === username && !users[0].online);
+    if (!isAvail) {
+      message = "Host is already online";
+    }
   } else {
-    isAvail =
-      !!users &&
-      !users.find((member) => !!member.online && member.username === username);
+    const existingUser = users.find(
+      (member, i) => i !== 0 && member.username === username
+    );
+    const fullRoom = !!users && users.length >= 5;
+
+    if (!!existingUser && !!existingUser.online) {
+      message = "User is already online";
+    } else if (!existingUser && fullRoom) {
+      message = "Room is full";
+    } else {
+      isAvail = true;
+    }
   }
 
-  const message = isAvail ? undefined : "Seems like that name is taken";
   return res.status(200).json({ isAvail, roomCode, username, message });
 }
