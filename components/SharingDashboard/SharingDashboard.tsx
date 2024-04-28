@@ -82,7 +82,9 @@ export const SharingDashboard = () => {
                 <button
                   key={`${u.username}-${u.done}-${u.online}`}
                   disabled={
-                    (i !== 0 && !!u.done) || u.username === currentSpeaker
+                    !u.online ||
+                    (i !== 0 && !!u.done) ||
+                    u.username === currentSpeaker
                   }
                   onClick={() => setSpeaker(u.username)}
                   className={clsx({ [styles.done]: u.done })}
