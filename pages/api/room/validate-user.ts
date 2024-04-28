@@ -31,15 +31,16 @@ export default function validateUserHandler(
       message = "Host is already online";
     }
   } else {
-    const existingUser = users.find(
-      (member, i) => i !== 0 && member.username === username
-    );
+    const userIndex = users.findIndex((member) => member.username === username);
+    const existingUser = userIndex > -1 ? users[userIndex] : undefined;
     const fullRoom = !!users && users.length >= 5;
 
-    if (!!existingUser && !!existingUser.online) {
+    if (userIndex === 0) {
+      message = "Username is used by host, switch mode to host a Space";
+    } else if (!!existingUser && !!existingUser.online) {
       message = "User is already online";
     } else if (!existingUser && fullRoom) {
-      message = "Room is full";
+      message = "Space is full";
     } else {
       isAvail = true;
     }

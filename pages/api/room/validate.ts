@@ -30,13 +30,16 @@ export default function validateHandler(
     if (users) {
       isAvail = !users[0].online;
       username = isAvail ? users[0].username : undefined;
-      if (!isAvail) message = "Room is in use with an online host";
+      if (!isAvail) message = "Space is in use with an online host";
     } else {
       isAvail = true;
     }
   } else {
     isAvail = !!users && users.filter((u) => u.online).length < 5;
-    if (!isAvail) message = "Room is at maximum capacity";
+    if (!isAvail)
+      message = !users
+        ? "Space does not exist"
+        : "Space is at maximum capacity";
   }
 
   return res.status(200).json({ isAvail, roomCode, username, message });
