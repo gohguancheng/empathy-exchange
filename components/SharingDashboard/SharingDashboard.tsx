@@ -1,23 +1,23 @@
-import { IUser } from "@/utils/types";
 import styles from "@/styles/SharingDashboard.module.css";
 import { roles, speakerRole } from "@/lib/roles";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { FadeCarousel } from "@/components/FadeCarousel/FadeCarousel";
 import { ModalContainer } from "@/components/ModalContainer/ModalContainer";
 import clsx from "clsx";
+import { IUser } from "@/lib/user";
 
 export const SharingDashboard = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { me, users, currentSpeaker, setSpeaker } =
+  const { me, users, currentSpeaker, setSpeaker, setDone } =
     useContext(SocketStateContext);
-  const index = users?.findIndex((u) => u.username === currentSpeaker) ?? -1;
+  const index = users?.findIndex((u) => u.name === currentSpeaker) ?? -1;
   const speakerDetails = (
     users && index !== -1 ? { ...users[index], index } : {}
   ) as IUser;
 
-  const isSpeaker = me?.username === currentSpeaker;
+  const isSpeaker = me?.name === currentSpeaker;
   const currentRole = isSpeaker
     ? speakerRole
     : !!me?.role
@@ -42,12 +42,18 @@ export const SharingDashboard = () => {
     [currentRole.label, isSpeaker]
   );
 
+  useEffect(() => {
+    if (isSpeaker) {
+      setDone();
+    }
+  }, [isSpeaker, setDone]);
+
   return (
     <section className={styles.container}>
       <div className={styles.spotlight}>
         <div>
           <p>Speaker:</p>
-          <p>{speakerDetails.username}</p>
+          <p>{speakerDetails.name}</p>
           <p>Topic:</p>
           <p>{speakerDetails.topic}</p>
         </div>
@@ -60,7 +66,7 @@ export const SharingDashboard = () => {
         </div>
       </div>
 
-      {!!me?.host && (
+      {!me?.n && (
         <div className={styles.hostContainer}>
           <button
             className={styles.hostButton}
@@ -80,16 +86,16 @@ export const SharingDashboard = () => {
             <div className={styles.modalButtonsContainer}>
               {users?.map((u, i) => (
                 <button
-                  key={`${u.username}-${u.done}-${u.online}`}
+                  key={`${u.name}-${u.done}-${u.clientId}`}
                   disabled={
-                    !u.online ||
+                    !u.clientId ||
                     (i !== 0 && !!u.done) ||
-                    u.username === currentSpeaker
+                    u.name === currentSpeaker
                   }
-                  onClick={() => setSpeaker(u.username)}
+                  onClick={() => setSpeaker(u.name)}
                   className={clsx({ [styles.done]: u.done })}
                 >
-                  {u.username}
+                  {u.name}
                 </button>
               ))}
             </div>

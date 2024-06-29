@@ -5,10 +5,11 @@ import styles from "@/styles/SpaceControls.module.css";
 import { useRouter } from "next/router";
 
 export function SpaceControls() {
-  const { setStage, me, currentStage, users } = useContext(SocketStateContext);
+  const { setStage, me, currentStage, users, setSpeaker, currentSpeaker } =
+    useContext(SocketStateContext);
   const { roomCode } = useRouter().query;
   const renderStageControl = () => {
-    if (!me?.host) {
+    if (me?.n !== 0) {
       return <></>;
     }
 
@@ -17,7 +18,7 @@ export function SpaceControls() {
         const [_, ...otherUsers] = users || [];
         return (
           <button
-            disabled={otherUsers.every((u) => !u.online)}
+            disabled={otherUsers.every((u) => !u.clientId)}
             onClick={() => {
               setStage(EStage.TOPIC_INPUT);
             }}
@@ -41,9 +42,10 @@ export function SpaceControls() {
       case EStage.ROLE_SELECT:
         return (
           <button
-            disabled={users?.some((u) => !!u.online && !u.role)}
+            disabled={users?.some((u) => !!u.clientId && !u.role)}
             onClick={() => {
               setStage(EStage.SHARING);
+              setSpeaker(me.name);
             }}
           >
             <span>To Sharing</span>
@@ -54,7 +56,10 @@ export function SpaceControls() {
         return (
           <button
             disabled={
-              !users?.filter((u, i) => i !== 0 && u.online).every((u) => u.done)
+              currentSpeaker !== me.name ||
+              !users
+                ?.filter((u, i) => i !== 0 && u.clientId)
+                .every((u) => u.done)
             }
             onClick={() => {
               setStage(EStage.END);

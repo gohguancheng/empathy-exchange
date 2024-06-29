@@ -9,7 +9,7 @@ export const WaitingRoom = () => {
 
   const isMe = useCallback(
     (user: string) => {
-      return !!user && !!me?.username && me.username === user;
+      return !!user && !!me?.name && me.name === user;
     },
     [me]
   );
@@ -19,17 +19,17 @@ export const WaitingRoom = () => {
       <div className={styles.userContainer}>
         {users?.map((u, i) => (
           <Card
-            key={u.username}
-            name={u.username}
-            highlight={isMe(u.username)}
-            isHost={i === 0}
-            isOnline={!!u.online}
+            key={u.name}
+            name={u.name}
+            highlight={isMe(u.name)}
+            isHost={me?.n === 0}
+            isOnline={!!u.clientId}
             index={i}
           />
         )) ?? "No users found"}
       </div>
     ),
-    [users, isMe]
+    [users, isMe, me?.n]
   );
 
   return (

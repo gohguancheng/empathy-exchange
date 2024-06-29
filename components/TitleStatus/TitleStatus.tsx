@@ -1,9 +1,10 @@
-import { EStage, IUser } from "@/utils/types";
+import { EStage } from "@/utils/types";
 import styles from "@/styles/utilities/TitleStatus.module.css";
 import clsx from "clsx";
 import { useCallback, useContext } from "react";
 import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { getInitials } from "@/utils/string";
+import { IUser, TUserProps } from "@/lib/user";
 
 export const TitleStatus = ({
   title,
@@ -20,21 +21,21 @@ export const TitleStatus = ({
     switch (stage) {
       case EStage.TOPIC_INPUT: {
         return {
-          isMe: me.username === user.username,
+          isMe: me.name === user.name,
           status: !!user.topic,
         };
       }
       case EStage.ROLE_SELECT: {
         return {
-          isMe: me.username === user.username,
+          isMe: me.name === user.name,
           status: !!user.role,
         };
       }
       case EStage.SHARING:
       case EStage.END: {
         return {
-          isMe: me.username === user.username,
-          status: !!user.done || currentSpeaker === user.username,
+          isMe: me.name === user.name,
+          status: !!user.done || currentSpeaker === user.name,
         };
       }
       default:
@@ -44,11 +45,11 @@ export const TitleStatus = ({
 
   const getStatusEmoji = useCallback(
     (user: TabElement): string => {
-      if (!(user && user.username)) return "";
-      if (!user.online) return "❌";
+      if (!(user && user.name)) return "";
+      if (!user.clientId) return "❌";
 
       if (stage === EStage.SHARING) {
-        if (user.username === currentSpeaker) return "🎙️";
+        if (user.name === currentSpeaker) return "🎙️";
         return "🎧";
       } else {
         if (user.status) return "✅";
@@ -76,17 +77,17 @@ export const TitleStatus = ({
         <div className={styles.topGrid}>
           {elements.map((user, i) => (
             <div
-              key={`${user.username}-${i}`}
+              key={`${user.name}-${i}`}
               className={clsx(styles.tab, {
-                [styles.offline]: !user.online,
+                [styles.offline]: !user.clientId,
                 [styles.done]: user.status,
               })}
             >
               <div>
-                {user.username ? getInitials(user.username) : "—"}{" "}
+                {user.name ? getInitials(user.name) : "—"}{" "}
                 {user.isMe ? "(You)" : ""}
               </div>
-              {!!user.online && (
+              {!!user.clientId && (
                 <div key={`${user.status}`} className="slide-fade">
                   {getStatusEmoji(user)}
                 </div>
@@ -102,7 +103,7 @@ export const TitleStatus = ({
 type TitleStatusProps = {
   title: string;
   users?: IUser[];
-  checkKey?: keyof IUser;
+  checkKey?: TUserProps;
   me: IUser;
   darkFont: boolean;
   stage?: EStage;

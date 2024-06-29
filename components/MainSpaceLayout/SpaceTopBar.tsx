@@ -2,12 +2,13 @@ import { SocketStateContext } from "@/provider/SocketProvider/SocketProvider";
 import { useContext, useMemo } from "react";
 import { TitleStatus } from "../TitleStatus/TitleStatus";
 import styles from "@/styles/SpaceTopBar.module.css";
-import { EStage, IUser, IUserData } from "@/utils/types";
+import { EStage } from "@/utils/types";
+import { IUser, TUserProps } from "@/lib/user";
 
 export function SpaceTopBar() {
   const {
     users = [],
-    me = {} as IUserData,
+    me = {} as IUser,
     currentStage,
   } = useContext(SocketStateContext);
 
@@ -49,7 +50,7 @@ export function SpaceTopBar() {
 type TopbarData = {
   title: string;
   users: IUser[];
-  me: IUserData;
-  checkKey?: keyof IUser;
+  me: IUser;
+  checkKey?: TUserProps;
   stage?: EStage | Omit<EStage, EStage.SHARING>;
 };

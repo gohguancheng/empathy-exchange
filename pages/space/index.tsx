@@ -81,7 +81,7 @@ export default function Space() {
         }),
       }).then((res) => res.json());
       if (res) {
-        const { roomCode, username } = res;
+        const { roomCode, name: username } = res;
         router.push({ pathname: "/space/" + roomCode, query: { username } });
       }
     } catch (e) {}
