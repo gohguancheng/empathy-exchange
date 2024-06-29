@@ -29,9 +29,11 @@ export default async function roomHandler(
 
     if (user?.clientId) {
       return res.status(400).json({ error: `Username ${user.name} is online` });
-    } else if (!user) {
-      await spaces.saveUser(roomCode, name);
-      return res.status(200).json({ message: "OK", roomCode, name });
+    } else {
+      if (!user) {
+        await spaces.saveUser(roomCode, name); // save if not existing
+      }
+      return res.status(200).json({ message: "OK", roomCode, name }); // respond if offline or not existing
     }
   }
 }
