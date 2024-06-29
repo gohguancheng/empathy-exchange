@@ -22,7 +22,7 @@ export const WaitingRoom = () => {
             key={u.name}
             name={u.name}
             highlight={isMe(u.name)}
-            isHost={me?.n === 0}
+            isHost={u.n === 0}
             isOnline={!!u.clientId}
             index={i}
           />
