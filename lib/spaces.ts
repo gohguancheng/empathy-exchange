@@ -8,11 +8,9 @@ declare global {
 
 class Spaces {
   private redis: Redis;
-  private ttl: number;
 
   constructor() {
     this.redis = new Redis(process.env.REDIS_CONNECTION_URI as string);
-    this.ttl = parseInt(process.env.TTL_VALUE ?? "7200"); // default 2 hours
   }
 
   async flush() {
@@ -39,9 +37,7 @@ class Spaces {
     await this.redis
       .multi()
       .hmset(spaceKey, { host: hostname, stage: EStage.WAITING, capacity: 1 })
-      .expire(spaceKey, this.ttl)
       .hset(hostKey, { name: hostname, n: 0 })
-      .expire(hostKey, this.ttl)
       .exec();
   }
 
@@ -62,7 +58,7 @@ class Spaces {
         await pipeline.hset(spaceKey, key, options[key]);
       }
     }
-    await pipeline.expire(spaceKey, this.ttl).exec();
+    await pipeline.exec();
   }
 
   async deleteSpace(code: string) {
@@ -113,9 +109,7 @@ class Spaces {
     await this.redis
       .multi()
       .hset(userKey, { name, n: space.capacity })
-      .expire(userKey, this.ttl)
       .hset(spaceKey, "capacity", space.capacity + 1)
-      .expire(spaceKey, this.ttl)
       .exec();
   }
 
@@ -133,7 +127,7 @@ class Spaces {
         await pipeline.hset(userKey, key, options[key]);
       }
     }
-    await pipeline.expire(userKey, this.ttl).exec();
+    await pipeline.exec();
   }
 }
 
