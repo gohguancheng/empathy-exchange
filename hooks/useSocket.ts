@@ -1,7 +1,7 @@
-import { IUser, IUserData } from "@/utils/types";
-import { useEffect, useRef, useState } from "react";
+import { IUser } from "@/lib/user";
+import { ISpace } from "@/utils/types";
+import { useCallback, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
-
 
 type SocketStatus = { isValidParams?: boolean; isConnected?: boolean };
 
@@ -12,10 +12,41 @@ export default function useSocket(
 ) {
   const [socket, setSocket] = useState<Socket | undefined>();
   const [socketStatus, setSocketStatus] = useState<SocketStatus>();
-  const [userData, setUserData] = useState<IUserData>({
-    username: "",
-    host: false,
-  });
+  const [space, setSpace] = useState<ISpace>();
+  const [userData, setUserData] = useState<IUser>({ name: username, n: 10 });
+
+  const initializeSession = useCallback(
+    (data: { me: IUser; users: IUser[]; space: ISpace }) => {
+      setUserData(() => data.me);
+      setSpace(() => ({ ...data.space, users: data.users }));
+      setSocketStatus((prev) => ({
+        ...prev,
+        isConnected: !!data.me.clientId,
+      }));
+    },
+    []
+  );
+
+  const spaceUpdateHandler = useCallback((newState: ISpace) => {
+    setSpace((prev) => ({ ...newState, users: prev?.users }));
+  }, []);
+
+  const userUpdateHandler = useCallback(
+    (updatedUser: IUser) => {
+      setSpace((prev) => {
+        const users = prev?.users ?? [];
+        if (users.length) {
+          users[updatedUser.n] = updatedUser;
+        }
+        return { ...prev, users } as ISpace;
+      });
+
+      if (updatedUser.name === userData.name) {
+        setUserData(() => updatedUser);
+      }
+    },
+    [userData.name]
+  );
 
   useEffect(() => {
     setSocketStatus((prev) => ({
@@ -46,41 +77,51 @@ export default function useSocket(
           sock.on("connect_error", (err) => {
             authErrorHandler({ message: err.message });
           });
+
+          sock.on("space_not_found", () => {
+            authErrorHandler({ message: "Space is not found" });
+          });
         });
       };
 
       connectSocket();
       return () => {
+        if (sock.connected) {
+          sock.close();
+        } else if (sock) {
+          sock.once("connect", () => {
+            sock.close();
+          });
+        }
         sock.removeAllListeners("connect");
         sock.removeAllListeners("connect_error");
+        sock.removeAllListeners("space_not_found");
       };
     }
   }, [socketStatus?.isValidParams]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("auth_success", (data: IUserData) => {
-        setUserData(() => data);
-        setSocketStatus((prev) => ({ ...prev, isConnected: !!data.username }));
-      });
+    if (socket?.id) {
+      socket.on("auth_success", initializeSession);
+      socket.on("space_updated", spaceUpdateHandler);
+      socket.on("user_updated", userUpdateHandler);
 
       return () => {
-        if (socket.connected) {
-          socket.close();
-        } else if (socket) {
-          socket.once("connect", () => {
-            socket.close();
-          });
-        }
         socket.removeAllListeners("auth_success");
+        socket.removeAllListeners("space_updated");
+        socket.removeAllListeners("user_updated");
       };
     }
-  }, [socket]);
+  }, [socket?.id, initializeSession, spaceUpdateHandler, userUpdateHandler]);
 
   return {
     socket,
     userData,
     setUserData,
     socketStatus,
+    space,
+    setSpace,
+    spaceUpdateHandler,
+    userUpdateHandler,
   };
 }

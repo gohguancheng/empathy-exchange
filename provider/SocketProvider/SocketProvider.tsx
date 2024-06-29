@@ -9,9 +9,10 @@ import {
   useState,
 } from "react";
 import useSocket from "@/hooks/useSocket";
-import { EStage, IRoom, IUser, IUserData } from "@/utils/types";
+import { EStage } from "@/utils/types";
 import useSpinnerDelay from "@/hooks/useSpinner";
 import { Socket } from "socket.io-client";
+import { IUser } from "@/lib/user";
 
 export const SocketStateContext = createContext<Context>({
   showSpinner: true,
@@ -19,24 +20,22 @@ export const SocketStateContext = createContext<Context>({
   setTopic: () => {},
   setRole: () => {},
   setSpeaker: () => {},
+  setDone: () => {},
 });
+
 export default function SocketStateProvider({ children }: Props) {
   const router = useRouter();
   const { roomCode, username } = router.query as {
     roomCode: string;
     username: string;
   };
-  const [content, setContent] = useState<IRoom>();
 
   const handleAuthError = (query: { message: string }) => {
     router.replace({ pathname: "/start", query });
   };
-  const { socket, setUserData, userData, socketStatus } = useSocket(
-    roomCode,
-    username,
-    handleAuthError
-  );
-  const { showSpinner } = useSpinnerDelay({ show: !userData?.username });
+  const { socket, userData, space, spaceUpdateHandler, userUpdateHandler } =
+    useSocket(roomCode, username, handleAuthError);
+  const { showSpinner } = useSpinnerDelay({ show: !userData?.clientId });
 
   useEffect(() => {
     if (router.isReady && !(roomCode && username)) {
@@ -49,58 +48,58 @@ export default function SocketStateProvider({ children }: Props) {
   }, [router.isReady, roomCode, username]);
 
   useEffect(() => {
-    if (username && userData?.username && username !== userData?.username) {
+    if (username && userData?.name && username !== userData?.name) {
       router.replace("/start");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData?.username]);
-
-  const roomUpdateHandler = useCallback((update: IRoom) => {
-    setContent(() => update);
-    setUserData((prev) => ({
-      ...prev,
-      ...update.users.find((e) => e.username === prev.username),
-    }));
-  }, []);
-
-  useEffect(() => {
-    if (socketStatus?.isConnected || !socket) return;
-    socket.emit(
-      "get_room",
-      ({ update, user }: { update: IRoom; user: IUserData }) => {
-        setUserData(() => user);
-        setContent(() => update);
-      }
-    );
-
-    socket.on("room_update", roomUpdateHandler);
-
-    return () => {
-      socket.off("room_update", roomUpdateHandler);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
+  }, [userData?.name]);
 
   const setStage = useCallback(
-    (s: EStage) => {
-      socket?.emit("set_stage", s, roomUpdateHandler);
+    (value: EStage) => {
+      socket?.emit("space_update", { key: "stage", value }, spaceUpdateHandler);
     },
-    [socket]
+    [socket, spaceUpdateHandler]
   );
 
   const setTopic = useCallback(
-    (topic: string) => socket?.emit("set_topic", topic, roomUpdateHandler),
-    [socket]
+    (topic: string) =>
+      socket?.emit(
+        "user_update",
+        { key: "topic", value: topic },
+        userUpdateHandler
+      ),
+    [socket, userUpdateHandler]
   );
 
   const setRole = useCallback(
-    (role: string) => socket?.emit("set_role", role, roomUpdateHandler),
-    [socket]
+    (role: string) =>
+      socket?.emit(
+        "user_update",
+        { key: "role", value: role },
+        userUpdateHandler
+      ),
+    [socket, userUpdateHandler]
   );
+
   const setSpeaker = useCallback(
-    async (speaker: string) =>
-      await socket?.emit("set_speaker", speaker, roomUpdateHandler),
-    [socket]
+    async (speaker: string) => {
+      await socket?.emit(
+        "space_update",
+        { key: "speaker", value: speaker },
+        spaceUpdateHandler
+      );
+    },
+    [socket, spaceUpdateHandler]
+  );
+
+  const setDone = useCallback(
+    () =>
+      socket?.emit(
+        "user_update",
+        { key: "done", value: true },
+        userUpdateHandler
+      ),
+    [socket, userUpdateHandler]
   );
 
   const socketObj = useMemo(() => socket, [socket?.id]);
@@ -108,8 +107,8 @@ export default function SocketStateProvider({ children }: Props) {
   const me = useMemo(
     () => userData,
     [
-      userData.username,
-      userData.online,
+      userData.name,
+      userData.clientId,
       userData.topic,
       userData.role,
       userData.done,
@@ -117,7 +116,7 @@ export default function SocketStateProvider({ children }: Props) {
   );
 
   const currentStage = useMemo(() => {
-    const hostStage = content?.current.stage;
+    const hostStage = space?.stage;
     if (showSpinner) return;
     if (hostStage === EStage.WAITING) return hostStage;
     if (!userData.topic || hostStage === EStage.TOPIC_INPUT)
@@ -126,24 +125,28 @@ export default function SocketStateProvider({ children }: Props) {
       return EStage.ROLE_SELECT;
     if (hostStage === EStage.SHARING) return EStage.SHARING;
     if (hostStage === EStage.END) return EStage.END;
-  }, [content?.current.stage, me, showSpinner]);
+  }, [space?.stage, me, showSpinner]);
 
-  const currentSpeaker = useMemo(
-    () => content?.current.speaker,
-    [content?.current.speaker]
-  );
+  useEffect(() => {
+    if (socket && currentStage === EStage.END) {
+      socket.close();
+    }
+  }, [currentStage, socket]);
+
+  const currentSpeaker = useMemo(() => space?.speaker, [space?.speaker]);
 
   const context = {
     showSpinner,
     socket: socketObj,
     me,
-    users: content?.users,
+    users: space?.users,
     currentStage,
     currentSpeaker,
     setStage,
     setTopic,
     setRole,
     setSpeaker,
+    setDone,
     roomCode,
     username,
   };
@@ -159,7 +162,7 @@ type Props = { children: ReactNode | ReactElement };
 type Context = {
   showSpinner: boolean;
   socket?: Socket;
-  me?: IUserData;
+  me?: IUser;
   users?: IUser[];
   currentStage?: EStage | Omit<EStage, EStage.SHARING>;
   currentSpeaker?: string;
@@ -167,6 +170,7 @@ type Context = {
   setTopic: (s: string) => void;
   setRole: (role: string) => void;
   setSpeaker: (speaker: string) => void;
+  setDone: () => void;
   roomCode?: string;
   username?: string;
 };
