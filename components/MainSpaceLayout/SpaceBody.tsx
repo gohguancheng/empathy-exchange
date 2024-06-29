@@ -23,7 +23,8 @@ export function SpaceBody() {
       case EStage.END:
         return (
           <div style={{ margin: "2rem", textAlign: "center" }}>
-            <p>Close the browser tab to logout from the Space</p>
+            <p>Thank you for sharing!</p>
+            <p>You may now close the browser.</p>
           </div>
         );
     }
