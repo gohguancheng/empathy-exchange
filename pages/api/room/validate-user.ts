@@ -34,7 +34,7 @@ export default async function validateUserHandler(
     } else {
       const space = await spaces.getSpace(roomCode as string);
       const isInvalidRole = name === space?.host;
-      const isFull = space && space?.capacity >= 5;
+      const isFull = space && !user && space?.capacity >= 5;
 
       if (isInvalidRole) {
         message = "Username is used by host, switch mode to host a Space";

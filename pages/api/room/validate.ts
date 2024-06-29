@@ -36,11 +36,8 @@ export default async function validateHandler(
       isAvail = true;
     }
   } else {
-    isAvail = !!(space && space?.capacity < 5);
-    if (!isAvail)
-      message = !space
-        ? "Space does not exist"
-        : "Space is at maximum capacity";
+    isAvail = !!space;
+    if (!isAvail) message = "Space does not exist";
   }
 
   return res.status(200).json({ isAvail, roomCode, name, message });
