@@ -1,34 +1,43 @@
 import type { NextApiRequest } from "next";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { ERole, EStage, NextApiResponseWithSocket } from "@/utils/types";
-import serverStore from "@/lib/roomStore";
+import { ISpace, NextApiResponseWithSocket } from "@/utils/types";
+import spaces from "@/lib/spaces";
+import { IUser } from "@/lib/user";
 
-const attachCredentials = (socket: Socket) => {
-  const data = socket.handshake.auth as {
+const attachCredentials = async (socket: Socket) => {
+  const data = { ...socket.handshake.auth } as {
     roomCode: string;
     username: string;
+    _me?: IUser;
+    _hostedSpace?: ISpace;
   };
   const { roomCode = "", username = "" } = data;
-  const user = serverStore.getUser(roomCode, username);
-  let error;
-  if (!user) {
-    error = `User, ${username}, has been logged out`;
-    // socket.emit("auth_error", { error });
-    throw error;
-  }
-  if (!!user?.online) {
-    error = "User is already online";
 
-    throw error;
-  }
+  try {
+    const space = await spaces.getSpace(roomCode);
+    if (!space) {
+      throw "Space not found";
+    }
 
-  serverStore.setUserOnlineState(roomCode, username, socket.id);
-  socket.data = data;
+    const user = await spaces.getUser(roomCode, username);
+    if (!user?.name) {
+      throw `User, ${username}, has been logged out`;
+    } else if (!!user?.clientId) {
+      throw "User is already online";
+    }
+
+    await spaces.setUserProperty(roomCode, username, { clientId: socket.id });
+    data._hostedSpace = space;
+    data._me = { ...user, clientId: socket.id };
+    socket.data = data;
+  } catch (err) {
+    throw err;
+  }
 };
 
-export default function handler(
-  req: NextApiRequest,
+export default async function handler(
+  _: NextApiRequest,
   res: NextApiResponseWithSocket
 ) {
   if (res.socket?.server?.io) {
@@ -39,10 +48,10 @@ export default function handler(
     const io = new Server(httpServer, { addTrailingSlash: false });
     res.socket.server.io = io;
 
-    io.use((socket, next) => {
-      if (socket.data.roomCode && socket.data.username) next();
+    io.use(async (socket, next) => {
+      if (socket.data._me?.clientId === socket.id) next();
       try {
-        attachCredentials(socket);
+        await attachCredentials(socket);
         next();
       } catch (error: any) {
         const err = new Error(error);
@@ -50,72 +59,64 @@ export default function handler(
       }
     });
 
-    io.on("connection", (socket) => {
-      if (socket.data.roomCode) {
-        const { roomCode, username } = socket.data;
-        socket.join(roomCode);
-        socket.emit("auth_success", {
-          ...serverStore.getUser(roomCode, username),
-          host: serverStore.isUserHost(roomCode, username),
-        });
-      }
-
-      socket.on("get_room", async (callback) => {
-        const { roomCode, username } = socket.data;
-        const user = serverStore.getUser(roomCode, username);
-        const update = serverStore.getRoom(roomCode);
-        socket.to(roomCode).emit("room_update", update);
-        callback({ update, user });
+    io.on("connection", async (socket) => {
+      const { roomCode, _me, _hostedSpace: space } = socket.data;
+      socket.join(roomCode);
+      const users = await spaces.getSpaceUsers(roomCode);
+      socket.emit("auth_success", {
+        me: { ..._me, host: _me.n === 0 },
+        users,
+        space,
       });
+      socket.to(socket.data.roomCode).emit("user_updated", _me);
+      if (_me.n !== 0) socket.data._hostedSpace = undefined; // remove for non-host
 
-      socket.on("set_stage", (stage: EStage, callback) => {
-        const update = serverStore.setStageForRoom(socket.data.roomCode, stage);
-        callback(update);
-        socket.to(socket.data.roomCode).emit("room_update", update);
-      });
-
-      socket.on("set_speaker", (speaker: string, callback) => {
-        const update = serverStore.setSpeakerForRoom(
-          socket.data.roomCode,
-          speaker
-        );
-        if (update) {
-          callback(update);
-          socket.to(socket.data.roomCode).emit("room_update", update);
-        }
-      });
-
-      socket.on("set_topic", (topic: string, callback) => {
-        const update = serverStore.setTopicForUser(
+      socket.on("space_update", async (update, callback) => {
+        if (!socket.data._hostedSpace) return;
+        const { key, value } = update;
+        await spaces.setSpaceProperty(
           socket.data.roomCode,
           socket.data.username,
-          topic
+          { [key]: value }
         );
-        callback(update);
-        socket.to(socket.data.roomCode).emit("room_update", update);
+        socket.data._hostedSpace[key] = value;
+        const newState = socket.data._hostedSpace;
+
+        callback(newState);
+        socket.to(socket.data.roomCode).emit("space_updated", newState);
       });
 
-      socket.on("set_role", (role: ERole, callback) => {
-        const update = serverStore.setRoleForUser(
+      socket.on("user_update", async (update, callback) => {
+        const { key, value } = update;
+        await spaces.setUserProperty(
           socket.data.roomCode,
           socket.data.username,
-          role
+          { [key]: value }
         );
-        callback(update);
-        socket.to(socket.data.roomCode).emit("room_update", update);
+        socket.data._me[key] = value;
+        const newState = socket.data._me;
+        callback(newState);
+        socket.to(socket.data.roomCode).emit("user_updated", newState);
       });
 
       socket.on("disconnecting", async () => {
         const { roomCode, username } = socket.data;
-        await serverStore.setUserOnlineState(roomCode, username, "");
-        socket.to(roomCode).emit("room_update", serverStore.getRoom(roomCode));
+        await spaces.setUserProperty(roomCode, username, { clientId: "" });
+
+        socket
+          .to(roomCode)
+          .emit("user_updated", { ...socket.data._me, clientId: "" });
       });
 
-      socket.on("disconnect", () => {
+      socket.on("disconnect", async () => {
         const { roomCode } = socket.data;
-        serverStore.closeRoomIfEmpty(roomCode);
+        const isEmptyAfter = !io.sockets.adapter.rooms.get(roomCode);
+        if (isEmptyAfter) {
+          await spaces.deleteSpace(roomCode);
+        }
       });
     });
   }
+
   res.end();
 }

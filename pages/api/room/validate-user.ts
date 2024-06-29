@@ -1,8 +1,8 @@
-import serverStore from "@/lib/roomStore";
+import spaces from "@/lib/spaces";
 import { NextApiResponseWithSocket } from "@/utils/types";
 import { NextApiRequest } from "next";
 
-export default function validateUserHandler(
+export default async function validateUserHandler(
   req: NextApiRequest,
   res: NextApiResponseWithSocket
 ) {
@@ -10,7 +10,7 @@ export default function validateUserHandler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { roomCode, host = "", username } = req.query;
+  const { roomCode, host = "", username: name } = req.query;
   const isHost = (host as string).toLowerCase() === "true";
   /**
    * Validate username
@@ -22,29 +22,29 @@ export default function validateUserHandler(
    */
 
   let isAvail = false;
-  const users = serverStore.getRoomUsers(roomCode as string);
   let message;
 
+  const user = await spaces.getUser(roomCode as string, name as string);
   if (isHost) {
-    isAvail = !users || (users[0].username === username && !users[0].online);
-    if (!isAvail) {
-      message = "Host is already online";
-    }
+    isAvail = !user || !user.clientId;
+    message = isAvail ? undefined : "Host is already online";
   } else {
-    const userIndex = users.findIndex((member) => member.username === username);
-    const existingUser = userIndex > -1 ? users[userIndex] : undefined;
-    const fullRoom = !!users && users.length >= 5;
-
-    if (userIndex === 0) {
-      message = "Username is used by host, switch mode to host a Space";
-    } else if (!!existingUser && !!existingUser.online) {
+    if (!!user?.clientId) {
       message = "User is already online";
-    } else if (!existingUser && fullRoom) {
-      message = "Space is full";
     } else {
-      isAvail = true;
+      const space = await spaces.getSpace(roomCode as string);
+      const isInvalidRole = name === space?.host;
+      const isFull = space && space?.capacity >= 5;
+
+      if (isInvalidRole) {
+        message = "Username is used by host, switch mode to host a Space";
+      } else if (isFull) {
+        message = "Space is full";
+      } else {
+        isAvail = true;
+      }
     }
   }
 
-  return res.status(200).json({ isAvail, roomCode, username, message });
+  return res.status(200).json({ isAvail, roomCode, name, message });
 }

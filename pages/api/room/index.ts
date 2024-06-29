@@ -1,8 +1,8 @@
-import serverStore from "@/lib/roomStore";
-import { EStage, NextApiResponseWithSocket } from "@/utils/types";
+import spaces from "@/lib/spaces";
+import { NextApiResponseWithSocket } from "@/utils/types";
 import { NextApiRequest } from "next";
 
-export default function roomHandler(
+export default async function roomHandler(
   req: NextApiRequest,
   res: NextApiResponseWithSocket
 ) {
@@ -10,35 +10,28 @@ export default function roomHandler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { roomCode, username, host } = req.body;
+  const { roomCode, username: name, host } = req.body;
   const isHost = host;
-  const room = serverStore.getRoom(roomCode as string);
-  const users = serverStore.getRoomUsers(roomCode as string);
+
+  const space = await spaces.getSpace(roomCode);
+  const user = await spaces.getUser(roomCode, name);
+
   if (isHost) {
-    if (!room) {
-      serverStore.rooms[roomCode] = {
-        current: { stage: EStage.WAITING },
-        users: [{ username }],
-      };
-    } else if (!!users[0].online) {
-      return res
-        .status(400)
-        .json({ error: `Space host [${username}] is online` });
+    if (!space) {
+      await spaces.createSpace(roomCode, name);
+    } else if (!!user?.clientId) {
+      return res.status(400).json({ error: `Space host [${name}] is online` });
     }
 
-    return res.status(200).json({ message: "OK", roomCode, username });
+    return res.status(200).json({ message: "OK", roomCode, name });
   } else {
-    if (!room) return res.status(400).json({ error: `Space does not exist!` });
+    if (!space) return res.status(400).json({ error: `Space does not exist!` });
 
-    const user = users.find((p) => p.username === username);
-
-    if (user?.online) {
-      return res
-        .status(400)
-        .json({ error: `Username ${user.username} is online` });
-    } else {
-      if (!user) users.push({ username });
-      return res.status(200).json({ message: "OK", roomCode, username });
+    if (user?.clientId) {
+      return res.status(400).json({ error: `Username ${user.name} is online` });
+    } else if (!user) {
+      await spaces.saveUser(roomCode, name);
+      return res.status(200).json({ message: "OK", roomCode, name });
     }
   }
 }
