@@ -2,8 +2,8 @@
   --primary-black: #00020f;
   --primary-white: #f5f5f5dd;
 
-  --accent-1: #a070fe;
-  --accent-2: #9eaafe;
+  --accent-1: #9d2eb0;
+  --accent-2: #9b62e5;
   --error-text-red: #d82400;
 
   --indicator-bg-pink: #d8006d;
@@ -17,10 +17,10 @@
   --card-bg-orange: #ffcbb7;
   --card-bg-green: #98f9d6;
 
-  --dynamic-bg-1: #0a75c3;
-  --dynamic-bg-2: #00a7fb;
-  --dynamic-bg-3: #4cc2fd;
-  --dynamic-bg-4: #b3e4ff;
+  --dynamic-bg-1: #02457A;
+  --dynamic-bg-2: #018abe;
+  --dynamic-bg-3: #97cadb;
+  --dynamic-bg-4: #d6e8ee;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
